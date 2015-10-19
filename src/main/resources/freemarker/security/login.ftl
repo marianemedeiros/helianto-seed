@@ -33,29 +33,29 @@
 				 ! Inactive user
 				 !-->
 				<div class="alert alert-danger" role="alert">
-					<i class="fa fa-lock"></i> Usuário inativo 
+					<i class="fa fa-lock"></i> Inactive user. 
 				</div>
 			[#else]	
 				<!--
 				 ! Login error
 				 !-->
 				<div class="alert alert-danger" role="alert">
-					<i class="fa fa-lock"></i> Erro ao fazer login
+					<i class="fa fa-lock"></i> Login error.
 				</div>		
 			[/#if]
 		[/#if]
 		[#if userConfirmed?? ]
-				<div class="alert alert-success" role="alert"><i class="fa fa-unlock"></i> Seu usuário foi ativado, faça o login para entrar.</div>		
+				<div class="alert alert-success" role="alert"><i class="fa fa-unlock"></i>Your username has been activated, do your login to enter.</div>		
 		[/#if]
 		[#if emailRecoverySent?? ]
-				<div class="alert alert-warning" role="alert">Consulte seu email para recuperar sua senha. </div>		
+				<div class="alert alert-warning" role="alert">Check your e-mail to recovery your password. </div>		
 		[/#if]
 		[#if emailRecoveryFailed?? ]
-				<div class="alert alert-warning" role="alert">Falha ao enviar o email para recuperar sua senha. </div>		
+				<div class="alert alert-warning" role="alert">E-mail failed.</div>		
 		[/#if]
-		[#if recoverFail?? && recoverFail="true" ]<div class="alert alert-danger" role="alert">Falha ao mudar a senha. </div>[/#if]
+		[#if recoverFail?? && recoverFail="true" ]<div class="alert alert-danger" role="alert">Failed to change password. </div>[/#if]
 		
-		[#if recoverFail?? && recoverFail="false"]<div class="alert alert-success" role="alert">Senha modificada com sucesso. </div>[/#if]
+		[#if recoverFail?? && recoverFail="false"]<div class="alert alert-success" role="alert">Password successfully modified. </div>[/#if]
 
 		<div id="form-group-email" class="form-group">
 			<input type="email"  required="" name="username"  data-ng-model="username" placeholder="E-mail" class="form-control">
@@ -69,10 +69,10 @@
 		 !-->
 		<div class="row">
 			<div class="col-md-6">
-				<p><input type="checkbox" name="remember-me" > Lembrar senha</p>
+				<p><input type="checkbox" name="remember-me" > Remember Password</p>
 			</div>
 			<div class="col-md-6">
-				<a target="_self" class="pull-right" data-ng-href="/recovery/">Esqueceu sua senha?</a>
+				<a target="_self" class="pull-right" data-ng-href="/recovery/">Forgot password?</a>
 			</div>
 		</div>
 		
@@ -94,7 +94,7 @@
 				<h5>Não possui acesso ainda?</h5>
 			</div>
 			<div class="col-md-6">
-				<h5><a class="pull-right" href="/signup/">Criar conta de usuário</a></h5>
+				<h5><a class="pull-right" href="/signup/">Create User Account</a></h5>
 			</div>
 		</div>
 	</div><!-- panel footer -->

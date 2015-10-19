@@ -69,7 +69,7 @@ public class PasswordRecoveryController extends AbstractCryptoController{
 	 */
 	@RequestMapping(value={"/recovery", ""}, method={ RequestMethod.GET })
 	public String recovery(String error, Model model) {
-		model.addAttribute("titlePage", "Recuperação de Senha");
+		model.addAttribute("titlePage", "Password recovery");
 		model.addAttribute("baseName", "security");
 		model.addAttribute("main", "security/passwordRecover");
 		model.addAttribute("copyright", env.getProperty("helianto.copyright", ""));
@@ -92,7 +92,7 @@ public class PasswordRecoveryController extends AbstractCryptoController{
 			User user = userRepository.findOne(userAuthentication.getUserId());
 			Identity  identity = user.getIdentity();
 			if (identity!=null) {
-				model.addAttribute("titlePage", "Mudança de Senha");
+				model.addAttribute("titlePage", "Password change");
 				model.addAttribute("baseName", "security");
 				model.addAttribute("main", "security/passwordChange");
 				model.addAttribute("copyright", env.getProperty("helianto.copyright", ""));
@@ -120,7 +120,7 @@ public class PasswordRecoveryController extends AbstractCryptoController{
 	 */
 	@RequestMapping(value="/submit", method= RequestMethod.POST)
 	public String recover(Model model, @RequestParam String email, @RequestParam String password) {
-		model.addAttribute("titlePage", "Mudança de Senha");
+		model.addAttribute("titlePage", "Password change");
 		model.addAttribute("baseName", "security");
 		model.addAttribute("main", "security/passwordChange");
 		model.addAttribute("copyright", env.getProperty("helianto.copyright", ""));
@@ -129,7 +129,7 @@ public class PasswordRecoveryController extends AbstractCryptoController{
 		if (identity!=null) {
 			IdentitySecret identitySecret = identitySecretRepository.findByIdentityKey(identity.getPrincipal());
 			model.addAttribute("email", identity.getPrincipal());
-			//verifica se a senha não é a mesma
+			//check for the same password
 			if(BCrypt.checkpw(password, identitySecret.getIdentitySecret())){
 				model.addAttribute("titlePage", "Mudança de Senha");
 				model.addAttribute("baseName", "security");
@@ -157,7 +157,7 @@ public class PasswordRecoveryController extends AbstractCryptoController{
 	 */
 	@RequestMapping(value="/send", method= {RequestMethod.POST, RequestMethod.GET })
 	public String send(Model model, @RequestParam(required=false) String principal) {
-		model.addAttribute("titlePage", "Recuperação de Senha");
+		model.addAttribute("titlePage", "Password recovery");
 		model.addAttribute("baseName", "security");
 		model.addAttribute("main", "security/passwordRecover");
 		model.addAttribute("copyright", env.getProperty("helianto.copyright", ""));
@@ -198,7 +198,7 @@ public class PasswordRecoveryController extends AbstractCryptoController{
 	}
 	
 	/**
-	 * RECEBE a confirmação do e-mail e apresenta formulário para troca de senha (usuários ainda não autenticados).
+	 * Receive e-mail confirmation and respond with form (unauthenticated users).
 	 * 
 	 * @param model
 	 * @param email
@@ -206,7 +206,7 @@ public class PasswordRecoveryController extends AbstractCryptoController{
 	 */
 	@RequestMapping(value="/return/{token}", method=RequestMethod.GET)
 	public String mail(Model model, @PathVariable String token) {
-		model.addAttribute("titlePage", "Mudança de Senha");
+		model.addAttribute("titlePage", "Password change");
 		model.addAttribute("baseName", "security");
 		model.addAttribute("main", "security/passwordChange");
 		model.addAttribute("copyright", env.getProperty("helianto.copyright", ""));

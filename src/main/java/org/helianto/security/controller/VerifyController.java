@@ -190,7 +190,7 @@ public class VerifyController
 	 * @param identity
 	 */
 	protected String createPassword(Model model, Identity  identity) {
-		model.addAttribute("titlePage", "Criação de Senha");
+		model.addAttribute("titlePage", "Password creation");
 		model.addAttribute("baseName", "security");
 		model.addAttribute("main", "security/passwordChange");
 		model.addAttribute("copyright", env.getProperty("helianto.copyright", ""));

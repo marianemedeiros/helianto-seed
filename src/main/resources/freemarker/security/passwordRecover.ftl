@@ -1,23 +1,23 @@
 [#ftl]	
 	[#--
-	 # Logotipo
+	 # Logo
 	 #--]
 	<div class="clearfix text-center">
 		<a href="#" class="text-center" target="_self"><img src="/images/logo.png" alt="Iservport" ></a>
 	</div>
 
 	[#--
-	 # Título: Recuperação de senha
+	 # Recovery Password
 	 #--]
 	<div class="heading" style="margin-bottom: 40px;">
-		<h3 class="text-center">Recuperação de senha</h3>
+		<h3 class="text-center">Recovery Password</h3>
 	</div>
 
     <div class="panel panel-default">
     <div class="panel-heading">
 		<div class="row">
 			<div class="col-md-12">
-				<h3 class="panel-title"><span class="glyphicon glyphicon-wrench"></span> Senha</h3>
+				<h3 class="panel-title"><span class="glyphicon glyphicon-wrench"></span> Password</h3>
 			</div>
 		</div>
 	</div>
@@ -42,7 +42,7 @@
 					class="form-control" data-ng-model="form.principal">
 			</div>
 				
-			<button type="submit" class="btn btn-primary" style="width: 100%;" data-ng-disabled="emailNotOk">Envie-me um e-mail de recuperação de senha</button>
+			<button type="submit" class="btn btn-primary" style="width: 100%;" data-ng-disabled="emailNotOk">Send me an e-mail to recovery my password.</button>
 		</div>
 		</form>
 		
@@ -56,7 +56,7 @@
 					<h5>Não possui acesso ainda?</h5>
 				</div>
 				<div class="col-md-6">
-					<h5><a class="pull-right" href="/signup/">Criar conta de usuário</a></h5>
+					<h5><a class="pull-right" href="/signup/">Create User Account</a></h5>
 				</div>
 			</div>
 		</div>
