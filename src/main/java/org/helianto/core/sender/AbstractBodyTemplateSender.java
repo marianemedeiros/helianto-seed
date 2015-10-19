@@ -43,7 +43,7 @@ public abstract class AbstractBodyTemplateSender
 		//paramMap.put("recipientFirstName", recipientName);
 		//paramMap.put("recipientEmail", recipientEmail);
 		
-//		System.err.println("recipientFirstName: "+ recipientName);
+		//System.err.println("recipientFirstName: "+ recipientName);
 		
 		StringBuilder body = new StringBuilder();
 		body.append("<div class='background-color: black; height: 12px;'> ")

@@ -58,7 +58,7 @@ public class AppController {
 			model.addAttribute("externalId", externalId);
 		}
 		if (locale!=null) {
-			model.addAttribute("locale", locale.toString());
+			model.addAttribute("locale", locale.toString().toLowerCase());
 			model.addAttribute("locale_", locale.toString().replace("_", "-").toLowerCase());
 		}
 		return getTemplateName();

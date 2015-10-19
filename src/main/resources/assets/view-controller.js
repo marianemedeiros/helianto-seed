@@ -23,55 +23,35 @@ angular.module('app.services')
 /**
  * View controller
  */
-
 .controller('ViewController', ['$rootScope', '$http', 'lang'
                                , function($rootScope, $http, lang) {
 		
-//	$scope.categoryMapList = [];
-//	$scope.showMenuItem = function(menuCode){
-//		console.log("Map list "+$scope.categoryMapList);
-//		var result = false;
-//		$scope.categoryMapList.forEach(function(entry) {
-//			if(entry.qualifierValue == menuCode && entry.countItems>0){
-//				result = true;
-//			}	
-//		});
-//		return result;
-//	}
 	$rootScope.logout = function() {
 		return $http.post('/logout');
     }
 	/**
-	 * Abas
+	 * Tabs
 	 */
 	$rootScope.sectionTab = 1;
 	$rootScope.setSectionTab = function(value) {
 		$rootScope.sectionTab = value;
-   };
-   $rootScope.isSectionTabSet = function(value) {
-     return $rootScope.sectionTab === value;
-   };
+    };
+    $rootScope.isSectionTabSet = function(value) {
+        return $rootScope.sectionTab === value;
+    };
 
-
-
-//	$scope.localizationKeys = lang._getLocalizationKeys();
-//
-//	securityServices.getAuthorizedRoles('/api/entity/auth');
-////	$scope.isAuthorized = function(role, ext) {
-////		return securityServices.isAuthorized(role, ext);
-////	}
-////	/**
-////	 * Autorização
-////	 */
-////	$scope.authList =[];
-////	defineAuthorities();
-////	function defineAuthorities(){
-////		securityServices.getAuthorizedRoles(null).success(function(data, status, headers, config) {
-////			$scope.authList = data.content;
-////		});
-////	}
-////	$scope.isAuthorized =function(role, ext){
-////		return securityServices.isAuthorized($scope.authList, role, ext);
-////	}
+	/**
+	 * Authorization
+	 */
+    $rootScope.getAuthorizedRoles = function(userId) {
+		return $http.get('/api/entity/auth'+((userId!=null && userId!='null')?'?userId='+userId:''))
+		.success(function(data, status, headers, config) {
+			roleList = data.content;
+		});
+	}
+    $rootScope.roleList = [];
+	$rootScope.isAuthorized = function(role, ext){
+		return false;
+	}
 		 
 }]);

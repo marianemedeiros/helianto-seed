@@ -379,7 +379,6 @@ angular.module('app.services', ['ngResource'])
 	})
 
 	.controller('ViewController', ['$scope', '$http', 'securityServices', function($scope, $http, securityServices, lang) {
-
 		/**
 		 * Abas
 		 */
