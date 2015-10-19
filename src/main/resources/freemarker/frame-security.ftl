@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html id="ng-app" xmlns:ng="http://angularjs.org" data-ng-app="security" >
 <head>
-    <title>"/${titlePage!'Security'}"</title>
+    <title>${titlePage!'Security'}</title>
 	[#include "/frame-head.ftl" /]
 </head>
 <body style="background-color: #f3f3f4;">
