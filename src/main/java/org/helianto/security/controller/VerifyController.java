@@ -57,16 +57,17 @@ import org.springframework.web.context.request.WebRequest;
  * 
  * @author mauriciofernandesdecastro
  */
-
-public abstract class AbstractVerifyController
+@Controller
+@RequestMapping("/verify")
+public class VerifyController
 	extends AbstractCryptoController
 {
 	
-	private static final Logger logger = LoggerFactory.getLogger(AbstractVerifyController.class);
+	private static final Logger logger = LoggerFactory.getLogger(VerifyController.class);
 	
-	public static final String PWD_CREATE = "/verify/createPassword";
+	public static final String PWD_CREATE = "/security/passwordCreate";
 	
-	public static final String PWD_VERIFY = "/verify/password";
+	public static final String PWD_VERIFY = "/security/password";
 	
 	@Inject 
 	private OperatorRepository contextRepository;
@@ -80,8 +81,8 @@ public abstract class AbstractVerifyController
 	@Inject 
 	private UserInstallService userInstallService;
 	
-	//@Inject
-	//protected EntityInstallStrategy entityInstallStrategy;
+	@Inject
+	private EntityInstallStrategy entityInstallStrategy;
 	
 	@Inject
 	private SignupRepository signupRepository;
@@ -119,7 +120,6 @@ public abstract class AbstractVerifyController
 	@RequestMapping(value={"/", ""}, method= RequestMethod.GET, params={"confirmationToken"})
 	public String getVerificationPage(Model model, @RequestParam String confirmationToken) {
 		int identityId = findPreviousSignupAttempt(confirmationToken, 5);
-		
 		if (identityId!=0) {
 			Identity  identity = identityRepository.findOne(identityId);
 			return createPassword(model, identity);
@@ -127,7 +127,7 @@ public abstract class AbstractVerifyController
 		else {
 			model.addAttribute("userConfirmed", false);
 		}
-		return "redirect:"+SignUpController.SIGN_UP;
+		return SignUpController.SIGN_UP;
 	}
 	
 	/**
@@ -144,7 +144,6 @@ public abstract class AbstractVerifyController
 				logger.debug("Previous signup attempt valid to {} ", expirationDate);
 				if (expirationDate.isAfterNow()) {
 					return identityRepository.findByPrincipal(signup.getPrincipal()).getId();
-					
 				}
 			}
 		}
@@ -245,7 +244,9 @@ public abstract class AbstractVerifyController
 	 * 
 	 * @param identity
 	 */
-	protected abstract List<Entity> generateEntityPrototypes(Signup signup);
+	protected List<Entity> generateEntityPrototypes(Signup signup){
+		return entityInstallStrategy.generateEntityPrototypes(signup);
+	}
 
 	/**
 	 * Create entities.
@@ -256,7 +257,7 @@ public abstract class AbstractVerifyController
 	protected void createEntities(Operator context, List<Entity> prototypes, Identity identity) {
 		Entity entity = null;
 		for (Entity prototype: prototypes) {
-			entity = installEntity(context, prototype);
+			entity = entityInstallStrategy.installEntity(context, prototype);
 			if(entity!=null){
 				createUser(entity, identity);
 			}
