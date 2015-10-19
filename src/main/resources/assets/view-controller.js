@@ -23,8 +23,8 @@ angular.module('app.services')
 /**
  * View controller
  */
-.controller('ViewController', ['$rootScope', '$http', 'lang'
-                               , function($rootScope, $http, lang) {
+.controller('ViewController', ['$rootScope', '$http', '$resource', 'lang'
+                               , function($rootScope, $http, $resource, lang) {
 		
 	$rootScope.logout = function() {
 		return $http.post('/logout');
@@ -40,18 +40,35 @@ angular.module('app.services')
         return $rootScope.sectionTab === value;
     };
 
+    $rootScope.userAuthResource = $resource("/api/entity/auth", {userId: "@userId"}, {});
+    $rootScope.roleList = [];
 	/**
 	 * Authorization
 	 */
-    $rootScope.getAuthorizedRoles = function(userId) {
-		return $http.get('/api/entity/auth'+((userId!=null && userId!='null')?'?userId='+userId:''))
-		.success(function(data, status, headers, config) {
-			roleList = data.content;
+    $rootScope.getAuthorizedRoles = function(userIdVal) {
+    	$rootScope.userAuthResource.get({userId:userIdVal}).$promise.then(function(data) {
+			console.log(data)
+			$rootScope.roleList = data;
+			$rootScope.isAdmin=$rootScope.isAuthorized('ADMIN', 'MANAGER');
+			console.log($rootScope.isAuthorized('ADMIN', 'MANAGER'));
 		});
 	}
-    $rootScope.roleList = $rootScope.getAuthorizedRoles();
+    
+    $rootScope.getAuthorizedRoles();
+    
+    console.log($rootScope.roleList);
+    
+    
+    
 	$rootScope.isAuthorized = function(role, ext){
-		return false;
-	}
+		var result = false;
+		$rootScope.roleList.forEach(function(entry) {
+			if(entry.serviceName == (role) && entry.serviceExtension.indexOf(extension)>-1){
+				result = true;
+			}
+		});
+		return result;
+	};
+	
 		 
 }]);
