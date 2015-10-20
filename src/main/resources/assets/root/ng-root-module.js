@@ -13,19 +13,19 @@
 		 */
 		$scope.rootResource = $resource(baseUrl + "entity", {entityType: "@entityType", rootUserId: "@rootUserId"}, {
 			save: { method: 'PUT' }
-		, create: { method: 'POST' }
-		, search : { method: 'POST', url: baseUrl+'search'}
-		, authorize : { method: 'GET'}
+			, create: { method: 'POST' }
+			, search : { method: 'POST', url: baseUrl+'search'}
+			, authorize : { method: 'GET'}
 		});
 		
 		/**
 		 * Entity Resource.
 		 */
-		$scope.entityResource = $resource("/api/entity", {}, {
+		$scope.entityResource = $resource("/api/entity/:path", { stateId : "@stateId"}, {
 			save: { method: 'PUT' }
 			, create: { method: 'POST' }
 		});
-
+		
 		$scope.root;
 
 		/**
@@ -52,6 +52,28 @@
 				if ($scope.rootValue === 0 && data.length>0) {
 					$scope.rootValue = $scope.rootList[0].id;
 				}
+			})
+		};
+		
+		/**
+		 * get states.
+		 */
+		$scope.getStates = function(){
+			$scope.entityResource.query({path: 'state'}).$promise.then(function(data){
+				$scope.states = data;
+				if(data.length>0){
+					$scope.stateId = data[0].id;
+					$scope.getCities($scope.stateId);
+				}
+			})
+		};
+		
+		/**
+		 * get cities.
+		 */
+		$scope.getCities = function(val){
+			$scope.entityResource.query({path: 'city', stateId:val}).$promise.then(function(data){
+				$scope.cities = data;
 			})
 		};
 
@@ -122,6 +144,7 @@
 			$scope.entityResource.create().$promise.then(
 					function(data){
 						$scope.entity = data;
+						$scope.getStates();
 						$scope.openForm('form-root-entity')
 					});
 		}

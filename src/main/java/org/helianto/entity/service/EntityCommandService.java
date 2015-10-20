@@ -1,6 +1,5 @@
 package org.helianto.entity.service;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -12,8 +11,6 @@ import org.helianto.core.domain.Signup;
 import org.helianto.core.repository.EntityRepository;
 import org.helianto.core.repository.IdentityRepository;
 import org.helianto.core.repository.OperatorRepository;
-import org.helianto.install.service.EntityInstallStrategy;
-import org.helianto.install.service.UserInstallService;
 import org.helianto.security.internal.UserAuthentication;
 import org.helianto.security.service.EntityInstallService;
 import org.slf4j.Logger;
@@ -55,9 +52,8 @@ public class EntityCommandService {
 		Entity target = entityRepository.findByOperatorAndAlias(context, command.getAlias());
 		Identity identity = identityRepository.findOne(userAuthentication.getIdentityId());
 		if(target==null){
-			Signup signup = new Signup();
+			Signup signup = new Signup(command);
 			signup.setDomain(command.getAlias());
-			signup.setCityId(command.getCityId());
 			List<Entity> prototypes = entityInstallService.generateEntityPrototypes(signup);
 			entityInstallService.createEntities(context, prototypes, identity);
 		}
@@ -65,7 +61,7 @@ public class EntityCommandService {
 //			TODO merge on Entity to update mode?
 //			target = target.merge(command);
 		}
-		return entityRepository.saveAndFlush(target);
+		return entityRepository.findByOperatorAndAlias(context, command.getAlias());
 	}
 	
 }
