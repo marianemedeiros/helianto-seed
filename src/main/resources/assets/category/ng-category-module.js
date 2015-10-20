@@ -174,6 +174,7 @@
 		//Update
 		$scope.updateCategory = function() {
 			//$scope.setChangeState(0);
+			$scope.message.exists = false;
 			if($scope.category.categoryName.length>0){
 				$scope.category = $scope.categoryResource.save($scope.category);
 				$scope.category.$promise.then(
@@ -184,10 +185,7 @@
 						},
 						function(data, getReponseHeaders) {
 							console.log(data);
-							if(data.status === 302) {
-								$scope.message= data.data;
-								$scope.message.exist= true;
-							}
+							$scope.message.exists= true;
 						}
 				);
 			};
