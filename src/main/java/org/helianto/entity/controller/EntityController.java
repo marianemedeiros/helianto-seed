@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class EntityController {
 
 	private static final Logger logger = LoggerFactory.getLogger(EntityController.class);
-	
+
 	@Inject
 	private EntityRepository entityRepository;
 	
@@ -114,7 +114,6 @@ public class EntityController {
 		List<UserAuthorityReadAdapter> authList = new ArrayList<>();
 		authList.addAll(userAuthorityRepository.findByUserGroupIdOrderByServiceCodeAsc(parentGroups));
 		authList.add(new UserAuthorityReadAdapter(0, 0, "USER", "READ"));
-
 		return authList;
 	}
 
