@@ -1,12 +1,19 @@
 package org.helianto.entity.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.Identity;
 import org.helianto.core.repository.EntityReadAdapter;
 import org.helianto.core.repository.EntityRepository;
+import org.helianto.core.repository.IdentityRepository;
+import org.helianto.core.repository.OperatorRepository;
+import org.helianto.entity.service.EntityCommandService;
+import org.helianto.install.service.UserInstallService;
 import org.helianto.security.internal.UserAuthentication;
 import org.helianto.security.repository.UserAuthorityReadAdapter;
 import org.helianto.security.repository.UserAuthorityRepository;
@@ -18,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,7 +42,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class EntityController {
 
 	private static final Logger logger = LoggerFactory.getLogger(EntityController.class);
-	
+
 	@Inject
 	private EntityRepository entityRepository;
 	
@@ -46,6 +54,9 @@ public class EntityController {
 	
 	@Inject
 	private UserAuthorityRepository userAuthorityRepository;
+	
+	@Inject
+	private EntityCommandService entityCommandService ;	
 	
 	/**
 	 * Get the current entity.
@@ -64,6 +75,20 @@ public class EntityController {
 		EntityReadAdapter adapter = entityRepository.findAdapter(userAuthentication.getEntityId());
 		logger.debug("Entity found: {}.", adapter);
 		return adapter;
+	}
+	
+	@RequestMapping(value={"/", ""}, method= RequestMethod.POST)
+	@ResponseBody
+	public Entity createEntity(UserAuthentication userAuthentication) {
+		Entity entity = new Entity();
+		logger.debug("Creating Entity {}.", entity);
+		return entity;
+	}
+	
+	@RequestMapping(value={"/", ""}, method= RequestMethod.PUT)
+	@ResponseBody
+	public Entity saveEntity(UserAuthentication userAuthentication, @RequestBody Entity entity ) {
+		return entityCommandService.saveEntity(userAuthentication, entity);
 	}
 	
 	/**

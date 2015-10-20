@@ -15,8 +15,8 @@
 	/**
 	 * Angular user controller
 	 */
-	.controller('UserController', ['$scope', '$window', 'resources', 'qualifierService', 'genericServices', 'securityServices'
-	                                  , function($scope, $window, resources, qualifierService, genericServices, securityServices) {
+	.controller('UserController', ['$scope', '$window', 'resources', 'qualifierService', 'genericServices'
+	                                  , function($scope, $window, resources, qualifierService, genericServices) {
 	
 		$scope.baseName = "user";
 		$scope.userStates = "A";

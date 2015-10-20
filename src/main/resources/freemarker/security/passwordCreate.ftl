@@ -1,6 +1,6 @@
 [#ftl]
 	<!--
-	 ! Logotipo
+	 ! Logo
 	 !-->
 	<div class="clearfix text-center">
 		<a href="#" class="text-center" target="_self"><img src="/images/logo.png" alt="Ubivis" ></a>
@@ -8,24 +8,24 @@
 
 
 	<div class="heading">
-		<h3 align="middle">Atualize sua senha</h3>
+		<h3 align="middle">Update Password</h3>
 	</div>
 
 	[#if userExists??]
 		<div class="alert alert-danger" role="alert">
-		<p>Senha modificada com sucesso.</p> 
+		<p>Password successfully modified.</p> 
 		</div>
 	[/#if]
 	
 	[#if recoverFail?? && recoverFail="true" ]
 		<div class="alert alert-danger" role="alert">
-		<p> Falha ao mudar a senha </p> 
+		<p>Failed to change email</p> 
 		</div>
 	[/#if]
 	
 	[#if recoverFail?? && recoverFail="false"]
 		<div class="alert alert-success" role="alert">
-		<p> Senha modificada com sucesso. </p> 
+		<p>Password successfully modified.</p> 
 		</div>
 	[/#if]
 	
@@ -37,7 +37,7 @@
 			
     <div class="panel panel-default">
     <div class="panel-heading">
-    	<h3 class="panel-title"><span class="glyphicon glyphicon-ok-sign"></span> Confirmação</h3>
+    	<h3 class="panel-title"><span class="glyphicon glyphicon-ok-sign"></span> Confirmation</h3>
     </div>
 	<div class="panel-body">
 			<form method="POST" name="form"  id="signup" action="/verify/createPass">
@@ -54,11 +54,11 @@
 				</br>
 				</div>
 				<div id="form-group-passwordc" class="field">
-					<input type="password"  required="" name="cpassword" id="cpassword" placeholder="Confirmação de senha" data-ng-model="cpassword" class="form-control">
+					<input type="password"  required="" name="cpassword" id="cpassword" placeholder="Password confirmation" data-ng-model="cpassword" class="form-control">
 					</br>
 				</div>
 					
-				<button type="submit" class="btn btn-primary" style="width: 100%;" data-ng-disabled="cannotChangePassword"> Criar Senha </button>
+				<button type="submit" class="btn btn-primary" style="width: 100%;" data-ng-disabled="cannotChangePassword"> Password creation </button>
 				<input type="hidden" name="${_csrf.parameterName}"
 				value="${_csrf.token}" />
 			</form>

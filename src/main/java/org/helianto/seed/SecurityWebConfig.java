@@ -64,7 +64,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 public class SecurityWebConfig 
 	extends WebSecurityConfigurerAdapter
 {
-	
+
 	private int REMEMBER_ME_DEFAULT_DURATION = 14*24*60*60; // duas semanas
 
 	@Autowired
