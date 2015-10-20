@@ -101,7 +101,7 @@
 				}
 				else if(data.totalElements>1){
 					$scope.categorySearchList = data;	
-					$scope.openForm('form-search');
+					$scope.openForm('search');
 				}else{
 					$("#searchMsg").fadeIn(1000);
 					$("#searchMsg").fadeOut(5000);
@@ -169,11 +169,12 @@
 		//create
 		$scope.newCategory = function(categoryGroupValue) {
 			$scope.category = $scope.categoryResource.create({categoryGroup:categoryGroupValue});
-			$scope.openForm('form-category');
+			$scope.openForm('category');
 		};
 		//Update
 		$scope.updateCategory = function() {
 			//$scope.setChangeState(0);
+			$scope.message.exists = false;
 			if($scope.category.categoryName.length>0){
 				$scope.category = $scope.categoryResource.save($scope.category);
 				$scope.category.$promise.then(
@@ -184,10 +185,7 @@
 						},
 						function(data, getReponseHeaders) {
 							console.log(data);
-							if(data.status === 302) {
-								$scope.message= data.data;
-								$scope.message.exist= true;
-							}
+							$scope.message.exists= true;
 						}
 				);
 			};

@@ -42,11 +42,8 @@
 					{{'CATEGORY_'+qualifierItem.qualifierName | i18n}}
 				</div>
 			
-				<div data-ng-show="message.exist" class="alert alert-danger" role="alert"> 
-					{{message.errorMessage | i18n}}
-					<a href="" data-ng-click="getCategory(message.id,null, null, true)" class="btn btn-sm btn-primary">
-						Abrir Categoria
-					</a>
+				<div data-ng-show="message.exists" class="alert alert-danger" role="alert"> 
+					{{'CATEGORY_UPD_ERR' | i18n}}
 				</div>
 				
 			</div><!--col-md-4  -->	 

@@ -3,11 +3,13 @@ value('lang', {
 	SAVE :'Salvar', 
 	CLOSE :'Fechar', 
 	ITEMS :'Itens', 
+	NEW_CATEGORY :'Nova categoria', 
 	CATEGORY_CODE :'Código', 
 	CATEGORY_NAME : 'Nome', 
 	CATEGORY :'Categoria', 
 	CATEGORIES :'Categorias', 
-	CATEGORY_EXISTS :'Categoria já existe'
+	CATEGORY_EXISTS :'Categoria já existe',
+	CATEGORY_UPD_ERR :'Não foi possível atualizar a categoria.'
 	
 	//tipos
 	, CATEGORY_NOT_DEFINED:'Indefinido'

@@ -1,19 +1,14 @@
 package org.helianto.entity.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import org.helianto.core.domain.Entity;
-import org.helianto.core.domain.Identity;
 import org.helianto.core.repository.EntityReadAdapter;
 import org.helianto.core.repository.EntityRepository;
-import org.helianto.core.repository.IdentityRepository;
-import org.helianto.core.repository.OperatorRepository;
 import org.helianto.entity.service.EntityCommandService;
-import org.helianto.install.service.UserInstallService;
 import org.helianto.security.internal.UserAuthentication;
 import org.helianto.security.repository.UserAuthorityReadAdapter;
 import org.helianto.security.repository.UserAuthorityRepository;
@@ -24,19 +19,19 @@ import org.helianto.user.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Entity controller.
  * 
  * @author mauriciofernandesdecastro
  */
-@Controller
+@RestController
 @RequestMapping("/api/entity")
 @PreAuthorize("isAuthenticated()")
 public class EntityController {
@@ -69,26 +64,28 @@ public class EntityController {
 	 *   
 	 * @param userAuthentication
 	 */
-	@RequestMapping(value={"/", ""}, method= RequestMethod.GET)
-	@ResponseBody
+	@RequestMapping(method= RequestMethod.GET)
 	public EntityReadAdapter entity(UserAuthentication userAuthentication) {
 		EntityReadAdapter adapter = entityRepository.findAdapter(userAuthentication.getEntityId());
 		logger.debug("Entity found: {}.", adapter);
 		return adapter;
 	}
 	
-	@RequestMapping(value={"/", ""}, method= RequestMethod.POST)
-	@ResponseBody
+	/**
+	 * Create entity.
+	 * 
+	 * @param userAuthentication
+	 */
+	@RequestMapping(method= RequestMethod.POST)
 	public Entity createEntity(UserAuthentication userAuthentication) {
 		Entity entity = new Entity();
 		logger.debug("Creating Entity {}.", entity);
 		return entity;
 	}
 	
-	@RequestMapping(value={"/", ""}, method= RequestMethod.PUT)
-	@ResponseBody
+	@RequestMapping(method= RequestMethod.PUT)
 	public Entity saveEntity(UserAuthentication userAuthentication, @RequestBody Entity entity ) {
-		return entityCommandService.saveEntity(userAuthentication, entity);
+		return entityCommandService.saveOrUpdate(userAuthentication, entity);
 	}
 	
 	/**
@@ -97,7 +94,6 @@ public class EntityController {
 	 * GET /api/entity/user
 	 */
 	@RequestMapping(value="/user", method= RequestMethod.GET)
-	@ResponseBody
 	public User user(UserAuthentication userAuthentication) {
 		User adapter = userRepository.findAdapter(userAuthentication.getUserId());
 		logger.debug("User found: {}.", adapter);
@@ -110,7 +106,6 @@ public class EntityController {
 	 * GET /api/entity/auth
 	 */
 	@RequestMapping(value={"/auth"}, method=RequestMethod.GET)
-	@ResponseBody
 	public List<UserAuthorityReadAdapter> auth(UserAuthentication userAuthentication) {
 		return auth(userAuthentication.getUserId(), 0);
 	}
@@ -121,7 +116,6 @@ public class EntityController {
 	 * GET /api/entity/auth?userId
 	 */
 	@RequestMapping(value={"/auth"}, method=RequestMethod.GET, params="userId")
-	@ResponseBody
 	public List<UserAuthorityReadAdapter> auth(UserAuthentication userAuthentication
 			, @RequestParam Integer userId
 			, @RequestParam(required = false, defaultValue = "0") Integer pageNumber) {
