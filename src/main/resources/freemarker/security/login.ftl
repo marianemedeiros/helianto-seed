@@ -8,7 +8,7 @@
 	<div class="panel-heading">
 		<div class="row">
 			<div class="col-md-12">
-				<h3 class="panel-title"><span class="glyphicon  glyphicon-lock"></span> Entrar</h3>
+				<h3 class="panel-title"><span class="glyphicon  glyphicon-lock"></span> Enter</h3>
 			</div>
 		</div>
 	</div>
@@ -91,7 +91,7 @@
 		 !-->
 		<div class="row">
 			<div class="col-md-6">
-				<h5>Não possui acesso ainda?</h5>
+				<h5>Doesn't have an account yet?</h5>
 			</div>
 			<div class="col-md-6">
 				<h5><a class="pull-right" href="/signup/">Create User Account</a></h5>

@@ -53,7 +53,7 @@
 		
 			<div class="row">
 				<div class="col-md-6">
-					<h5>Não possui acesso ainda?</h5>
+					<h5>Doesn't have an account yet?</h5>
 				</div>
 				<div class="col-md-6">
 					<h5><a class="pull-right" href="/signup/">Create User Account</a></h5>

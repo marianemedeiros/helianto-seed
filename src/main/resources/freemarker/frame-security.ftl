@@ -20,8 +20,8 @@
   		<div class="row">
     	<div class="col-md-12">
 	 		<small> 
-		 			<a class="text-muted" target="_new" data-ng-href="/signup/privacy/" href="/signup/privacy/"> Politica de Privacidade</a>  |
-		    		<a target="_new" class="text-muted" data-ng-href="/signup/license/" href="/signup/license/"> Termos de Uso</a>
+		 			<a class="text-muted" target="_new" data-ng-href="/signup/privacy/" href="/signup/privacy/"> Privacy Police</a>  |
+		    		<a target="_new" class="text-muted" data-ng-href="/signup/license/" href="/signup/license/"> Terms of Use</a>
 			</small>
      	</div>
 		</div>
