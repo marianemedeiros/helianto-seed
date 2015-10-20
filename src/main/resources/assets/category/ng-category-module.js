@@ -1,5 +1,5 @@
 (function() {
-	app = angular.module('category', ['ui.bootstrap', 'app.services', 'ngResource', 'ngSanitize', 'angular-loading-bar', 'angular-redactor']);
+	app = angular.module('category', ['ui.bootstrap', 'app.services', 'ngResource', 'ngSanitize', 'angular-loading-bar']);
 	
 	/**
 	 * Category controller
@@ -11,9 +11,7 @@
 
 		$scope.externalId = (externalId==null || externalId=='undefined')?0:externalId;
 
-		$scope.menu = menu;
 		$scope.baseName = "category";
-		$scope.menuName = "categories";
 
 		$scope.categoryNotExists = true;
 
@@ -103,7 +101,7 @@
 				}
 				else if(data.totalElements>1){
 					$scope.categorySearchList = data;	
-					openForm('form-search');
+					$scope.openForm('form-search');
 				}else{
 					$("#searchMsg").fadeIn(1000);
 					$("#searchMsg").fadeOut(5000);
@@ -171,7 +169,7 @@
 		//create
 		$scope.newCategory = function(categoryGroupValue) {
 			$scope.category = $scope.categoryResource.create({categoryGroup:categoryGroupValue});
-			openForm('form-category');
+			$scope.openForm('form-category');
 		};
 		//Update
 		$scope.updateCategory = function() {
@@ -208,10 +206,6 @@
 		 * Modal.
 		 * 
 		 */
-		$scope.openForm = function(formName){
-			openForm(formName);
-		}
-
 		$scope.openForm = function(formName){
 			$scope.message =[];
 			$scope.formUrl = '/assets/category/form/'+formName+'.html';
