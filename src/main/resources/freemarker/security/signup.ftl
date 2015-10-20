@@ -33,19 +33,19 @@
 	<div class="container-small" data-ng-cloak >
 
 	<!--
-	 ! Logotipo
+	 ! Logo
 	 !-->
 	<div class="clearfix text-center">
 		<img src="/images/logo.png" alt="">
 	</div>
 
-	<h3 align="middle">Registre-se gratuitamente.</h3>
-	<p align="middle">Entre com seus dados para uma nova conta.</p>
+	<h3 align="middle">Register for free.</h3>
+	<p align="middle">Enter with your data to create a new account.</p>
 	<br/>
 
     <div class="panel panel-default">
     <div class="panel-heading">
-    	<h3 class="panel-title"><span class="glyphicon glyphicon-user"></span> Dados para contato</h3>
+    	<h3 class="panel-title"><span class="glyphicon glyphicon-user"></span> Contact data</h3>
     </div>
 	<div class="panel-body">
 		<form class="m-t" role="form"  method="POST" name="form"  id="signup" action="/signup/">
@@ -61,7 +61,7 @@
 			<input type="hidden" name="contextId" value="${contextId!1}" />
 				
 			<#--
-			 # Email inválido
+			 # Invalid e-mail
 			 #-->
 			<#if emailError?? && emailError="invalid" ><div class="alert alert-danger" role="alert">
 				<@spring.message "label.email.invalid" /> </div>
@@ -100,7 +100,7 @@
 			
 			
 			<div class="form-group">
-			<input  type="text" class="form-control" name="firstName"  placeholder="Nome" required="" />
+			<input  type="text" class="form-control" name="firstName"  placeholder="Name" required="" />
 			
 			<#--
 			 # Usuário já existe
@@ -109,30 +109,30 @@
 			</div>
 
 			<div id="input-group-lastName" class="form-group">
-				<input type="text" required="true" name="lastName" id="lastName"  placeholder="Sobrenome" class="form-control">
+				<input type="text" required="true" name="lastName" id="lastName"  placeholder="LastName" class="form-control">
 			</div>
 			
 			<div id="input-group-domain" class="form-group">
-				<input type="text" required="true" name="domain" id="domain"  placeholder="Domínio" class="form-control">
+				<input type="text" required="true" name="domain" id="domain"  placeholder="Domain" class="form-control">
 			</div>
 
 			<div class="row">
 				<div class="col-md-8">
-					<p><input type="checkbox" name="licenseAccepted" data-ng-model="checked"> Li e concordo com os termos de uso</p>
+					<p><input type="checkbox" name="licenseAccepted" data-ng-model="checked"> Read and accepted the term of use.</p>
 				</div>
 				<div class="col-md-4">
-					<a target="_new" class="pull-right" data-ng-href="/signup/license/" href="/signup/license/">Ver termos de uso.</a>
+					<a target="_new" class="pull-right" data-ng-href="/signup/license/" href="/signup/license/">See terms of use.</a>
 				</div>
 			</div>
 			
 			<div id="input-group-submit" class="form-group">
-				<button type="submit" class="form-control btn btn-primary full-width" data-ng-disabled="!emailOk || !checked"> Enviar e-mail de confirmação </button>
+				<button type="submit" class="form-control btn btn-primary full-width" data-ng-disabled="!emailOk || !checked"> Send confirmation e-mail. </button>
 			</div>
 		</form>
 		</div>
 		<div class="panel-footer">
 			<div class="row">
-				<div class="col-md-6"> Já tem uma conta?</div>
+				<div class="col-md-6"> Already have an account?</div>
 				<div class="col-md-6">	<a class="pull-right" href="/login">Login</a></div>
 			</div>
 		</div>
@@ -140,13 +140,13 @@
 
 <footer class="footer">
 		<hr>
-        <p>© i-serv Consultoria Empresarial Ltda. 2015</p>
+        <p>© I-SERV Enterprise Consulting Ltda. 2015</p>
   
   		<div class="row">
     	<div class="col-md-12">
 	 		<small> 
-		 			<a class="text-muted" target="_new" data-ng-href="/signup/privacy/" href="/signup/privacy/"> Politica de Privacidade</a>  |
-		    		<a target="_new" class="text-muted" data-ng-href="/signup/license/" href="/signup/license/"> Termos de Uso</a>
+		 			<a class="text-muted" target="_new" data-ng-href="/signup/privacy/" href="/signup/privacy/"> Privacy Policy</a>  |
+		    		<a target="_new" class="text-muted" data-ng-href="/signup/license/" href="/signup/license/"> Terms of Use.</a>
 			</small>
      	</div>
 		</div>

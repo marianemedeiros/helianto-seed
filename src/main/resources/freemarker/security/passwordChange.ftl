@@ -1,26 +1,26 @@
 [#ftl]
 	[#--
-	 # Logotipo
+	 # Logo
 	 #--]
 	<div class="clearfix text-center">
 		<a href="#" class="text-center" target="_self"><img src="/images/logo.png" alt="" ></a>
 	</div>
 
 	[#--
-	 # Título: Recuperação de senha
+	 # Título: Change Password
 	 #--]
 	<div class="heading" style="margin-bottom: 40px;">
-		<h3 class="text-center">Recuperação de senha</h3>
+		<h3 class="text-center">Change Password</h3>
 	</div>
 
 	<div class="heading">
-		<h4 align="middle">Seu e-mail é [#if email??>${email}[/#if]!</h4>
+		<h4 align="middle">Your e-mail is [#if email??]>${email}[/#if]!</h4>
 	</div>
 
-	[#if userExists??]<div class="alert alert-danger" role="alert"><p>Email já cadastrado" </p> </div>[/#if]
+	[#if userExists??]<div class="alert alert-danger" role="alert"><p>E-mail already registered!" </p> </div>[/#if]
 	
-	[#if recoverFail?? && recoverFail="true" ]<div class="alert alert-danger" role="alert"><p>Falha ao mudar a senha</p> </div>[/#if]
-	[#if recoverFail?? && recoverFail="false"]<div class="alert alert-success" role="alert"><p>Senha modificada com sucesso.</p> </div>[/#if]
+	[#if recoverFail?? && recoverFail="true" ]<div class="alert alert-danger" role="alert"><p>Failed to change email.</p> </div>[/#if]
+	[#if recoverFail?? && recoverFail="false"]<div class="alert alert-success" role="alert"><p>Password successfully modified.</p> </div>[/#if]
 	[#if recoverFailMsg?? ]<div class="alert alert-warning" role="alert"><@spring.message "${recoverFailMsg}" /> </div>[/#if]
 			
     
@@ -28,7 +28,7 @@
     <div class="panel-heading">
 		<div class="row">
 			<div class="col-md-12">
-				<h3 class="panel-title"><span class="glyphicon glyphicon-wrench"></span> Senha</h3>
+				<h3 class="panel-title"><span class="glyphicon glyphicon-wrench"></span> Password</h3>
 			</div>
 		</div>
 	</div>
@@ -36,7 +36,7 @@
 	<div class="panel-body">
     
     	[#--
-    	 # Pode se tratar de um usuário externo ou já vinculado a uma sessão.
+    	 # Can be an external user or a user linked to a section.
     	 #--]
     	 
     	<#assign changeAction="/recovery/submit" />
@@ -53,7 +53,7 @@
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			
 			[#--
-			 # Campo de email (oculto), senha e confirmação
+			 # E-mail field (hidden), password and confirmation
 			 #--]
 			<input type="hidden" name="email" id="email" value="[#if email??]${email}[/#if]" >
 			<password-checker password="password" cpassword="cpassword" ></password-checker>	
@@ -64,12 +64,12 @@
 			</br>
 			
 			<div id="form-group-passwordc" class="form-group">
-				<input type="password"  required="" name="cpassword" id="cpassword" data-ng-model="cpassword" placeholder="Confirmação de senha" class="form-control">
+				<input type="password"  required="" name="cpassword" id="cpassword" data-ng-model="cpassword" placeholder="Password confirmation" class="form-control">
 			</div>
 			
 			</br>
 			
-			<button type="submit" class="btn btn-primary" style="width: 100%;" data-ng-disabled="cannotChangePassword"> Mudar Senha</button>
+			<button type="submit" class="btn btn-primary" style="width: 100%;" data-ng-disabled="cannotChangePassword"> Change Password</button>
 		
 		</form>
 		</div>
@@ -78,7 +78,7 @@
 	<div class="panel-footer">
 		<div class="row">
 			<div class="col-md-6">
-				<h5>Página Inicial</h5>
+				<h5>Home Page</h5>
 
 			</div>
 			<div class="col-md-6">
