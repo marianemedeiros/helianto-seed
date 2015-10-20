@@ -46,11 +46,11 @@ angular.module('app.services')
 	 * Authorization
 	 */
     $rootScope.getAuthorizedRoles = function(userIdVal) {
-    	$rootScope.userAuthResource.get({userId:userIdVal}).$promise.then(function(data) {
+    	$rootScope.userAuthResource.query({userId:userIdVal}).$promise.then(function(data) {
 			console.log(data)
 			$rootScope.roleList = data;
-			$rootScope.isAdmin=$rootScope.isAuthorized('ADMIN', 'MANAGER');
-			console.log($rootScope.isAuthorized('ADMIN', 'MANAGER'));
+			$rootScope.isAdmin=$rootScope.isAuthorized(data, 'ADMIN', 'MANAGER');
+			console.log($rootScope.isAuthorized(data, 'ADMIN', 'MANAGER'));
 		});
 	}
     
@@ -60,9 +60,9 @@ angular.module('app.services')
     
     
     
-	$rootScope.isAuthorized = function(role, ext){
+	$rootScope.isAuthorized = function(data, role, ext){
 		var result = false;
-		$rootScope.roleList.forEach(function(entry) {
+		data.forEach(function(entry) {
 			if(entry.serviceName == (role) && entry.serviceExtension.indexOf(extension)>-1){
 				result = true;
 			}
