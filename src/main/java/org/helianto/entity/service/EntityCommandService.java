@@ -55,10 +55,7 @@ public class EntityCommandService {
 		Entity target = entityRepository.findByOperatorAndAlias(context, command.getAlias());
 		Identity identity = identityRepository.findOne(userAuthentication.getIdentityId());
 		if(target==null){
-			Signup signup = new Signup();
-			signup.setDomain(command.getAlias());
-			//TODO add transient to city on Entity.
-//			signup.setCityId(command.getCityId());
+			Signup signup = new Signup(command);
 			List<Entity> prototypes = entityInstallService.generateEntityPrototypes(signup);
 			entityInstallService.createEntities(context, prototypes, identity);
 		}
