@@ -14,7 +14,7 @@
 	</div>
 
 	<div class="heading">
-		<h4 align="middle">Your e-mail is [#if email??>${email}[/#if]!</h4>
+		<h4 align="middle">Your e-mail is [#if email??]>${email}[/#if]!</h4>
 	</div>
 
 	[#if userExists??]<div class="alert alert-danger" role="alert"><p>E-mail already registered!" </p> </div>[/#if]

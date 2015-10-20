@@ -18,14 +18,14 @@
 	<div class="container-small" data-ng-cloak >
 
 	<!--
-	 ! Logotipo
+	 ! Logo
 	 !-->
 	<div class="clearfix text-center">
 		<a href="#" class="text-center" target="_self"><img src="/images/logo.png" alt="iservport" ></a>
 	</div>
 
 	<div class="heading">
-		<h2 align="middle">Verifique seu e-mail</h2>
+		<h2 align="middle">Verify your e-mail</h2>
 	<div class="well well-lg">
 		[#if emailSent?? && emailSent="false" ]
 			<div class="alert alert-danger" role="alert">
@@ -34,12 +34,13 @@
 		[/#if]
 		
 		[#--
-		 # E-mail enviado
+		 # Send E-mail
 		 #--]
 		[#if emailSent?? && emailSent="true"]
 
-		<h4>Não recebeu o e-mail?</h4>
-		<p>Verifique se a caixa de spam contém uma mensagem de ${sender!'alexandre@winbid.com.br'}.</p>
+		<h4>Doesn't received e-mail?</h4>
+		
+		<p>Verify if your span box has a message ${sender!'alexandre@winbid.com.br'}.</p>
 		[/#if]
 		
 		[#if passError?? && passError="true" ]
@@ -54,7 +55,7 @@
 			</div>
 		[/#if]
 
-		<h2><a class="form-control btn btn-primary full-width" href="/home/">Retornar ao login</a></h2>
+		<h2><a class="form-control btn btn-primary full-width" href="/home/">Return to login</a></h2>
 		</div>
 	</div>
 
