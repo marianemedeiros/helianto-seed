@@ -192,7 +192,7 @@ public class VerifyController
 	protected String createPassword(Model model, Identity  identity) {
 		model.addAttribute("titlePage", "Password creation");
 		model.addAttribute("baseName", "security");
-		model.addAttribute("main", "security/passwordChange");
+		model.addAttribute("main", "security/passwordCreate");
 		model.addAttribute("copyright", env.getProperty("helianto.copyright", ""));
 		
 		if(identity!=null){

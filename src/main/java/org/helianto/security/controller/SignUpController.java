@@ -132,6 +132,9 @@ public class SignUpController
 		}
 		// TODO prevent double submission
 		signup.setToken(signupService.createToken());
+		
+		
+		
 		signup = signupService.saveSignup(signup, ipAddress);
 		boolean userExists = signupService.allUsersForIdentityAreValid(signup);
 		model.addAttribute("userExists", userExists);
