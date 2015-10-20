@@ -359,7 +359,7 @@ angular.module('app.services', ['ngResource'])
 	
 	    $rootScope.userAuthResource = $resource("/api/entity/auth", {userId: "@userId"}, {});
 	    $rootScope.roleList = [];
-	    
+
 	    /**
 		 * Authorization
 		 */
