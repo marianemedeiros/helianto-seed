@@ -112,7 +112,7 @@
 			})    
 		}
 		
-		$scope.categoryResource = $resource(baseUrl , { categoryGroup:"@categoryGroup"}, {
+		$scope.categoryResource = $resource(baseUrl , { categoryGroupType:"@categoryGroupType"}, {
 			save: { method: 'PUT' },
 			create: { method: 'POST' },
 		});
@@ -168,7 +168,7 @@
 
 		//create
 		$scope.newCategory = function(categoryGroupValue) {
-			$scope.category = $scope.categoryResource.create({categoryGroup:categoryGroupValue});
+			$scope.category = $scope.categoryResource.create({categoryGroupType:$scope.qualifierName});
 			$scope.openForm('category');
 		};
 		//Update
