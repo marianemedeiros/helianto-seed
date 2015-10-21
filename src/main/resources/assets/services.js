@@ -360,13 +360,13 @@ angular.module('app.services', ['ngResource'])
 	    $rootScope.userAuthResource = $resource("/api/entity/auth", {userId: "@userId"}, {});
 	    
 	    /**
-		 * Location Resource.
+		 * Entity Resource.
 		 */
-	    $rootScope.locationResource = $resource("/api/location/:path", { stateId : "@stateId"}, {
+	    $rootScope.entityResource = $resource("/api/entity/:path", { stateId : "@stateId"}, {
 			save: { method: 'PUT' }
 			, create: { method: 'POST' }
 		});
-		
+	    
 	    $rootScope.roleList = [];
 
 	    /**
