@@ -18,21 +18,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.web.authentication.rememberme.AbstractRememberMeServices;
-import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Entity network controller.
  * 
  * @author mauriciofernandesdecastro
  */
-@RequestMapping(value={"/app/root"})
-@Controller
+@RequestMapping(value={"/api/root"})
+@RestController
 @PreAuthorize("isAuthenticated()")
 public class RootSearchController {
 
@@ -50,7 +49,6 @@ public class RootSearchController {
 	 * GET /api/root/qualifier
 	 */
 	@RequestMapping(value = { "/qualifier" }, method = RequestMethod.GET)
-	@ResponseBody
 	public List<QualifierAdapter> qualifier(
 			UserAuthentication userAuthentication) {
 		return rootQueryService.qualifier(userAuthentication.getEntityId());
@@ -62,7 +60,6 @@ public class RootSearchController {
 	 * GET /api/root/entity?entityType
 	 */
 	@RequestMapping(value ="/entity", method = RequestMethod.GET, params={"entityType"})
-	@ResponseBody
 	public Page<UserAdapter> entities(UserAuthentication userAuthentication, @RequestParam Character entityType) {
 		return rootQueryService.listUser(userAuthentication.getIdentityId(), entityType);
 	}
@@ -73,7 +70,6 @@ public class RootSearchController {
 	 * GET /api/root/entity/?userId
 	 */
 	@RequestMapping(value ="/entity", method = RequestMethod.GET, params={"userId"})
-	@ResponseBody
 	public UserAdapter entity(UserAuthentication userAuthentication, @RequestParam Integer userId) {
 		return rootQueryService.entity(userId);
 	}
@@ -86,7 +82,6 @@ public class RootSearchController {
 	 * @param searchString
 	 */
 	@RequestMapping(value="/search", method= RequestMethod.POST)
-	@ResponseBody
 	public Page<UserAdapter> search(UserAuthentication userAuthentication, @RequestParam(defaultValue="0") Integer pageNumber
 			, @RequestBody SearchForm form) {
 		return rootQueryService.search(userAuthentication.getEntityId(), form.getSearchString(), pageNumber);
@@ -102,7 +97,6 @@ public class RootSearchController {
 	 * @param searchString
 	 */
 	@RequestMapping(value="/entity", method= RequestMethod.GET, params={"rootUserId"})
-	@ResponseBody
 	public String authorize(UserAuthentication userAuthentication, HttpServletRequest request
 			, HttpServletResponse response, @RequestParam Integer rootUserId) {
 		if(rootCommandService.authorize(rootUserId, userAuthentication.getUserId())) {
