@@ -198,9 +198,9 @@ public class SignupService {
 	 */
 	public Signup saveSignup(Signup signup, String ipAddress) {
 		Identity identity = identityRepository.findByPrincipal(signup.getPrincipal());
-		signup.setDomain("DEFAULT");
 		if (identity==null) {
 			identity = identityRepository.saveAndFlush(signup.createIdentityFromForm());
+			System.err.println(identity.getPrincipal());
 			logger.info("New identity {} created", identity.getPrincipal());
 		}
 		// TODO save the ipAddress

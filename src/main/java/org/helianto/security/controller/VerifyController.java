@@ -34,6 +34,7 @@ import org.helianto.security.domain.IdentitySecret;
 import org.helianto.security.internal.UserDetailsAdapter;
 import org.helianto.security.repository.SignupTmpRepository;
 import org.helianto.security.service.AuthorizationChecker;
+import org.helianto.security.service.EntityInstallService;
 import org.helianto.security.util.SignInUtils;
 import org.helianto.user.domain.User;
 import org.joda.time.DateMidnight;
@@ -102,6 +103,10 @@ public class VerifyController
 	
 	@Inject
 	private ConnectionFactoryLocator connectionFactoryLocator;
+
+	@Inject
+	private EntityInstallService entityInstallService;
+	
 
 	/**
 	 * Create = true if identity not yet exists.
@@ -196,7 +201,7 @@ public class VerifyController
 		model.addAttribute("copyright", env.getProperty("helianto.copyright", ""));
 		
 		if(identity!=null){
-			model.addAttribute("email", removeLead(identity.getPrincipal()));
+			model.addAttribute("email", entityInstallService.removeLead(identity.getPrincipal()));
 			// prevents duplicated submission
 			IdentitySecret identitySecret = getIdentitySecret(identity);			
 			if(identitySecret!= null){
@@ -229,80 +234,13 @@ public class VerifyController
 			identitySecret = createIdentitySecret(identity, password);
 		}
 		Operator context = contextRepository.findOne(contextId);
-		Signup signup = getSignup(contextId, identity);
-		List<Entity> prototypes = generateEntityPrototypes(signup);
-		createEntities(context, prototypes, identity);
+		Signup signup = entityInstallService.getSignup(contextId, identity);
+		List<Entity> prototypes = entityInstallService.generateEntityPrototypes(signup);
+		entityInstallService.createEntities(context, prototypes, identity);
 		model.addAttribute("passError", "false");
 		
 		return SignUpController.WELCOME_TEMPLATE;
 		
-	}
-	
-	/**
-	 * Retrieve previous signup.
-	 * 
-	 * @param contextId
-	 * @param identity
-	 */
-	protected Signup getSignup(Integer contextId, Identity identity) {
-		return signupRepository.findByContextIdAndPrincipal(contextId, identity.getPrincipal());
-	}
-	
-	/**
-	 * Generate entity prototypes.
-	 * 
-	 * @param identity
-	 */
-	protected List<Entity> generateEntityPrototypes(Signup signup){
-		return entityInstallStrategy.generateEntityPrototypes(signup);
-	}
-
-	/**
-	 * Create entities.
-	 * 
-	 * @param prototypes
-	 * @param identity
-	 */
-	protected void createEntities(Operator context, List<Entity> prototypes, Identity identity) {
-		Entity entity = null;
-		for (Entity prototype: prototypes) {
-			entity = entityInstallStrategy.installEntity(context, prototype);
-			if(entity!=null){
-				createUser(entity, identity);
-			}
-		}
-	}
-	
-	/**
-	 * Create new user.
-	 * 
-	 * @param entity
-	 * @param form
-	 * @param formBinding
-	 */
-	protected User createUser(Entity entity, Identity identity) {
-		try {
-			String principal = identity.getPrincipal();
-			User user = userInstallService.installUser(entity,  principal);
-			removeLead(principal);
-			return user;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	/**
-	 * Remove temporary lead.
-	 * 
-	 * @param leadPrincipal
-	 */
-	protected final String removeLead(String leadPrincipal){
-		List<Lead> leads = leadRepository.findByPrincipal(leadPrincipal);	
-		for (Lead lead : leads) {
-			leadRepository.delete(lead);
-		}
-		return leadPrincipal;
 	}
 	
 }

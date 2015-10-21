@@ -2,10 +2,10 @@
 	app = angular.module('root', ['ui.bootstrap', 'app.layout', 'angular-loading-bar', 'app.services']);
 
 	app.controller('RootController', ['$scope', '$window', '$http', '$resource', 'qualifierService', 'lang'
-	                                 , function($scope, $window, $http, $resource, qualifierService, lang) {
-		
+	                                  , function($scope, $window, $http, $resource, qualifierService, lang) {
+
 		$scope.baseName = "root";
-		
+
 		var baseUrl = '/api/root/';
 
 		/**
@@ -17,7 +17,15 @@
 			, search : { method: 'POST', url: baseUrl+'search'}
 			, authorize : { method: 'GET'}
 		});
-
+		
+		/**
+		 * Entity Resource.
+		 */
+		$scope.entityResource = $resource("/api/entity/:path", { stateId : "@stateId"}, {
+			save: { method: 'PUT' }
+			, create: { method: 'POST' }
+		});
+		
 		$scope.root;
 
 		/**
@@ -48,13 +56,35 @@
 		};
 		
 		/**
+		 * get states.
+		 */
+		$scope.getStates = function(){
+			$scope.entityResource.query({path: 'state'}).$promise.then(function(data){
+				$scope.states = data;
+				if(data.length>0){
+					$scope.stateId = data[0].id;
+					$scope.getCities($scope.stateId);
+				}
+			})
+		};
+		
+		/**
+		 * get cities.
+		 */
+		$scope.getCities = function(val){
+			$scope.entityResource.query({path: 'city', stateId:val}).$promise.then(function(data){
+				$scope.cities = data;
+			})
+		};
+
+		/**
 		 * Faz  a pesquisa
 		 */
 		$scope.search = function(page, searchUrl) {
 			$scope.searchString = $("#searchString").val();
 			search(page, $scope.searchString, searchUrl) ;
 		}
-		
+
 		function search(page, searchString, searchUrl) {
 			var dataObj = {	
 					"searchString" : searchString ,
@@ -89,25 +119,44 @@
 				$scope.root = $scope.rootResource.get({userId: id});
 			}
 			$scope.root.$promise.then(
-				function(data, getReponseHeaders) {
-					if (data.length>0) {
-						$scope.rootValue = data.userId;
+					function(data, getReponseHeaders) {
+						if (data.length>0) {
+							$scope.rootValue = data.userId;
+						}
 					}
-				}
 			);
 		};
 		// authorize
 		$scope.authorize = function() {
 			$scope.newUser = $scope.rootResource.authorize({rootUserId:$scope.root.userId});
 			$scope.newUser.$promise.then(
-				function(data, getReponseHeaders) {
-					if (data.success==1) {
-						$window.location = "/";
+					function(data, getReponseHeaders) {
+						if (data.success==1) {
+							$window.location = "/";
+						}
 					}
-				}
 			);
 		}
-				
+		/**
+		 * Entity
+		 */
+		$scope.createEntity = function(){
+			$scope.entityResource.create().$promise.then(
+					function(data){
+						$scope.entity = data;
+						$scope.getStates();
+						$scope.openForm('form-root-entity')
+					});
+		}
+
+		$scope.saveEntity = function(){
+			$scope.entityResource.save($scope.entity).$promise.then(
+					function(data){
+						$scope.entity = data;
+						$("#modalBody").modal('hide');
+					});
+		}
+
 		/**
 		 * Abre um modal.
 		 * 
@@ -119,19 +168,19 @@
 			//inicialização em form-report
 			//$scope.createPart = false;
 			//$('#save-report input[type="text"]').removeAttr('readonly').val('');
-			
+
 			$scope.formUrl = '/ng/entity/'+formName+'.html';
 			console.log($scope.formUrl);
 			$("#modalBody").modal('show');
 		}
-		
+
 		/**
 		 * Retorna o form a ser mostrado no Modal
 		 */
 		$scope.getFormUrl = function(){
 			return $scope.formUrl;
 		} 
-		
+
 		$scope.open = function($event,value) {
 			$event.preventDefault();
 			$event.stopPropagation();
@@ -141,21 +190,21 @@
 		//formato do combobox
 		$scope.formats = ['ativo', 'inativo'];
 		$scope.format = $scope.formats[0];
-		
-		  $scope.openForm = function(formName){
-				openForm(formName);
-			}
-			
-		  function openForm(formName){
-				$scope.message = [];
-				//inicialização em form
-				$scope.formUrl = '/assets/'+$scope.baseName+'/'+formName+'.html';
-				$("#modalBody").modal('show');
-		
-			}
+
+		$scope.openForm = function(formName){
+			openForm(formName);
+		}
+
+		function openForm(formName){
+			$scope.message = [];
+			//inicialização em form
+			$scope.formUrl = '/assets/'+$scope.baseName+'/'+formName+'.html';
+			$("#modalBody").modal('show');
+
+		}
 
 	}])
-	
+
 	.directive('rootWrapper', function() {
 		return {
 			restrict: 'EA',
@@ -165,5 +214,5 @@
 		}
 
 	})
-		
+
 })();

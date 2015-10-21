@@ -72,7 +72,7 @@
 				<p><input type="checkbox" name="remember-me" > Remember Password</p>
 			</div>
 			<div class="col-md-6">
-				<a class="pull-right" href="/recovery/">Forgot password?</a>
+				<a target="_self" class="pull-right" data-ng-href="/recovery/">Forgot password?</a>
 			</div>
 		</div>
 		
