@@ -5,7 +5,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.helianto.core.domain.City;
 import org.helianto.core.domain.Entity;
+import org.helianto.core.domain.State;
 import org.helianto.core.repository.EntityReadAdapter;
 import org.helianto.core.repository.EntityRepository;
 import org.helianto.entity.service.EntityCommandService;

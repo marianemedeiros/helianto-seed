@@ -4,6 +4,8 @@
 	<!-- Slim Style -->
 	<link rel='stylesheet' href='/css/slim-main-1.3.css'>
 	<link rel='stylesheet' href='/css/slim-ui-1.3.css'>
+	<!-- Helianto Style -->
+	<link rel='stylesheet' href='/css/helianto.css'>
 	<!-- Loading bar -->
 	<link rel='stylesheet' href='/webjars/angular-loading-bar/0.7.1/loading-bar.min.css'>
 	<!-- Morris style -->
