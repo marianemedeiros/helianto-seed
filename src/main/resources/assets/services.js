@@ -358,6 +358,15 @@ angular.module('app.services', ['ngResource'])
 	    };
 	
 	    $rootScope.userAuthResource = $resource("/api/entity/auth", {userId: "@userId"}, {});
+	    
+	    /**
+		 * Entity Resource.
+		 */
+		$scope.entityResource = $resource("/api/entity/:path", { stateId : "@stateId"}, {
+			save: { method: 'PUT' }
+			, create: { method: 'POST' }
+		});
+	    
 	    $rootScope.roleList = [];
 
 	    /**
@@ -381,6 +390,30 @@ angular.module('app.services', ['ngResource'])
 			});
 			return result;
 		};
+		
+		/**
+		 * get states.
+		 */
+		$scope.getStates = function(){
+			$scope.entityResource.query({path: 'state'}).$promise.then(function(data){
+				$scope.states = data;
+				if(data.length>0){
+					$scope.stateId = data[0].id;
+					$scope.getCities($scope.stateId);
+				}
+			})
+		};
+		
+		/**
+		 * get cities.
+		 */
+		$scope.getCities = function(val){
+			$scope.entityResource.query({path: 'city', stateId:val}).$promise.then(function(data){
+				$scope.cities = data;
+			})
+		};
+		
+		
 		
 			 
 	}])
