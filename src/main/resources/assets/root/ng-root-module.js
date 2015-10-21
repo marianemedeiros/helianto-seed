@@ -21,7 +21,15 @@
 		/**
 		 * Entity Resource.
 		 */
-		$scope.entityResource = $resource("/api/entity/:path", { stateId : "@stateId"}, {
+		$scope.entityResource = $resource("/api/entity/:path", {}, {
+			save: { method: 'PUT' }
+			, create: { method: 'POST' }
+		});
+		
+		/**
+		 * Location Resource.
+		 */
+		$scope.locationResource = $resource("/api/location/:path", { stateId : "@stateId"}, {
 			save: { method: 'PUT' }
 			, create: { method: 'POST' }
 		});
@@ -59,7 +67,7 @@
 		 * get states.
 		 */
 		$scope.getStates = function(){
-			$scope.entityResource.query({path: 'state'}).$promise.then(function(data){
+			$scope.locationResource.query({path: 'state'}).$promise.then(function(data){
 				$scope.states = data;
 				if(data.length>0){
 					$scope.stateId = data[0].id;
@@ -72,7 +80,7 @@
 		 * get cities.
 		 */
 		$scope.getCities = function(val){
-			$scope.entityResource.query({path: 'city', stateId:val}).$promise.then(function(data){
+			$scope.locationResource.query({path: 'city', stateId:val}).$promise.then(function(data){
 				$scope.cities = data;
 			})
 		};
