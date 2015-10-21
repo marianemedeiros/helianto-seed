@@ -362,7 +362,15 @@ angular.module('app.services', ['ngResource'])
 	    /**
 		 * Entity Resource.
 		 */
-	    $rootScope.entityResource = $resource("/api/entity/:path", { stateId : "@stateId"}, {
+	    $rootScope.entityResource = $resource("/api/entity/:path", {}, {
+			save: { method: 'PUT' }
+			, create: { method: 'POST' }
+		});
+	    
+	    /**
+		 * Location Resource.
+		 */
+	    $rootScope.locationResource = $resource("/api/location/:path", { stateId : "@stateId"}, {
 			save: { method: 'PUT' }
 			, create: { method: 'POST' }
 		});
