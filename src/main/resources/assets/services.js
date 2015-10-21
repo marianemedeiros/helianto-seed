@@ -360,13 +360,13 @@ angular.module('app.services', ['ngResource'])
 	    $rootScope.userAuthResource = $resource("/api/entity/auth", {userId: "@userId"}, {});
 	    
 	    /**
-		 * Entity Resource.
+		 * Location Resource.
 		 */
-		$scope.entityResource = $resource("/api/entity/:path", { stateId : "@stateId"}, {
+		$scope.locationResource = $resource("/api/location/:path", { stateId : "@stateId"}, {
 			save: { method: 'PUT' }
 			, create: { method: 'POST' }
 		});
-	    
+		
 	    $rootScope.roleList = [];
 
 	    /**
@@ -395,7 +395,7 @@ angular.module('app.services', ['ngResource'])
 		 * get states.
 		 */
 		$scope.getStates = function(){
-			$scope.entityResource.query({path: 'state'}).$promise.then(function(data){
+			$scope.locationResource.query({path: 'state'}).$promise.then(function(data){
 				$scope.states = data;
 				if(data.length>0){
 					$scope.stateId = data[0].id;
@@ -408,7 +408,7 @@ angular.module('app.services', ['ngResource'])
 		 * get cities.
 		 */
 		$scope.getCities = function(val){
-			$scope.entityResource.query({path: 'city', stateId:val}).$promise.then(function(data){
+			$scope.locationResource.query({path: 'city', stateId:val}).$promise.then(function(data){
 				$scope.cities = data;
 			})
 		};

@@ -5,9 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.helianto.core.domain.City;
 import org.helianto.core.domain.Entity;
-import org.helianto.core.domain.State;
 import org.helianto.core.repository.EntityReadAdapter;
 import org.helianto.core.repository.EntityRepository;
 import org.helianto.entity.service.EntityCommandService;
@@ -139,28 +137,6 @@ public class EntityController {
 		authList.addAll(userAuthorityRepository.findByUserGroupIdOrderByServiceCodeAsc(parentGroups));
 		authList.add(new UserAuthorityReadAdapter(0, 0, "USER", "READ"));
 		return authList;
-	}
-	
-	/**
-	 * Retrieve state from user context.
-	 * 
-	 * @param userAuthentication
-	 * 
-	 */
-	@RequestMapping(value={"/state"}, method=RequestMethod.GET)
-	public List<State> states(UserAuthentication userAuthentication) {
-		return entityQueryService.getStates(userAuthentication);
-	}
-
-	/**
-	 * Get Cities given State.
-	 * 
-	 * @param stateId
-	 * 
-	 */
-	@RequestMapping(value={"/city"}, method=RequestMethod.GET, params="stateId")
-	public List<City> cities(@RequestParam Integer stateId) {
-		return entityQueryService.getCities(stateId);
 	}
 	
 }
