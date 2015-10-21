@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html id="ng-app" xmlns:ng="http://angularjs.org" data-ng-app="security" >
+<html id="ng-app" xmlns:ng="http://angularjs.org" data-ng-app="security">
 
 <#import "/spring.ftl" as spring/>
 
@@ -115,7 +115,27 @@
 			<div id="input-group-domain" class="form-group">
 				<input type="text" required="true" name="domain" id="domain"  placeholder="Domain" class="form-control">
 			</div>
-
+			<div class="row">
+				<div class="col-md-6 form-group">
+					<label for="stateId" class="col-sm-3 control-label">Estado</label>
+					<div class="col-sm-9">
+						<select id="stateId" class="form-control" name="stateId"  data-ng-model="stateId" data-ng-change="getCities(stateId)"
+					  		data-ng-options="state.id as state.stateName +' / ' +  state.stateCode for state in states track by state.id"
+					  		required="required">
+						</select>
+					</div>
+				</div>
+				<div class="col-md-6 form-group">
+					<label for="cityId" class="col-sm-3 control-label">Cidade</label>
+					<div class="col-sm-9">
+						<select id="cityId" class="form-control" name="cityId"  data-ng-model="entity.cityId" 
+					  		data-ng-options="city.id as city.cityName for city in cities track by city.id"
+					  		required="required">
+						</select>
+					</div>
+				</div>
+			</div>
+	
 			<div class="row">
 				<div class="col-md-8">
 					<p><input type="checkbox" name="licenseAccepted" data-ng-model="checked"> Read and accepted the term of use.</p>

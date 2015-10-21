@@ -421,7 +421,7 @@ angular.module('app.services', ['ngResource'])
 			})
 		};
 		
-		
+		$rootScope.getStates();
 		
 			 
 	}])

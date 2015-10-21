@@ -1,6 +1,9 @@
 [#ftl]
 <!DOCTYPE html>
-<html id="ng-app" xmlns:ng="http://angularjs.org" data-ng-app="security" >
+<html id="ng-app" xmlns:ng="http://angularjs.org" 
+	data-ng-app="security" 
+	data-ng-controller="ViewController as ViewCtrl" 
+>
 <head>
     <title>${titlePage!'Security'}</title>
 	[#include "/frame-head.ftl" /]
