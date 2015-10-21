@@ -392,29 +392,26 @@ angular.module('app.services', ['ngResource'])
 		};
 		
 		/**
-		 * get states.
+		 * Get states.
 		 */
-		$scope.getStates = function(){
-			$scope.entityResource.query({path: 'state'}).$promise.then(function(data){
-				$scope.states = data;
+		$rootScope.getStates = function(){
+			$rootScope.entityResource.query({path: 'state'}).$promise.then(function(data){
+				$rootScope.states = data;
 				if(data.length>0){
-					$scope.stateId = data[0].id;
-					$scope.getCities($scope.stateId);
+					$rootScope.stateId = data[0].id;
+					$rootScope.getCities($rootScope.stateId);
 				}
 			})
 		};
 		
 		/**
-		 * get cities.
+		 * Get cities.
 		 */
-		$scope.getCities = function(val){
-			$scope.entityResource.query({path: 'city', stateId:val}).$promise.then(function(data){
-				$scope.cities = data;
+		$rootScope.getCities = function(val){
+			$rootScope.entityResource.query({path: 'city', stateId:val}).$promise.then(function(data){
+				$rootScope.cities = data;
 			})
 		};
-		
-		
-		
 			 
 	}])
 	;
