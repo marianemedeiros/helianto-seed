@@ -362,7 +362,7 @@ angular.module('app.services', ['ngResource'])
 	    /**
 		 * Location Resource.
 		 */
-		$scope.locationResource = $resource("/api/location/:path", { stateId : "@stateId"}, {
+	    $rootScope.locationResource = $resource("/api/location/:path", { stateId : "@stateId"}, {
 			save: { method: 'PUT' }
 			, create: { method: 'POST' }
 		});
@@ -394,12 +394,12 @@ angular.module('app.services', ['ngResource'])
 		/**
 		 * get states.
 		 */
-		$scope.getStates = function(){
-			$scope.locationResource.query({path: 'state'}).$promise.then(function(data){
-				$scope.states = data;
+		$rootScope.getStates = function(){
+			$rootScope.locationResource.query({path: 'state'}).$promise.then(function(data){
+				$rootScope.states = data;
 				if(data.length>0){
-					$scope.stateId = data[0].id;
-					$scope.getCities($scope.stateId);
+					$rootScope.stateId = data[0].id;
+					$rootScope.getCities($rootScope.stateId);
 				}
 			})
 		};
@@ -407,9 +407,9 @@ angular.module('app.services', ['ngResource'])
 		/**
 		 * get cities.
 		 */
-		$scope.getCities = function(val){
-			$scope.locationResource.query({path: 'city', stateId:val}).$promise.then(function(data){
-				$scope.cities = data;
+		$rootScope.getCities = function(val){
+			$rootScope.locationResource.query({path: 'city', stateId:val}).$promise.then(function(data){
+				$rootScope.cities = data;
 			})
 		};
 		
