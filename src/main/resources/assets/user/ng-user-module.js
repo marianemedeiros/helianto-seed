@@ -11,10 +11,11 @@
 		service.qualifier = $resource("/api/user/qualifier");
 		service.user = $resource("/api/user/:method"
 				, {qualifierValue:"@qualifierValue",groupId:"@groupId"
+					, userId:"@userId"
 					, userGroupId : "@userGroupId", search:"@search"
 					, novo:"@novo", pageNumber:"@pageNumber"}
 				, { save: { method: 'PUT'}, create: {method: 'POST' }, remove:{method:'DELETE'}});
-		service.identityResource = $resource('/app/identity/' 
+		service.identityResource = $resource('/api/identity/' 
 					, { type : "@type", type2:"@type2", gender:"@gender"
 						, pageNumber:"@pageNumber", identityId:"@identityId", mine:"@mine"
 					  }

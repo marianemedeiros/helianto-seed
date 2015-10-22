@@ -9,6 +9,7 @@ import org.helianto.core.internal.KeyNameAdapter;
 import org.helianto.core.internal.QualifierAdapter;
 import org.helianto.core.internal.SimpleCounter;
 import org.helianto.core.repository.EntityRepository;
+import org.helianto.core.repository.IdentityReadAdapter;
 import org.helianto.core.repository.IdentityRepository;
 import org.helianto.user.domain.User;
 import org.helianto.user.repository.UserRepository;
@@ -117,6 +118,15 @@ public class UserQueryService {
 		}
 		response.setUserName(search);
 		return response;
+	}
+	
+	//TODO replace readAdapter.
+	public IdentityReadAdapter identityOne(Integer identityId) {
+		Identity target = identityRepository.findOne(identityId);
+		if (target==null) {
+			target = new Identity(); 
+		}
+		return new IdentityReadAdapter().setAdaptee(target).build();
 	}
 	
 	/**
