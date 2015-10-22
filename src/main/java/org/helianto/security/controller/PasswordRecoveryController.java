@@ -16,13 +16,17 @@
 package org.helianto.security.controller;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.helianto.core.domain.Identity;
+import org.helianto.core.domain.Signup;
 import org.helianto.core.repository.IdentityRepository;
 import org.helianto.core.sender.PasswordRecoverySender;
 import org.helianto.security.domain.IdentitySecret;
 import org.helianto.security.internal.UserAuthentication;
 import org.helianto.security.repository.IdentitySecretRepository;
+import org.helianto.security.repository.SignupTmpRepository;
+import org.helianto.security.service.SignupService;
 import org.helianto.user.domain.User;
 import org.helianto.user.repository.UserRepository;
 import org.springframework.core.env.Environment;
@@ -59,6 +63,12 @@ public class PasswordRecoveryController extends AbstractCryptoController{
 	
 	@Inject
 	private IdentitySecretRepository identitySecretRepository;
+	
+	@Inject
+	private SignupService signupService;
+	
+	@Inject
+	private SignupTmpRepository signupTmpRepository;
 	
 	@Inject
 	private PasswordRecoverySender passwordRecoverySender;
@@ -129,6 +139,7 @@ public class PasswordRecoveryController extends AbstractCryptoController{
 		if (identity!=null) {
 			IdentitySecret identitySecret = identitySecretRepository.findByIdentityKey(identity.getPrincipal());
 			model.addAttribute("email", identity.getPrincipal());
+			
 			//check for the same password
 			if(BCrypt.checkpw(password, identitySecret.getIdentitySecret())){
 				model.addAttribute("titlePage", "Mudança de Senha");
@@ -156,7 +167,12 @@ public class PasswordRecoveryController extends AbstractCryptoController{
 	 * @param principal
 	 */
 	@RequestMapping(value="/send", method= {RequestMethod.POST, RequestMethod.GET })
-	public String send(Model model, @RequestParam(required=false) String principal) {
+	public String send(Model model, @RequestParam(required=false) String principal, HttpServletRequest request) {
+		String ipAddress = request.getHeader("X-FORWARDED-FOR");  
+		if (ipAddress == null) {  
+			  ipAddress = request.getRemoteAddr();  
+		}
+		
 		model.addAttribute("titlePage", "Password recovery");
 		model.addAttribute("baseName", "security");
 		model.addAttribute("main", "security/passwordRecover");
@@ -172,14 +188,18 @@ public class PasswordRecoveryController extends AbstractCryptoController{
 			Identity recipient = identityRepository.findByPrincipal(principal);
 			
 			if (recipient!=null) {
+				Signup signup = new Signup(recipient);
+				signup.setToken(signupService.createToken());
+				
 				if (passwordRecoverySender.send(recipient, env.getProperty("sender.recovery.subject", "Password recovery e-mail"))) {
+					signup = signupService.saveSignup(signup, ipAddress);
 					model.addAttribute("emailRecoverySent", true);
 				}
 				else {
 					// Caso falhe o envio, retorna ao formulário de e-mail
 					model.addAttribute("emailRecoveryFailed", true);
 					return FRAME_SECURITY;
-				} 
+				}	
 				return REDIRECT_LOGIN;
 			}
 			

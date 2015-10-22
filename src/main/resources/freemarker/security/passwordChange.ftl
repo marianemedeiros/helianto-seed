@@ -82,7 +82,7 @@
 
 			</div>
 			<div class="col-md-6">
-				<h5><a class="pull-right" href="/app/home">Home</a></h5>
+				<h5><a class="pull-right" href="/home">Home</a></h5>
 			</div>
 		</div>
 

@@ -40,10 +40,6 @@ public abstract class AbstractBodyTemplateSender
 
 	@Override
 	public String getBody(Map<String, String> paramMap) {
-		//paramMap.put("recipientFirstName", recipientName);
-		//paramMap.put("recipientEmail", recipientEmail);
-		
-		//System.err.println("recipientFirstName: "+ recipientName);
 		
 		StringBuilder body = new StringBuilder();
 		body.append("<div class='background-color: black; height: 12px;'> ")
@@ -66,7 +62,6 @@ public abstract class AbstractBodyTemplateSender
 		.append(staticRedirectMessage)
 		.append("</a></p></div>");
 			
-		System.err.println(body.toString());
 		
 		return body.toString();
 	}
