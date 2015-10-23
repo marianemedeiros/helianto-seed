@@ -1,0 +1,65 @@
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	<span class="h4 modal-title" id="modalLabel" > {{'USER_DATA_FOR' | i18n}} {{user.userKey}}</span>
+</div><!-- modal-header-->
+  		
+<div class="modal-body">
+	<form  class="form-horizontal" role="form">
+	
+	<div class="row" >
+	<div class="col-md-8" >
+			
+	<div id="form-group-displayName" class="form-group">
+		<label for="displayName" class="col-sm-3 control-label">{{'DISPLAY_NAME' | i18n}}</label>
+		<div class="col-sm-9">
+		<input id="displayName" type="text" disabled 
+		       class="form-control" data-ng-model="user.displayName"/>
+		</div>
+	</div>		
+	
+	<div id="form-group-firstName" class="form-group">
+		<label for="firstName" class="col-sm-3 control-label">{{'FIRST_NAME' | i18n}}</label>
+		<div class="col-sm-9">
+		<input id="firstName" type="text" disabled 
+		        class="form-control" data-ng-model="user.firstName" />
+		</div>
+	</div>		
+	
+	<div id="form-group-lastName" class="form-group">
+		<label for="lastName" class="col-sm-3 control-label">{{'LAST_NAME' | i18n}}</label>
+		<div class="col-sm-9">
+		<input id="lastName" type="text" disabled 
+		       class="form-control" data-ng-model="user.lastName" />
+		</div>
+	</div>
+	
+	</div><!-- col-md-8 -->
+	
+	<div class="col-md-4" >
+		<div class="panel panel-profile">
+            <div class="panel-body bg-primary clearfix">
+                <a href="" class="pull-left profile">
+                	<img class="img-circle img80_80" data-ng-src="{{user.userImageUrl}}" data-err-src="/images/user/gender64-N.png">
+                </a>
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <span class="badge">14</span>
+                    <i class="ti-email"></i>
+                    Tarefas
+                </li>
+            </ul>
+      </div>
+	</div><!-- col-md-4 -->
+			
+	</div><!-- row -->
+		
+	<div class="row">
+			<div class="col-md-12" >
+			<hr/>
+			<a data-dismiss="modal"  class="btn btn-link">Fechar</a>
+			</div>
+		</div>
+	</form>
+</div>
+	
