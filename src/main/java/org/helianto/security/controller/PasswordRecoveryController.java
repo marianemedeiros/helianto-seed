@@ -172,7 +172,6 @@ public class PasswordRecoveryController extends AbstractCryptoController{
 	 */
 	@RequestMapping(value="/send", method= {RequestMethod.POST, RequestMethod.GET })
 	public String send(Model model, @RequestParam(required=false) String principal) {
-		System.err.println("send");
 		model.addAttribute("titlePage", "Password recovery");
 		model.addAttribute("baseName", "security");
 		model.addAttribute("main", "security/passwordRecover");
@@ -191,7 +190,6 @@ public class PasswordRecoveryController extends AbstractCryptoController{
 				Signup signup = new Signup(recipient);
 				signup.setToken(signupService.createToken());
 				signup = signupService.saveSignup(signup, null);
-				System.err.println(signup.getPrincipal() + signup.getToken());
 				
 				if(passwordRecoverySender.send(recipient.getPrincipal(), recipient.getIdentityFirstName(), 
 						recipient.getIdentityLastName(), "Password recovery e-mail", "confirmationToken", 

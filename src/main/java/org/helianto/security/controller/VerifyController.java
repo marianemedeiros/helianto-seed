@@ -204,13 +204,13 @@ public class VerifyController
 			model.addAttribute("email", entityInstallService.removeLead(identity.getPrincipal()));
 			// prevents duplicated submission
 			IdentitySecret identitySecret = getIdentitySecret(identity);			
-			if(identitySecret!= null){
-				return "redirect:/";
+			if(identitySecret != null){
+				return PasswordRecoveryController.FRAME_SECURITY;
 			}
-		}
-		else{
+		}else{
 			return "redirect:"+SignUpController.SIGN_UP;
 		}
+		
 		return PasswordRecoveryController.FRAME_SECURITY;
 	}
 	
@@ -232,6 +232,9 @@ public class VerifyController
 		if (identitySecret==null) {
 			logger.info("Will install identity secret for {}.", identity);
 			identitySecret = createIdentitySecret(identity, password);
+		}else{
+			logger.info("Will change identity secret for {}.", identity);
+			identitySecret = changeIdentitySecret(identity.getPrincipal(),password);
 		}
 		Operator context = contextRepository.findOne(contextId);
 		Signup signup = entityInstallService.getSignup(contextId, identity);

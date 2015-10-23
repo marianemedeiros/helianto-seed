@@ -62,8 +62,6 @@ public abstract class AbstractBodyTemplateSender
 		.append(staticRedirectMessage)
 		.append("</a></p></div>");
 			
-		System.err.println(body.toString());
-		
 		return body.toString();
 	}
 	
