@@ -15,10 +15,14 @@
  */
 package org.helianto.security.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
+import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Signup;
 import org.helianto.core.repository.IdentityRepository;
 import org.helianto.core.sender.PasswordRecoverySender;
@@ -167,12 +171,8 @@ public class PasswordRecoveryController extends AbstractCryptoController{
 	 * @param principal
 	 */
 	@RequestMapping(value="/send", method= {RequestMethod.POST, RequestMethod.GET })
-	public String send(Model model, @RequestParam(required=false) String principal, HttpServletRequest request) {
-		String ipAddress = request.getHeader("X-FORWARDED-FOR");  
-		if (ipAddress == null) {  
-			  ipAddress = request.getRemoteAddr();  
-		}
-		
+	public String send(Model model, @RequestParam(required=false) String principal) {
+		System.err.println("send");
 		model.addAttribute("titlePage", "Password recovery");
 		model.addAttribute("baseName", "security");
 		model.addAttribute("main", "security/passwordRecover");
@@ -190,9 +190,12 @@ public class PasswordRecoveryController extends AbstractCryptoController{
 			if (recipient!=null) {
 				Signup signup = new Signup(recipient);
 				signup.setToken(signupService.createToken());
+				signup = signupService.saveSignup(signup, null);
+				System.err.println(signup.getPrincipal() + signup.getToken());
 				
-				if (passwordRecoverySender.send(recipient, env.getProperty("sender.recovery.subject", "Password recovery e-mail"))) {
-					signup = signupService.saveSignup(signup, ipAddress);
+				if(passwordRecoverySender.send(recipient.getPrincipal(), recipient.getIdentityFirstName(), 
+						recipient.getIdentityLastName(), "Password recovery e-mail", "confirmationToken", 
+						signup.getToken())){	
 					model.addAttribute("emailRecoverySent", true);
 				}
 				else {
@@ -216,7 +219,7 @@ public class PasswordRecoveryController extends AbstractCryptoController{
 		return REDIRECT_LOGIN;
 		
 	}
-	
+
 	/**
 	 * Receive e-mail confirmation and respond with form (unauthenticated users).
 	 * 
