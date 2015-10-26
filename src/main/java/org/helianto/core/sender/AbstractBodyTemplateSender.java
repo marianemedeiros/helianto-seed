@@ -2,6 +2,8 @@ package org.helianto.core.sender;
 
 import java.util.Map;
 
+import javax.mail.internet.MimeUtility;
+
 import org.helianto.sendgrid.message.sender.AbstractTemplateSender;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -51,9 +53,11 @@ public abstract class AbstractBodyTemplateSender
 		.append(getApiUrl())
 		.append(staticPath)
 		.append(getTemplateId());
+
 		for (String param: paramMap.keySet()) {
 			body.append(";"+param+"="+paramMap.get(param));
 		}
+		
 		body.append(";?confirmationuri=");
 		if(paramMap.containsKey("confirmationToken")){
 			body.append(getConfirmationUriEncoded(getConfirmationUri(paramMap.get("paramMap"))));

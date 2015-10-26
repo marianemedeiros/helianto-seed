@@ -193,7 +193,8 @@ public class PasswordRecoveryController extends AbstractCryptoController{
 				
 				if(passwordRecoverySender.send(recipient.getPrincipal(), recipient.getIdentityFirstName(), 
 						recipient.getIdentityLastName(), "Password recovery e-mail", "confirmationToken", 
-						signup.getToken())){	
+						signup.getToken(),"recipientEmail",recipient.getPrincipal(), 
+						"recipientFirstName",recipient.getIdentityFirstName())){	
 					model.addAttribute("emailRecoverySent", true);
 				}
 				else {

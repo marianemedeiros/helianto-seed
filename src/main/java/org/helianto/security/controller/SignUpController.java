@@ -53,7 +53,9 @@ public class SignUpController
 	 * @param signup
 	 */
 	public String sendConfirmation(Signup signup) {
-		if (userConfirmationSender.send(signup.getPrincipal(), signup.getFirstName(), signup.getLastName(), "Email Confirmação", "confirmationToken", signup.getToken())) {
+		if (userConfirmationSender.send(signup.getPrincipal(), signup.getFirstName(), signup.getLastName(), "Email Confirmação", "confirmationToken", signup.getToken()
+				,"recipientEmail",signup.getPrincipal() 
+				,"recipientFirstName",signup.getFirstName())) {
 			return "true";
 		}
 		return "false";
