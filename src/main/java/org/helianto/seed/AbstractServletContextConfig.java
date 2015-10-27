@@ -50,16 +50,7 @@ public abstract class AbstractServletContextConfig extends WebMvcConfigurerAdapt
 		return new CurrentUserHandlerMethodArgumentResolver();
 	}
 
-	/**
-	 * Required to allow matrix type params.
-	 * @return
-	 */
-	@Bean
-	public RequestMappingHandlerMapping requestMappingHandlerMapping() {
-	    final RequestMappingHandlerMapping requestMappingHandlerMapping = new RequestMappingHandlerMapping();
-	    requestMappingHandlerMapping.setRemoveSemicolonContent(false); 
-	    return requestMappingHandlerMapping;
-	}
+
 	
 	/**
 	 * Argument resolvers.
