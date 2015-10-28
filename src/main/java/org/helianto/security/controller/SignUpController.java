@@ -53,9 +53,9 @@ public class SignUpController
 	 * @param signup
 	 */
 	public String sendConfirmation(Signup signup) {
-		System.err.println("Signup: " + signup.getPrincipal());
-
-		if (userConfirmationSender.send(signup.getPrincipal(), signup.getFirstName(), signup.getLastName(), "Email Confirmação", "confirmationToken", signup.getToken())) {
+		if (userConfirmationSender.send(signup.getPrincipal(), signup.getFirstName(), signup.getLastName(), "Email Confirmação", "confirmationToken", signup.getToken()
+				,"recipientEmail",signup.getPrincipal() 
+				,"recipientFirstName",signup.getFirstName())) {
 			return "true";
 		}
 		return "false";
@@ -132,6 +132,9 @@ public class SignUpController
 		}
 		// TODO prevent double submission
 		signup.setToken(signupService.createToken());
+		
+		
+		
 		signup = signupService.saveSignup(signup, ipAddress);
 		boolean userExists = signupService.allUsersForIdentityAreValid(signup);
 		model.addAttribute("userExists", userExists);
