@@ -32,6 +32,12 @@
 		<div class="col-md-4 col-xs-12">
 		<table class="table table-hover">
 		  <tbody>
+		   	<tr >
+		   		<td>
+		   		<a  data-ng-click="newUser()" class="btn btn-default">
+					Nova pessoa</a>
+		   		</td>
+		   	</tr>
 		    <tr data-ng-class="{active: userItem.id==user.id}" 
 		    	data-ng-click="getUser(userItem.id)"
 	 			data-ng-repeat="userItem in userList.content" >
@@ -55,7 +61,7 @@
 		      <td >{{user.userKey}}
 		        <h5>{{user.displayName.length>0?user.displayName:user.userName}}</h5>
 		      </td>
-		      <td><button class="btn btn-primary pull-right" data-ng-click="openForm('form-user')">Editar</button>
+		      <td><button class="btn btn-primary pull-right" data-ng-click="getUser(user.id)">Editar</button>
 		      </td>
 		    </tr>
 		  </tbody>
