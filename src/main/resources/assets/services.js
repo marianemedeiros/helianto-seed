@@ -29,9 +29,10 @@ angular.module('app.services', ['ngResource'])
 	  };
 	})
 .factory("genericServices", function() {                                                                                                                                                   
-	return {                                                                                                                                                                                                              
+	return {
 		getNextAndPreviousLinkByList: function(list) {   
-			var page = {next:0, previous:0, hasNext:false, hasPrevious:false}; 
+			var page = {next:0, previous:0, hasNext:false, hasPrevious:false};
+			
 			if(list.number!=0){
 				page.previous = list.number-1;
 				page.hasPrevious = true;
@@ -360,9 +361,9 @@ angular.module('app.services', ['ngResource'])
 	    $rootScope.userAuthResource = $resource("/api/entity/auth", {userId: "@userId"}, {});
 	    
 	    /**
-		 * Entity Resource.
+		 * Location Resource.
 		 */
-	    $rootScope.entityResource = $resource("/api/entity/:path", { stateId : "@stateId"}, {
+	    $rootScope.locationResource = $resource("/api/location/:path", { stateId : "@stateId"}, {
 			save: { method: 'PUT' }
 			, create: { method: 'POST' }
 		});
@@ -395,7 +396,7 @@ angular.module('app.services', ['ngResource'])
 		 * Get states.
 		 */
 		$rootScope.getStates = function(){
-			$rootScope.entityResource.query({path: 'state'}).$promise.then(function(data){
+			$rootScope.locationResource.query({path: 'state'}).$promise.then(function(data){
 				$rootScope.states = data;
 				if(data.length>0){
 					$rootScope.stateId = data[0].id;
@@ -408,10 +409,13 @@ angular.module('app.services', ['ngResource'])
 		 * Get cities.
 		 */
 		$rootScope.getCities = function(val){
-			$rootScope.entityResource.query({path: 'city', stateId:val}).$promise.then(function(data){
+			$rootScope.locationResource.query({path: 'city', stateId:val}).$promise.then(function(data){
 				$rootScope.cities = data;
 			})
 		};
+		
+		$rootScope.getStates();
+		
 			 
 	}])
 	;
