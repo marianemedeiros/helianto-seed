@@ -2,6 +2,8 @@ package org.helianto.core.sender;
 
 import java.util.Map;
 
+import javax.mail.internet.MimeUtility;
+
 import org.helianto.sendgrid.message.sender.AbstractTemplateSender;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -34,16 +36,12 @@ public abstract class AbstractBodyTemplateSender
 	
 	@Override
 	protected String getConfirmationUri(String confirmationToken) {
-		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(getApiUrl()+"/app/verify").queryParam("confirmationToken", confirmationToken);
+		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(getApiUrl()+"/verify").queryParam("confirmationToken", confirmationToken);
 		return builder.build().encode().toUri().toString();
 	}
 
 	@Override
 	public String getBody(Map<String, String> paramMap) {
-		//paramMap.put("recipientFirstName", recipientName);
-		//paramMap.put("recipientEmail", recipientEmail);
-		
-		//System.err.println("recipientFirstName: "+ recipientName);
 		
 		StringBuilder body = new StringBuilder();
 		body.append("<div class='background-color: black; height: 12px;'> ")
@@ -55,9 +53,11 @@ public abstract class AbstractBodyTemplateSender
 		.append(getApiUrl())
 		.append(staticPath)
 		.append(getTemplateId());
+
 		for (String param: paramMap.keySet()) {
 			body.append(";"+param+"="+paramMap.get(param));
 		}
+		
 		body.append(";?confirmationuri=");
 		if(paramMap.containsKey("confirmationToken")){
 			body.append(getConfirmationUriEncoded(getConfirmationUri(paramMap.get("paramMap"))));
@@ -66,8 +66,6 @@ public abstract class AbstractBodyTemplateSender
 		.append(staticRedirectMessage)
 		.append("</a></p></div>");
 			
-		System.err.println(body.toString());
-		
 		return body.toString();
 	}
 	
