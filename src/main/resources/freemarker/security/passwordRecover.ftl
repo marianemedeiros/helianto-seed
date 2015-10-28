@@ -13,6 +13,10 @@
 		<h3 class="text-center">Recovery Password</h3>
 	</div>
 
+	<script >
+		var email = [#if email??]'${email}' [#else]''[/#if];
+	</script>
+	
     <div class="panel panel-default">
     <div class="panel-heading">
 		<div class="row">
@@ -38,7 +42,7 @@
 				<i class="fa fa-check" style="color:green;" data-ng-show="!emailNotOk"></i>
 				<i class="fa fa-close" style="color:red;" data-ng-show="emailNotOk"></i>
 
-				<input type="email" name="principal" id="principal" required="true" placeholder="E-mail" data-ng-blur="verifyEmail(form.principal)" 
+				<input type="email" name="principal" id="principal" required="true" placeholder="E-mail" data-ng-blur="verifyEmail(form.principal,0)" 
 					class="form-control" data-ng-model="form.principal">
 			</div>
 				
