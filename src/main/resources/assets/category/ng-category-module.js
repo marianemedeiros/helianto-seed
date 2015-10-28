@@ -118,7 +118,7 @@
 		});
 		//list
 		$scope.listCategories = function(categoryGroupName, page) {
-			$scope.qualifierNamee = categoryGroupName;
+			$scope.qualifierName = categoryGroupName;
 			$scope.categoryList = $scope.categoryResource.get({categoryGroupType:categoryGroupName, pageNumber: page});
 			$scope.categoryList.$promise.then(function(data) {
 				$scope.categoryList = data;
