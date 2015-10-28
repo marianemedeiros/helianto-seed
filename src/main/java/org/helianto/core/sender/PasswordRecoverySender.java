@@ -15,16 +15,10 @@ import org.springframework.stereotype.Component;
  * @author mauriciofernandesdecastro
  */
 @Component
-@PropertySource("classpath:/META-INF/sender.properties")
+@PropertySource("classpath:/META-INF/app.properties")
 public class PasswordRecoverySender 
-	extends AbstractBodyTemplateSender
+	extends AbstractBodyTemplateSender 
 {
-
-	@Value("${sender.recoveryuri}")
-	private String recoveryUri;
-
-	@Value("${sender.rejecturi}")
-	private String rejectUri;
 
 	/**
 	 * Constructor.
@@ -32,14 +26,6 @@ public class PasswordRecoverySender
 	@Inject
 	public PasswordRecoverySender(Environment env) {
 		super(env.getProperty("sender.noReplyEmail"), env.getProperty("sender.rootFullName"), "passwordRecovery");
-	}
-	
-	@Override
-	protected Map<String, String> getDefaultSubstitutions(Map<String, String> paramMap) {
-		Map<String, String> map = super.getDefaultSubstitutions(paramMap);
-		map.put("recoveryuri", recoveryUri);
-		map.put("rejecturi", rejectUri);
-		return map;
 	}
 	
 }
