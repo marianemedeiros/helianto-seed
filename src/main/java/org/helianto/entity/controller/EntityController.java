@@ -9,7 +9,6 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.repository.EntityReadAdapter;
 import org.helianto.core.repository.EntityRepository;
 import org.helianto.entity.service.EntityCommandService;
-import org.helianto.entity.service.EntityQueryService;
 import org.helianto.security.internal.UserAuthentication;
 import org.helianto.security.repository.UserAuthorityReadAdapter;
 import org.helianto.security.repository.UserAuthorityRepository;
@@ -52,9 +51,6 @@ public class EntityController {
 	
 	@Inject
 	private EntityCommandService entityCommandService ;	
-	
-	@Inject
-	private EntityQueryService entityQueryService;	
 	
 	/**
 	 * Get the current entity.
