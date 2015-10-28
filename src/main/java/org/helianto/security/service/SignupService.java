@@ -198,12 +198,17 @@ public class SignupService {
 	 */
 	public Signup saveSignup(Signup signup, String ipAddress) {
 		Identity identity = identityRepository.findByPrincipal(signup.getPrincipal());
-		
 		if (identity==null) {
 			identity = identityRepository.saveAndFlush(signup.createIdentityFromForm());
 			logger.info("New identity {} created", identity.getPrincipal());
 		}
 		// TODO save the ipAddress
+		Signup exists = signupRepository.findByContextIdAndPrincipal(1, signup.getPrincipal());
+		
+		if(exists != null){
+			exists.setToken(signup.getToken());
+			return signupRepository.saveAndFlush(exists);
+		}
 		return signupRepository.saveAndFlush(signup);
 	}
 	
