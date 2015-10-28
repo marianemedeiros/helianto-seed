@@ -77,7 +77,7 @@ public class IdentityController {
 	 */
 	@RequestMapping(value={"/", ""}, method=RequestMethod.PUT, consumes=MediaType.APPLICATION_JSON_VALUE)
 	public IdentityReadAdapter user(UserAuthentication userAuthentication, @RequestBody IdentityReadAdapter command) {
-		return userCommandService.identity(userAuthentication, command);
+		return userCommandService.identity(userAuthentication.getEntityId(), command);
 	}
 
 	/**
