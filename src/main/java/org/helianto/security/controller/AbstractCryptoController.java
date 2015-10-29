@@ -55,7 +55,7 @@ public class AbstractCryptoController {
 	}
 	
 	/**
-	 * Muda a senha de uma identidade.
+	 * Change password of an identity.
 	 * 
 	 * @param principal
 	 * @param password

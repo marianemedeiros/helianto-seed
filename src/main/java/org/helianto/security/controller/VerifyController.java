@@ -21,15 +21,10 @@ import javax.inject.Inject;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
-import org.helianto.core.domain.Lead;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Signup;
 import org.helianto.core.repository.IdentityRepository;
-import org.helianto.core.repository.LeadRepository;
 import org.helianto.core.repository.OperatorRepository;
-import org.helianto.core.repository.SignupRepository;
-import org.helianto.install.service.EntityInstallStrategy;
-import org.helianto.install.service.UserInstallService;
 import org.helianto.security.domain.IdentitySecret;
 import org.helianto.security.internal.UserDetailsAdapter;
 import org.helianto.security.repository.SignupTmpRepository;
@@ -79,18 +74,6 @@ public class VerifyController
 	
 	@Inject 
 	private IdentityRepository identityRepository;
-	
-	@Inject
-	private LeadRepository leadRepository;
-	
-	@Inject 
-	private UserInstallService userInstallService;
-	
-	@Inject
-	private EntityInstallStrategy entityInstallStrategy;
-	
-	@Inject
-	private SignupRepository signupRepository;
 	
 	@Inject
 	private AuthorizationChecker authorizationChecker;

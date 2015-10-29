@@ -58,9 +58,9 @@ public abstract class AbstractBodyTemplateSender
 			body.append(";"+param+"="+paramMap.get(param));
 		}
 		
-		body.append(";?confirmationuri=");
+		body.append(";?confirmationUri=");
 		if(paramMap.containsKey("confirmationToken")){
-			body.append(getConfirmationUriEncoded(getConfirmationUri(paramMap.get("paramMap"))));
+			body.append(getConfirmationUriEncoded(getConfirmationUri(paramMap.get("confirmationToken"))));
 		}
 		body.append("\" style=\"color: #08088A; text-decoration: underline;\">")
 		.append(staticRedirectMessage)
