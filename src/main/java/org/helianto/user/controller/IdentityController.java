@@ -7,9 +7,10 @@ import org.helianto.core.def.Gender;
 import org.helianto.core.def.IdentityType;
 import org.helianto.core.def.Notification;
 import org.helianto.core.repository.IdentityReadAdapter;
+import org.helianto.identity.service.IdentityCommandService;
+import org.helianto.identity.service.IdentityQueryService;
 import org.helianto.security.internal.UserAuthentication;
 import org.helianto.user.service.UserCommandService;
-import org.helianto.user.service.UserQueryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -34,11 +35,13 @@ public class IdentityController {
 	private static final Logger logger = LoggerFactory.getLogger(IdentityController.class);
 	
 	@Inject
-	private UserCommandService userCommandService;
+	private IdentityCommandService identityCommandService;
 	
 	@Inject
-	private UserQueryService userQueryService;
+	private IdentityQueryService identityQueryService;
 	
+	
+
 	/**
 	 * New identity.
 	 *
@@ -46,7 +49,7 @@ public class IdentityController {
 	 */
 	@RequestMapping(value={"/", ""}, method=RequestMethod.POST)
 	public IdentityReadAdapter identityNew() {
-		return userCommandService.newIdentity();
+		return identityCommandService.newIdentity();
 	}
 	
 	/**
@@ -56,7 +59,7 @@ public class IdentityController {
 	 */
 	@RequestMapping(value={"/", ""}, method=RequestMethod.GET, params={"identityId"})
 	public IdentityReadAdapter userOne(@RequestParam Integer identityId) {
-		return userQueryService.identityOne(identityId);
+		return identityQueryService.identityOne(identityId);
 	}
 
 	/**
@@ -66,7 +69,7 @@ public class IdentityController {
 	 */
 	@RequestMapping(value={"/", ""}, method=RequestMethod.GET, params={"mine"})
 	public IdentityReadAdapter identityOne(UserAuthentication userAuthentication) {
-		return userQueryService.identityOne(userAuthentication.getIdentityId());
+		return identityQueryService.identityOne(userAuthentication.getIdentityId());
 	}
 
 	/**
@@ -77,7 +80,7 @@ public class IdentityController {
 	 */
 	@RequestMapping(value={"/", ""}, method=RequestMethod.PUT, consumes=MediaType.APPLICATION_JSON_VALUE)
 	public IdentityReadAdapter user(UserAuthentication userAuthentication, @RequestBody IdentityReadAdapter command) {
-		return userCommandService.identity(userAuthentication.getEntityId(), command);
+		return identityCommandService.identity(userAuthentication.getEntityId(), command);
 	}
 
 	/**
@@ -88,7 +91,7 @@ public class IdentityController {
 	 */
 	@RequestMapping(value={"/", ""}, method=RequestMethod.PUT, consumes=MediaType.APPLICATION_JSON_VALUE, params={"mine"})
 	public IdentityReadAdapter self(UserAuthentication userAuthentication, @RequestBody IdentityReadAdapter command) {
-		return userCommandService.self(userAuthentication, command);
+		return identityCommandService.self(userAuthentication, command);
 	}
 	
 	/**
@@ -142,5 +145,4 @@ public class IdentityController {
 	public Gender[] getGenders() {
 		return Gender.values();
 	}
-
 }

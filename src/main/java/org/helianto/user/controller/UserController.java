@@ -5,13 +5,14 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.helianto.core.internal.QualifierAdapter;
+import org.helianto.identity.service.IdentityQueryService;
+import org.helianto.identity.service.IdentityQueryService.IdentityUserCreateResponse;
 import org.helianto.security.internal.UserAuthentication;
 import org.helianto.seed.PageDecorator;
 import org.helianto.user.domain.User;
 import org.helianto.user.repository.UserReadAdapter;
 import org.helianto.user.service.UserCommandService;
 import org.helianto.user.service.UserQueryService;
-import org.helianto.user.service.UserQueryService.IdentityUserCreateResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -37,6 +38,9 @@ public class UserController {
 	
 	@Inject
 	private UserCommandService userCommandService;
+	
+	@Inject
+	private IdentityQueryService identityQueryService;
 	
 	/**
 	 * List qualifiers.
@@ -120,7 +124,7 @@ public class UserController {
 	 */
 	@RequestMapping(value={"/", ""}, method=RequestMethod.POST, params={"search","novo"})
 	public IdentityUserCreateResponse userSearchNew(UserAuthentication userAuthentication, @RequestParam String search) {
-		return userQueryService.createNewUser(search, userAuthentication.getEntityId());
+		return identityQueryService.createNewUser(search, userAuthentication.getEntityId());
 	}
 	
 }
