@@ -6,13 +6,17 @@ import javax.inject.Inject;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
+import org.helianto.core.domain.Lead;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Signup;
 import org.helianto.core.repository.EntityRepository;
 import org.helianto.core.repository.IdentityRepository;
+import org.helianto.core.repository.LeadRepository;
 import org.helianto.core.repository.OperatorRepository;
+import org.helianto.install.service.EntityInstallStrategy;
+import org.helianto.install.service.UserInstallService;
 import org.helianto.security.internal.UserAuthentication;
-import org.helianto.security.service.EntityInstallService;
+import org.helianto.user.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -37,8 +41,14 @@ public class EntityCommandService {
 	@Inject 
 	private	IdentityRepository identityRepository;
 	
+	@Inject
+	private LeadRepository leadRepository;
+
 	@Inject 
-	private	EntityInstallService entityInstallService;
+	private UserInstallService userInstallService;
+
+	@Inject 
+	private	EntityInstallStrategy entityInstallStrategy;
 	
 	/**
 	 * Save an Entity.
@@ -54,8 +64,8 @@ public class EntityCommandService {
 		if(target==null){
 			Signup signup = new Signup(command);
 			signup.setDomain(command.getAlias());
-			List<Entity> prototypes = entityInstallService.generateEntityPrototypes(signup);
-			entityInstallService.createEntities(context, prototypes, identity);
+			List<Entity> prototypes = entityInstallStrategy.generateEntityPrototypes(signup);
+			createEntities(context, prototypes, identity);
 		}
 		else{
 //			TODO merge on Entity to update mode?
@@ -64,4 +74,52 @@ public class EntityCommandService {
 		return entityRepository.findByOperatorAndAlias(context, command.getAlias());
 	}
 	
+	/**
+	 * Create entities.
+	 * 
+	 * @param prototypes
+	 * @param identity
+	 */
+	public void createEntities(Operator context, List<Entity> prototypes, Identity identity) {
+		Entity entity = null;
+		for (Entity prototype: prototypes) {
+			entity = entityInstallStrategy.installEntity(context, prototype);
+			if(entity!=null){
+				createUser(entity, identity);
+			}
+		}
+	}
+	/**
+	 * Create new user.
+	 * 
+	 * @param entity
+	 * @param form
+	 * @param formBinding
+	 */
+	public User createUser(Entity entity, Identity identity) {
+		try {
+			String principal = identity.getPrincipal();
+			User user = userInstallService.installUser(entity,  principal);
+			removeLead(principal);
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	/**
+	 * Remove temporary lead.
+	 * 
+	 * @param leadPrincipal
+	 */
+	public final String removeLead(String leadPrincipal){
+		List<Lead> leads = leadRepository.findByPrincipal(leadPrincipal);	
+		for (Lead lead : leads) {
+			leadRepository.delete(lead);
+		}
+		return leadPrincipal;
+	}
+
+
 }
