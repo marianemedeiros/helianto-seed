@@ -25,11 +25,12 @@ import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Signup;
 import org.helianto.core.repository.IdentityRepository;
 import org.helianto.core.repository.OperatorRepository;
+import org.helianto.core.repository.SignupRepository;
+import org.helianto.install.service.EntityInstallStrategy;
 import org.helianto.security.domain.IdentitySecret;
 import org.helianto.security.internal.UserDetailsAdapter;
 import org.helianto.security.repository.SignupTmpRepository;
 import org.helianto.security.service.AuthorizationChecker;
-import org.helianto.security.service.EntityInstallService;
 import org.helianto.security.util.SignInUtils;
 import org.helianto.user.domain.User;
 import org.joda.time.DateMidnight;
@@ -72,6 +73,9 @@ public class VerifyController
 	@Inject 
 	private OperatorRepository contextRepository;
 	
+	@Inject
+	private SignupRepository signupRepository;
+
 	@Inject 
 	private IdentityRepository identityRepository;
 	
@@ -88,7 +92,7 @@ public class VerifyController
 	private ConnectionFactoryLocator connectionFactoryLocator;
 
 	@Inject
-	private EntityInstallService entityInstallService;
+	private EntityInstallStrategy entityInstallService;
 	
 
 	/**
@@ -220,7 +224,7 @@ public class VerifyController
 			identitySecret = changeIdentitySecret(identity.getPrincipal(),password);
 		}
 		Operator context = contextRepository.findOne(contextId);
-		Signup signup = entityInstallService.getSignup(contextId, identity);
+		Signup signup = signupRepository.findByContextIdAndPrincipal(contextId, identity.getPrincipal());
 		List<Entity> prototypes = entityInstallService.generateEntityPrototypes(signup);
 		entityInstallService.createEntities(context, prototypes, identity);
 		model.addAttribute("passError", "false");
@@ -228,5 +232,5 @@ public class VerifyController
 		return SignUpController.WELCOME_TEMPLATE;
 		
 	}
-	
+
 }
