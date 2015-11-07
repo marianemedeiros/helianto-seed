@@ -1,7 +1,7 @@
 package org.helianto.seed;
 
 import org.helianto.core.config.HeliantoServiceConfig;
-import org.helianto.core.sender.UserConfirmationSender;
+import org.helianto.sender.service.UserConfirmationSender;
 import org.helianto.sendgrid.config.SendGridConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

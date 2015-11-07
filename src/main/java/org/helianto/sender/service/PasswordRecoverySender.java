@@ -1,4 +1,4 @@
-package org.helianto.core.sender;
+package org.helianto.sender.service;
 
 import java.util.Map;
 
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
  * @author mauriciofernandesdecastro
  */
 @Component
-@PropertySource("classpath:/META-INF/app.properties")
 public class PasswordRecoverySender 
 	extends AbstractBodyTemplateSender 
 {

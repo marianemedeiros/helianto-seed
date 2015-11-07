@@ -1,8 +1,8 @@
 package org.helianto.seed;
 
-import org.helianto.core.sender.NotificationSender;
 import org.helianto.network.service.RootQueryService;
 import org.helianto.network.service.SimpleNetworkKeyName;
+import org.helianto.sender.service.NotificationSender;
 import org.helianto.user.service.SimpleUserKeyName;
 import org.helianto.user.service.UserQueryService;
 import org.springframework.context.annotation.Bean;

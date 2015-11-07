@@ -12,7 +12,7 @@ import org.helianto.core.domain.Signup;
 import org.helianto.core.repository.IdentityRepository;
 import org.helianto.core.repository.LeadRepository;
 import org.helianto.core.repository.SignupRepository;
-import org.helianto.core.sender.NotificationSender;
+import org.helianto.sender.service.NotificationSender;
 import org.helianto.user.domain.User;
 import org.helianto.user.repository.UserRepository;
 import org.slf4j.Logger;

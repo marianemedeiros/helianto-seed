@@ -1,4 +1,4 @@
-package org.helianto.core.sender;
+package org.helianto.sender.service;
 
 import java.util.Map;
 
@@ -14,7 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
  * 
  * @author mauriciofernandesdecastro
  */
-@PropertySource("classpath:/freemarker/sendgrid/sender.properties")
+@PropertySource("classpath:/META-INF/seed.properties")
 public abstract class AbstractBodyTemplateSender 
 	extends AbstractTemplateSender
 {
