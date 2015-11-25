@@ -1,4 +1,4 @@
-package org.helianto.user.controller;
+package org.helianto.identity.controller;
 
 import javax.inject.Inject;
 
