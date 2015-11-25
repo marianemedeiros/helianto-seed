@@ -5,6 +5,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.helianto.core.config.HeliantoServiceConfig;
+import org.helianto.install.service.DefaultInstallStrategy;
 import org.helianto.install.service.EntityInstallStrategy;
 import org.helianto.sendgrid.config.SendGridConfig;
 import org.hibernate.ejb.HibernatePersistence;
@@ -92,6 +93,11 @@ public abstract class AbstractRootContextConfig extends AbstractContextConfig {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+	
+	@Bean
+	public EntityInstallStrategy entityInstallStrategy() {
+		return new DefaultInstallStrategy();
 	}
 	
 	/**
