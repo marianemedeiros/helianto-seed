@@ -5,8 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.helianto.core.domain.Signup;
-import org.helianto.core.sender.UserConfirmationSender;
 import org.helianto.security.service.SignupService;
+import org.helianto.sender.service.UserConfirmationSender;
 import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -53,9 +53,11 @@ public class SignUpController
 	 * @param signup
 	 */
 	public String sendConfirmation(Signup signup) {
-		System.err.println("Signup: " + signup.getPrincipal());
-
-		if (userConfirmationSender.send(signup.getPrincipal(), signup.getFirstName(), signup.getLastName(), "Email Confirmação", "confirmationToken", signup.getToken())) {
+		if (userConfirmationSender.send(signup.getPrincipal(), signup.getFirstName(), signup.getLastName(), 
+				"Email Confirmação", 
+				"confirmationToken", signup.getToken()
+				,"recipientEmail",signup.getPrincipal() 
+				,"recipientFirstName",signup.getFirstName())) {
 			return "true";
 		}
 		return "false";
@@ -132,6 +134,9 @@ public class SignUpController
 		}
 		// TODO prevent double submission
 		signup.setToken(signupService.createToken());
+		
+		
+		
 		signup = signupService.saveSignup(signup, ipAddress);
 		boolean userExists = signupService.allUsersForIdentityAreValid(signup);
 		model.addAttribute("userExists", userExists);

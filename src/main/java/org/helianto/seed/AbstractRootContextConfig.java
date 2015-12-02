@@ -19,6 +19,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
@@ -91,6 +92,17 @@ public abstract class AbstractRootContextConfig extends AbstractContextConfig {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+	
+	/**
+	 * Required to allow matrix type params.
+	 * @return
+	 */
+	@Bean
+	public RequestMappingHandlerMapping requestMappingHandlerMapping() {
+	    final RequestMappingHandlerMapping requestMappingHandlerMapping = new RequestMappingHandlerMapping();
+	    requestMappingHandlerMapping.setRemoveSemicolonContent(false); 
+	    return requestMappingHandlerMapping;
 	}
 
 }

@@ -1,4 +1,4 @@
-package org.helianto.entity.service;
+package org.helianto.location.service;
 
 import java.util.List;
 
@@ -25,9 +25,9 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class EntityQueryService {
+public class LocationQueryService {
 
-	private static final Logger logger = LoggerFactory.getLogger(EntityQueryService.class);
+	private static final Logger logger = LoggerFactory.getLogger(LocationQueryService.class);
 
 	@Inject
 	private OperatorRepository operatorRepository;	

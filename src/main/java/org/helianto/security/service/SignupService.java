@@ -12,7 +12,7 @@ import org.helianto.core.domain.Signup;
 import org.helianto.core.repository.IdentityRepository;
 import org.helianto.core.repository.LeadRepository;
 import org.helianto.core.repository.SignupRepository;
-import org.helianto.core.sender.NotificationSender;
+import org.helianto.sender.service.NotificationSender;
 import org.helianto.user.domain.User;
 import org.helianto.user.repository.UserRepository;
 import org.slf4j.Logger;
@@ -198,12 +198,17 @@ public class SignupService {
 	 */
 	public Signup saveSignup(Signup signup, String ipAddress) {
 		Identity identity = identityRepository.findByPrincipal(signup.getPrincipal());
-		
 		if (identity==null) {
 			identity = identityRepository.saveAndFlush(signup.createIdentityFromForm());
 			logger.info("New identity {} created", identity.getPrincipal());
 		}
 		// TODO save the ipAddress
+		Signup exists = signupRepository.findByContextIdAndPrincipal(1, signup.getPrincipal());
+		
+		if(exists != null){
+			exists.setToken(signup.getToken());
+			return signupRepository.saveAndFlush(exists);
+		}
 		return signupRepository.saveAndFlush(signup);
 	}
 	

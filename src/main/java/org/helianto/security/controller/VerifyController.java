@@ -21,20 +21,16 @@ import javax.inject.Inject;
 
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
-import org.helianto.core.domain.Lead;
 import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Signup;
 import org.helianto.core.repository.IdentityRepository;
-import org.helianto.core.repository.LeadRepository;
 import org.helianto.core.repository.OperatorRepository;
 import org.helianto.core.repository.SignupRepository;
 import org.helianto.install.service.EntityInstallStrategy;
-import org.helianto.install.service.UserInstallService;
 import org.helianto.security.domain.IdentitySecret;
 import org.helianto.security.internal.UserDetailsAdapter;
 import org.helianto.security.repository.SignupTmpRepository;
 import org.helianto.security.service.AuthorizationChecker;
-import org.helianto.security.service.EntityInstallService;
 import org.helianto.security.util.SignInUtils;
 import org.helianto.user.domain.User;
 import org.joda.time.DateMidnight;
@@ -77,20 +73,11 @@ public class VerifyController
 	@Inject 
 	private OperatorRepository contextRepository;
 	
-	@Inject 
-	private IdentityRepository identityRepository;
-	
-	@Inject
-	private LeadRepository leadRepository;
-	
-	@Inject 
-	private UserInstallService userInstallService;
-	
-	@Inject
-	private EntityInstallStrategy entityInstallStrategy;
-	
 	@Inject
 	private SignupRepository signupRepository;
+
+	@Inject 
+	private IdentityRepository identityRepository;
 	
 	@Inject
 	private AuthorizationChecker authorizationChecker;
@@ -105,7 +92,7 @@ public class VerifyController
 	private ConnectionFactoryLocator connectionFactoryLocator;
 
 	@Inject
-	private EntityInstallService entityInstallService;
+	private EntityInstallStrategy entityInstallService;
 	
 
 	/**
@@ -197,20 +184,20 @@ public class VerifyController
 	protected String createPassword(Model model, Identity  identity) {
 		model.addAttribute("titlePage", "Password creation");
 		model.addAttribute("baseName", "security");
-		model.addAttribute("main", "security/passwordChange");
+		model.addAttribute("main", "security/passwordCreate");
 		model.addAttribute("copyright", env.getProperty("helianto.copyright", ""));
 		
 		if(identity!=null){
 			model.addAttribute("email", entityInstallService.removeLead(identity.getPrincipal()));
 			// prevents duplicated submission
 			IdentitySecret identitySecret = getIdentitySecret(identity);			
-			if(identitySecret!= null){
-				return "redirect:/";
+			if(identitySecret != null){
+				return PasswordRecoveryController.FRAME_SECURITY;
 			}
-		}
-		else{
+		}else{
 			return "redirect:"+SignUpController.SIGN_UP;
 		}
+		
 		return PasswordRecoveryController.FRAME_SECURITY;
 	}
 	
@@ -232,9 +219,12 @@ public class VerifyController
 		if (identitySecret==null) {
 			logger.info("Will install identity secret for {}.", identity);
 			identitySecret = createIdentitySecret(identity, password);
+		}else{
+			logger.info("Will change identity secret for {}.", identity);
+			identitySecret = changeIdentitySecret(identity.getPrincipal(),password);
 		}
 		Operator context = contextRepository.findOne(contextId);
-		Signup signup = entityInstallService.getSignup(contextId, identity);
+		Signup signup = signupRepository.findByContextIdAndPrincipal(contextId, identity.getPrincipal());
 		List<Entity> prototypes = entityInstallService.generateEntityPrototypes(signup);
 		entityInstallService.createEntities(context, prototypes, identity);
 		model.addAttribute("passError", "false");
@@ -242,5 +232,5 @@ public class VerifyController
 		return SignUpController.WELCOME_TEMPLATE;
 		
 	}
-	
+
 }

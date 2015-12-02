@@ -29,9 +29,10 @@ angular.module('app.services', ['ngResource'])
 	  };
 	})
 .factory("genericServices", function() {                                                                                                                                                   
-	return {                                                                                                                                                                                                              
+	return {
 		getNextAndPreviousLinkByList: function(list) {   
-			var page = {next:0, previous:0, hasNext:false, hasPrevious:false}; 
+			var page = {next:0, previous:0, hasNext:false, hasPrevious:false};
+			
 			if(list.number!=0){
 				page.previous = list.number-1;
 				page.hasPrevious = true;

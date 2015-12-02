@@ -1,4 +1,4 @@
-package org.helianto.city.controller;
+package org.helianto.location.controller;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import javax.inject.Inject;
 
 import org.helianto.core.domain.City;
 import org.helianto.core.domain.State;
-import org.helianto.entity.service.EntityQueryService;
+import org.helianto.location.service.LocationQueryService;
 import org.helianto.security.internal.UserAuthentication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +29,7 @@ public class LocationController {
 	private static final Logger logger = LoggerFactory.getLogger(LocationController.class);
 
 	@Inject
-	private EntityQueryService entityQueryService;	
+	private LocationQueryService locationQueryService;	
 	
 	/**
 	
@@ -41,7 +41,7 @@ public class LocationController {
 	 */
 	@RequestMapping(value={"/state"}, method=RequestMethod.GET)
 	public List<State> states(UserAuthentication userAuthentication) {
-		return entityQueryService.getStates(userAuthentication);
+		return locationQueryService.getStates(userAuthentication);
 	}
 
 	/**
@@ -52,7 +52,7 @@ public class LocationController {
 	 */
 	@RequestMapping(value={"/city"}, method=RequestMethod.GET, params="stateId")
 	public List<City> cities(@RequestParam Integer stateId) {
-		return entityQueryService.getCities(stateId);
+		return locationQueryService.getCities(stateId);
 	}
 	
 }

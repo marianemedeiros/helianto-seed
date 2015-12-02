@@ -1,4 +1,4 @@
-package org.helianto.core.sender;
+package org.helianto.sender.service;
 
 import javax.inject.Inject;
 

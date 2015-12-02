@@ -15,14 +15,18 @@
  */
 package org.helianto.security.controller;
 
-import javax.inject.Inject;
 
+import javax.inject.Inject;
 import org.helianto.core.domain.Identity;
+import org.helianto.core.domain.Operator;
+import org.helianto.core.domain.Signup;
 import org.helianto.core.repository.IdentityRepository;
-import org.helianto.core.sender.PasswordRecoverySender;
 import org.helianto.security.domain.IdentitySecret;
 import org.helianto.security.internal.UserAuthentication;
 import org.helianto.security.repository.IdentitySecretRepository;
+import org.helianto.security.repository.SignupTmpRepository;
+import org.helianto.security.service.SignupService;
+import org.helianto.sender.service.PasswordRecoverySender;
 import org.helianto.user.domain.User;
 import org.helianto.user.repository.UserRepository;
 import org.springframework.core.env.Environment;
@@ -59,6 +63,12 @@ public class PasswordRecoveryController extends AbstractCryptoController{
 	
 	@Inject
 	private IdentitySecretRepository identitySecretRepository;
+	
+	@Inject
+	private SignupService signupService;
+	
+	@Inject
+	private SignupTmpRepository signupTmpRepository;
 	
 	@Inject
 	private PasswordRecoverySender passwordRecoverySender;
@@ -129,6 +139,7 @@ public class PasswordRecoveryController extends AbstractCryptoController{
 		if (identity!=null) {
 			IdentitySecret identitySecret = identitySecretRepository.findByIdentityKey(identity.getPrincipal());
 			model.addAttribute("email", identity.getPrincipal());
+			
 			//check for the same password
 			if(BCrypt.checkpw(password, identitySecret.getIdentitySecret())){
 				model.addAttribute("titlePage", "Mudança de Senha");
@@ -172,14 +183,21 @@ public class PasswordRecoveryController extends AbstractCryptoController{
 			Identity recipient = identityRepository.findByPrincipal(principal);
 			
 			if (recipient!=null) {
-				if (passwordRecoverySender.send(recipient, env.getProperty("sender.recovery.subject", "Password recovery e-mail"))) {
+				Signup signup = new Signup(recipient);
+				signup.setToken(signupService.createToken());
+				signup = signupService.saveSignup(signup, null);
+				
+				if(passwordRecoverySender.send(recipient.getPrincipal(), recipient.getIdentityFirstName(), 
+						recipient.getIdentityLastName(), "Password recovery e-mail", "confirmationToken", 
+						signup.getToken(),"recipientEmail",recipient.getPrincipal(), 
+						"recipientFirstName",recipient.getIdentityFirstName())){	
 					model.addAttribute("emailRecoverySent", true);
 				}
 				else {
 					// Caso falhe o envio, retorna ao formulário de e-mail
 					model.addAttribute("emailRecoveryFailed", true);
 					return FRAME_SECURITY;
-				} 
+				}	
 				return REDIRECT_LOGIN;
 			}
 			
@@ -196,7 +214,7 @@ public class PasswordRecoveryController extends AbstractCryptoController{
 		return REDIRECT_LOGIN;
 		
 	}
-	
+
 	/**
 	 * Receive e-mail confirmation and respond with form (unauthenticated users).
 	 * 
