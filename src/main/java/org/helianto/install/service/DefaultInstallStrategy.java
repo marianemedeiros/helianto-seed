@@ -10,11 +10,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
- * Entity prototype generation by domain.
+ * Entity prototype generation by domain. 
  * 
  * @author mauriciofernandesdecastro
  */
-//@Service
 public class DefaultInstallStrategy 
 	extends AbstractEntityInstallStrategy
 {

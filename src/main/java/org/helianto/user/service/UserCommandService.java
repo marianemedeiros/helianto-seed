@@ -7,10 +7,7 @@ import javax.inject.Inject;
 import org.helianto.core.domain.Entity;
 import org.helianto.core.domain.Identity;
 import org.helianto.core.repository.EntityRepository;
-import org.helianto.core.repository.IdentityReadAdapter;
 import org.helianto.core.repository.IdentityRepository;
-import org.helianto.install.service.IdentityInstallService;
-import org.helianto.install.service.UserInstallService;
 import org.helianto.security.internal.UserAuthentication;
 import org.helianto.user.domain.User;
 import org.helianto.user.domain.UserGroup;
@@ -42,7 +39,6 @@ public class UserCommandService {
 	
 	@Inject 
 	private IdentityRepository identityRepository;
-	
 	
 	//TODO Replace ReadAdapter
 	public User user(int entityId, UserReadAdapter command) {
@@ -87,8 +83,6 @@ public class UserCommandService {
 		}
 		throw new IllegalArgumentException("Identity not informed!");
 	}
-	
-
 	
 	//TODO Replace ReadAdapter
 	public User user(UserAuthentication userAuthentication, UserReadAdapter command) {
