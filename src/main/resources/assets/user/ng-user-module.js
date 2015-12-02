@@ -1,5 +1,5 @@
 (function() {
-	app = angular.module('user', ['ui.bootstrap', 'app.layout', 'angular-loading-bar', 'app.services', 'ngResource', 'ngSanitize', 'angular-redactor'])
+	app = angular.module('user', ['ui.bootstrap', 'app.layout', 'angular-loading-bar', 'app.services', 'ngResource', 'ngSanitize'])
 	/**
 	 * User resources
 	 */
