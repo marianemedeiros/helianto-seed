@@ -29,7 +29,6 @@ import org.helianto.core.repository.SignupRepository;
 import org.helianto.install.service.EntityInstallStrategy;
 import org.helianto.security.domain.IdentitySecret;
 import org.helianto.security.internal.UserDetailsAdapter;
-import org.helianto.security.repository.SignupTmpRepository;
 import org.helianto.security.service.AuthorizationChecker;
 import org.helianto.security.util.SignInUtils;
 import org.helianto.user.domain.User;
@@ -83,9 +82,6 @@ public class VerifyController
 	private AuthorizationChecker authorizationChecker;
 	
 	@Inject
-	private SignupTmpRepository signupTmpRepository;
-
-	@Inject
 	private UsersConnectionRepository connectionRepository;
 	
 	@Inject
@@ -133,7 +129,7 @@ public class VerifyController
 	 * @param expirationLimit
 	 */
 	protected int findPreviousSignupAttempt(String confirmationToken, int expirationLimit) {
-		Signup signup = signupTmpRepository.findByToken(confirmationToken);
+		Signup signup = signupRepository.findByToken(confirmationToken);
 		if (signup!=null) {
 			if (expirationLimit>0 && signup.getIssueDate()!=null) {
 				DateMidnight expirationDate = new DateMidnight(signup.getIssueDate()).plusDays(expirationLimit + 1);

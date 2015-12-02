@@ -17,14 +17,13 @@ package org.helianto.security.controller;
 
 
 import javax.inject.Inject;
+
 import org.helianto.core.domain.Identity;
-import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Signup;
 import org.helianto.core.repository.IdentityRepository;
 import org.helianto.security.domain.IdentitySecret;
 import org.helianto.security.internal.UserAuthentication;
 import org.helianto.security.repository.IdentitySecretRepository;
-import org.helianto.security.repository.SignupTmpRepository;
 import org.helianto.security.service.SignupService;
 import org.helianto.sender.service.PasswordRecoverySender;
 import org.helianto.user.domain.User;
@@ -66,9 +65,6 @@ public class PasswordRecoveryController extends AbstractCryptoController{
 	
 	@Inject
 	private SignupService signupService;
-	
-	@Inject
-	private SignupTmpRepository signupTmpRepository;
 	
 	@Inject
 	private PasswordRecoverySender passwordRecoverySender;

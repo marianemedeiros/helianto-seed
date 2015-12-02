@@ -16,7 +16,11 @@ import org.helianto.core.repository.EntityRepository;
 import org.helianto.core.repository.IdentityRepository;
 import org.helianto.core.repository.LeadRepository;
 import org.helianto.core.repository.OperatorRepository;
+import org.helianto.security.domain.UserAuthority;
+import org.helianto.security.repository.UserAuthorityRepository;
 import org.helianto.user.domain.User;
+import org.helianto.user.domain.UserGroup;
+import org.helianto.user.repository.UserGroupRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -62,7 +66,13 @@ public abstract class AbstractEntityInstallStrategy
 	private EntityRepository entityRepository;
 
 	@Inject
-	private  UserInstallService userInstallService;
+	private UserGroupRepository userGroupRepository;
+
+	@Inject
+	private UserInstallService userInstallService;
+	
+	@Inject
+	private UserAuthorityRepository userAuthorityRepository;
 	
     private String contextName;
     
@@ -145,6 +155,18 @@ public abstract class AbstractEntityInstallStrategy
 		
 		// Root user
 		User rootUser = userInstallService.installUser(rootEntity, rootIdentity.getPrincipal());
+		
+		// Root authorities
+		UserGroup admin = userGroupRepository.findByEntity_IdAndUserKey(rootEntity.getId(), "ADMIN");
+		
+		// TODO pay attention to the hard coded ADMIN group here; see contextGroups for a better solution
+		
+		if (admin==null) {
+			throw new IllegalArgumentException("Unable to install context, ADMIN group not found; check your contextGroups definition to ensure proper installation.");
+		}
+		UserAuthority rootAuthority = new UserAuthority(admin, "ADMIN");
+		rootAuthority.setServiceExtension("READ,WRITE,MANAGER");
+		userAuthorityRepository.saveAndFlush(rootAuthority);
 		
 		runAfterInstall(context, rootEntity, rootUser);
 	}

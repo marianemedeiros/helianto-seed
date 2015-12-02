@@ -39,15 +39,24 @@ public class UserGroupQueryService {
 	/**
 	 * List user groups by user.
 	 * 
-	 * @param model
 	 * @param userId
-	 * @param userGroupListPage
+	 * @param pageNumber
+	 * @param pageSize
 	 */
 	public Page<UserGroup> listUserGroup(int userId, Integer pageNumber, Integer pageSize) {
 		Pageable page = new PageRequest(pageNumber, pageSize, Direction.ASC, "parent.userKey");
 		Page<UserGroup> userGroupAdapterList =
 				userGroupRepository.find2ParentsByChildId(userId, page);
 		return userGroupAdapterList;
+	}
+
+	/**
+	 * Some group.
+	 * 
+	 * @param groupId
+	 */
+	public UserGroup groupOpen(Integer groupId) {
+		return userGroupRepository.findOne(groupId);
 	}
 	
 }
