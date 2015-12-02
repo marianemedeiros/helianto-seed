@@ -112,9 +112,10 @@ public abstract class AbstractEntityInstallStrategy
 	public void afterPropertiesSet() throws Exception {
 		contextName = env.getProperty("helianto.defaultContextName", DEFAULT_CONTEXT_NAME);
 //		String contextDataLocation = env.getProperty("helianto.defaultContextName", DEFAULT_CONTEXT_NAME);
-
+		logger.info("install to {}.", contextName);
 		Operator context = contextRepository.findByOperatorName(contextName);
 		if (context==null) {
+			logger.info("will install all data to {}.", context);
 			install();
 		}
 		
@@ -136,6 +137,8 @@ public abstract class AbstractEntityInstallStrategy
 		String rootDisplayName = env.getProperty("helianto.rootDisplayName", rootFirstName);
 		String initialSecret = env.getProperty("helianto.initialSecret", getInitialSecret());
 		
+		logger.info("Creating rootIdentity to {}.", rootPrincipal);
+		
 		// Root identity
 		Identity rootIdentity = identityRepository.findByPrincipal(rootPrincipal);
 		if(rootIdentity==null){
@@ -152,10 +155,12 @@ public abstract class AbstractEntityInstallStrategy
 		Entity rootEntity = new Entity(context, rootEntityAlias);
 		rootEntity.setCity(rootCity);
 		rootEntity = installEntity(context, rootEntity);
+
+		logger.info("Creating rootEntity to {}.", rootEntity);
 		
 		// Root user
 		User rootUser = userInstallService.installUser(rootEntity, rootIdentity.getPrincipal());
-		
+		logger.info("Creating rootUser to {}.", rootUser);
 		// Root authorities
 		UserGroup admin = userGroupRepository.findByEntity_IdAndUserKey(rootEntity.getId(), "ADMIN");
 		
@@ -167,6 +172,7 @@ public abstract class AbstractEntityInstallStrategy
 		UserAuthority rootAuthority = new UserAuthority(admin, "ADMIN");
 		rootAuthority.setServiceExtension("READ,WRITE,MANAGER");
 		userAuthorityRepository.saveAndFlush(rootAuthority);
+		logger.info("Creating rootAuthority to {}.", rootAuthority);
 		
 		runAfterInstall(context, rootEntity, rootUser);
 	}

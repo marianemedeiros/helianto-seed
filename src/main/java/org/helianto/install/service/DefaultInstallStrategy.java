@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * 
  * @author mauriciofernandesdecastro
  */
-//@Service
+@Service
 public class DefaultInstallStrategy 
 	extends AbstractEntityInstallStrategy
 {

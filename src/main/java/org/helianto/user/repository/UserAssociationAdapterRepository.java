@@ -22,7 +22,7 @@ public interface UserAssociationAdapterRepository
 	 * @param userId
 	 */
 	@Query("select new "
-			+ "com.iservport.user.repository.UserGroupNameAdapter("
+			+ "org.helianto.user.repository.UserGroupNameAdapter("
 			+ "association.parent.id, association.parent.userName, 1"
 			+ ") "
 			+ "from UserAssociation association "
