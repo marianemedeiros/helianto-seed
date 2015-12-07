@@ -1,4 +1,4 @@
-package org.helianto.user.controller;
+package org.helianto.identity.controller;
 
 import javax.inject.Inject;
 
@@ -10,6 +10,7 @@ import org.helianto.core.repository.IdentityReadAdapter;
 import org.helianto.identity.service.IdentityCommandService;
 import org.helianto.identity.service.IdentityQueryService;
 import org.helianto.security.internal.UserAuthentication;
+import org.helianto.user.service.UserCommandService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;

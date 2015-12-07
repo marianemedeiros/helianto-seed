@@ -89,7 +89,6 @@ public class VerifyController
 	private ConnectionFactoryLocator connectionFactoryLocator;
 
 	@Inject
-	@Qualifier("defaultInstallStrategy")
 	private EntityInstallStrategy entityInstallService;
 	
 
