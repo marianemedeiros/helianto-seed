@@ -106,7 +106,7 @@ public class EntityController {
 	 */
 	@RequestMapping(value={"/auth"}, method=RequestMethod.GET)
 	public List<UserAuthorityReadAdapter> auth(UserAuthentication userAuthentication) {
-		return auth(userAuthentication.getUserId(), 0);
+		return auth(userAuthentication.getUserId(), userAuthentication.getIdentityId(), 0);
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class EntityController {
 	public List<UserAuthorityReadAdapter> auth(UserAuthentication userAuthentication
 			, @RequestParam Integer userId
 			, @RequestParam(required = false, defaultValue = "0") Integer pageNumber) {
-		return auth(userId, pageNumber);
+		return auth(userId, userAuthentication.getIdentityId(),pageNumber);
 	}
 	
 	/**
@@ -127,11 +127,12 @@ public class EntityController {
 	 * @param userId
 	 * @param pageNumber
 	 */
-	private List<UserAuthorityReadAdapter> auth(Integer userId, Integer pageNumber) {
+	private List<UserAuthorityReadAdapter> auth(Integer userId, Integer identityId, Integer pageNumber) {
 		List<UserGroup> parentGroups = userGroupRepository.findParentsByChildId(userId);
 		List<UserAuthorityReadAdapter> authList = new ArrayList<>();
 		authList.addAll(userAuthorityRepository.findByUserGroupIdOrderByServiceCodeAsc(parentGroups));
 		authList.add(new UserAuthorityReadAdapter(0, 0, "USER", "READ"));
+		authList.add(new UserAuthorityReadAdapter(0, 0, "SELF", identityId+""));
 		return authList;
 	}
 	
