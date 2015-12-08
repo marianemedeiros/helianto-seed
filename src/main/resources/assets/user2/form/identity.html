@@ -1,0 +1,81 @@
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	<span class="h4 modal-title" id="modalLabel" > {{'PERSONAL_DATA_FOR' | i18n}} {{identity.principal}}</span>
+</div><!-- modal-header-->
+  		
+<div class="modal-body">
+
+<form  class="form-horizontal" role="form" data-ng-submit="updateUser()">
+
+	<div class="row" >
+	<div class="col-md-8" >
+	<div id="form-group-identityType" class="form-group">
+		<label for="identityType" class="col-sm-3 control-label">{{'IDENTITY_TYPE' | i18n}}</label>
+		<div class="col-sm-9">
+		<select id="identityType" class="form-control" name="identityType"  data-ng-model="identity.identityType">
+			<option data-ng-repeat="identityTypeOption in identityTypes" value="{{identityTypeOption}}">{{'IDENTITY_TYPE_'+identityTypeOption | i18n}}</option>
+		</select>
+		</div>
+	</div>
+
+	<div id="form-group-gender" class="form-group">
+		<label for="gender" class="col-sm-3 control-label">{{'IDENTITY_GENDER' | i18n}}</label>
+		<div class="col-sm-9">
+		<select id="gender" class="form-control"  data-ng-model="identity.gender">
+			<option data-ng-repeat="genderOption in genders" value="{{genderOption}}" data-ng-class="userGenderIcon[genderOption]"> {{'IDENTITY_GENDER_'+genderOption | i18n}}
+			</option>
+		</select>
+		</div>
+	</div>
+	
+	<hr/>
+	
+	<div id="form-group-displayName" class="form-group">
+		<label for="displayName" class="col-sm-3 control-label">{{'DISPLAY_NAME' | i18n}}</label>
+		<div class="col-sm-9">
+		<input id="displayName" type="text"  required="" name="displayName" maxlength="64" 
+		       placeholder="{{'DISPLAY_NAME' | i18n}} " class="form-control" data-ng-model="identity.displayName"/>
+		</div>
+	</div>		
+	
+	<div id="form-group-firstName" class="form-group">
+		<label for="firstName" class="col-sm-3 control-label">{{'FIRST_NAME' | i18n}}</label>
+		<div class="col-sm-9">
+		<input id="firstName" type="text"  required="" name="firstName" maxlength="64" 
+		       data-ng-model="identity.firstName" class="form-control" />
+		</div>
+	</div>		
+	
+	<div id="form-group-lastName" class="form-group">
+		<label for="lastName" class="col-sm-3 control-label">{{'LAST_NAME' | i18n}}</label>
+		<div class="col-sm-9">
+		<input id="lastName" type="text"  required="" name="lastName" maxlength="64" 
+		       data-ng-model="identity.lastName" class="form-control" />
+		</div>
+	</div>
+	
+	</div><!-- col-md-8 -->
+	<div class="col-md-4" >
+	</div><!-- col-md-4 -->
+	
+	</div><!-- row -->
+	
+	<!--
+	 ! Submit row
+	 !-->
+	<div class="row">
+	<div class="col-md-12" >
+	<!--
+	 ! Submit button
+	 !-->
+	<hr/>
+	<div class="pull-right"> 
+		<button type="submit" name="submit" value="0" class="btn btn-primary" >{{'SAVE' | i18n}}</button>
+		<a data-dismiss="modal"  class="btn btn-link">{{'CLOSE' | i18n}}</a>
+	</div>
+	</div>
+	</div>
+	
+	
+</form>
+</div>

@@ -7,17 +7,16 @@
 <div class="row">
 
 <!-- Filter -->
-<div class="col-md-2 col-sm-12" data-ng-show="isSectionTabSet(-1)" data-ng-init="setSectionTab(-1)">
-<div data-qualifier-box="qualifiers" data-set-qualifier="setQualifier(value)" 
-data-is-qualifier-active="isQualifierActive(value)" data-qualifier-icon="fi-torsos-all" ></div>
+<div class="col-md-3 col-sm-12" data-ng-show="isSectionTabSet(-1)">
+<div data-qualifier-panel="qualifiers" data-set-qualifier="setQualifier(value)" data-is-qualifier-active="isQualifierActive(value)" data-ng-init="setSectionTab(-1)" ></div>
 </div><!-- Filter -->
 
 <!-- Main -->
-<div class="col-sm-12" data-ng-class="{'col-md-10':isSectionTabSet(-1)}">
+<div class="col-sm-12" data-ng-class="{'col-md-9':isSectionTabSet(-1)}">
 
     <div class="panel panel-default">
 	<!--
-	 ! Title
+	 ! Título
 	 !-->
 	<div class="panel-body">
 	<div class="row">
@@ -25,8 +24,10 @@ data-is-qualifier-active="isQualifierActive(value)" data-qualifier-icon="fi-tors
 			<div class="h4 pull-right">
 				<a data-ng-show="isSectionTabSet(-1) && qualifierValue=='A'" data-ng-click="newUser()" class="btn btn-danger">
 					{{'NEW_PERSON' | i18n}}</a>
-				<a data-ng-show="isSectionTabSet(-1) && qualifierValue!='A'" data-ng-click="newUserGroup()" class="btn btn-danger">
-					{{'NEW_GROUP' | i18n}}</a>
+				<a data-ng-show="isSectionTabSet(-1) && qualifierValue=='F'" data-ng-click="newUserGroup()" class="btn btn-danger">
+					{{'NEW_FUNCTION' | i18n}}</a>
+				<a data-ng-show="isSectionTabSet(-1) && qualifierValue=='J'" data-ng-click="newUserGroup()" class="btn btn-danger">
+					{{'NEW_POST' | i18n}}</a>
 				<a class="btn btn-danger" data-ng-show="userState=='A' && isSectionTabSet(-1)" data-ng-click="listUsers(userGroupValue, 1, 'I')">
 					{{'SHOW_INACTIVES' | i18n}}</a>
 				<a class="btn btn-primary" data-ng-show="userState=='I' && isSectionTabSet(-1)" data-ng-click="listUsers(userGroupValue, 1, 'A')">
@@ -39,16 +40,20 @@ data-is-qualifier-active="isQualifierActive(value)" data-qualifier-icon="fi-tors
 				  <button type="button" data-ng-click="activateUser('A')" class="btn btn-default">{{'ACTIVATE' | i18n}}</button>
 				  <button type="button"class="btn btn-danger active">{{'INACTIVE' | i18n}}</button>
 				</div>
-				<a data-ng-show="isSectionTabSet(0)" data-ng-click="openForm('associate')" class="btn btn-danger">
-					{{'ASSOCIATE' | i18n}}</a>
+				<a data-ng-show="isSectionTabSet(0)" data-ng-click="newAssessment('I')" class="btn btn-danger">
+					{{'NEW_INFORMATION' | i18n}}</a>
+				<a data-ng-show="isSectionTabSet(0)" data-ng-click="newAssessment('R')" class="btn btn-danger">
+					{{'NEW_EVALUATION' | i18n}}</a>
+				<a data-ng-show="isSectionTabSet(0)" data-ng-click="associate()" class="btn btn-danger">
+					{{'CONNECT' | i18n}}</a>
 			</div>
 			<!-- 
-			 ! Header
+			 ! Cabeçalho
 			 ! -->
 			<div data-ng-show="isSectionTabSet(-1)" class="h3">{{userGroup.userName}}</div>
 			<div data-ng-hide="isSectionTabSet(-1)" class="media">
 				<div class="pull-left">
-					<img class="img-rounded img64_64"
+					<img class="img-rounded img64_64" 
 						data-ng-src="{{user.userImageUrl}}" 
 						data-err-src="/images/user/gender64-{{user.userGender}}.png">
 				</div>
@@ -73,29 +78,52 @@ data-is-qualifier-active="isQualifierActive(value)" data-qualifier-icon="fi-tors
 			    {{'PERSONAL_DATA' | i18n}}
 			    </a>
 			</li>
+			<li data-ng-hide="isSectionTabSet(-1)" data-ng-class="{active:isSectionTabSet(1)}">
+			    <a data-ng-click="setSectionTab(1)">
+			    {{'TRAINNING' | i18n}}
+			    </a>
+			</li>
+			<!-- shown only after tab selection is triggered anywhere else  -->
+			<li data-ng-show="isSectionTabSet(2)" data-ng-class="{active:isSectionTabSet(2)}">
+				{{'GROUP' | i18n}}
+			</li>
 		</ul>
 		<!-- 
 		 ! Conteúdo
 		 !-->
 		<div class="tab-content">
 	        <!-- 
-	         ! SECTION -1
-	         ! Groups
+	         ! SEÇÃO -1
+	         ! Aba Grupos
 	         !
 	         ! -->
 	        <div class="tab-pane fade in" data-ng-class="{'active':isSectionTabSet(-1)}"
 	            data-ng-include="'/assets/user/selection/user-group.html'"></div>
 	        <!-- 
-	         ! SECTION 0
-	         ! Users
+	         ! SEÇÃO 0
+	         ! Aba Usuário
 	         !
 	         ! -->
 	        <div class="tab-pane fade in" data-ng-class="{'active':isSectionTabSet(0)}"
 	            data-ng-include="'/assets/user/selection/user-0.html'"></div>
+	        <!-- 
+	         ! SEÇÃO 1
+	         ! Aba Competências
+	         !
+	         ! -->
+	        <div class="tab-pane fade in" data-ng-class="{'active':isSectionTabSet(1)}"
+	            data-ng-include="'/assets/user/selection/user-1.html'"></div>
+	        <!-- 
+	         ! SEÇÃO 2
+	         ! Aba Grupo
+	         !
+	         ! -->
+	        <div class="tab-pane fade in" data-ng-class="{'active':isSectionTabSet(2)}"
+	            data-ng-include="'/assets/user/selection/user-2.html'"></div>
 		</div>
 	</div>
 	<!-- 
-	 ! Footer
+	 ! Rodapé
 	 !-->
 	<div class="panel-footer clearfix" data-ng-if="isSectionTabSet(-1)">
 		<div data-pagination data-total-items="userList.totalElements" data-items-per-page="userItemsPerPage"
@@ -112,6 +140,16 @@ data-is-qualifier-active="isQualifierActive(value)" data-qualifier-icon="fi-tors
 		<button class="pull-right btn btn-primary" data-ng-click="getProfile()"> 
 			<i class="fa fa-pencil-square-o"></i> {{'CHANGE_DATA' | i18n}}
 		</button>	
+	</div>
+	<div class="panel-footer clearfix" data-ng-if="isSectionTabSet(1)">
+		<div data-pagination data-total-items="knowledgeList.totalElements" data-items-per-page="knowledgeItemsPerPage"
+		     data-ng-model="knowledgeList.number" data-ng-change="knowledgePageChanged()"
+		     data-previous-text="<" data-next-text=">" ></div>
+		<div class="pull-right">
+			<a href="" data-ng-class="{active: ipg==knowledgeItemsPerPage}" data-ng-click="setKnowledgeItemsPerPage(ipg)" 
+			data-ng-repeat="ipg in [5, 10, 20]"
+			class="btn btn-sm">{{ipg}} </a>
+		</div>
 	</div>
 	</div>
 </div><!-- Main -->
