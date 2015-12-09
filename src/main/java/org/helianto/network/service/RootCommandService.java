@@ -5,9 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.helianto.core.domain.Entity;
-import org.helianto.security.internal.UserAuthentication;
-import org.helianto.security.repository.UserAuthorityReadAdapter;
+import org.helianto.security.domain.UserAuthority;
 import org.helianto.security.repository.UserAuthorityRepository;
 import org.helianto.user.domain.User;
 import org.helianto.user.repository.UserGroupRepository;
@@ -16,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 /**
  * Entity network command service.
@@ -82,7 +79,7 @@ public class RootCommandService {
 //																						// aCredentials,
 //																						// anAuthorities);
 							
-							List<UserAuthorityReadAdapter> roles = userAuthorityRepository
+							List<UserAuthority> roles = userAuthorityRepository
 									.findByUserGroupIdOrderByServiceCodeAsc(userGroupRepository.findParentsByChildId(user.getId()));
 							User newUser = userRepository.saveAndFlush(user);
 							SecurityContextHolder.clearContext();
