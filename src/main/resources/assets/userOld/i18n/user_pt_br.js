@@ -8,10 +8,10 @@ value('lang', {
 	ALL:'Todos',
 	ACTIVE: 'Ativo',
 	ACTIVATE: 'Ativar',
+	ASSOCIATE: 'Associar',
 
 	CURRICULUM: 'Histórico',
 	CHANGE_DATA: 'Mudar dados pessoais',
-	CONNECT: 'Associar',
 	CAREER:'Carreira',
 	COMPETENCE_SPECIALIZATION_E_BACHELOR_DEGREE:'Graduação',
 	COMPETENCE_SPECIALIZATION_E_BASIC:'Médio ou fundamental',
@@ -35,13 +35,16 @@ value('lang', {
 	COMPETENCE_UNIT_YEAR:'Ano(s)',
 	CONSULTANCY:'Terceiros',
 	
-	DISPLAY_NAME:'Nome mais usado',
+	DISPLAY_NAME:'Mostrar como',
 	DISABLE: 'Desativar',
 
+	EMAIL: 'E-mail',
 	EVALUATION: 'Avaliação',
 	
 	FIRST_NAME:'Primeiro nome',
 	FUNCTION:'Funções',
+
+	GROUP:'Grupo',
 	
 	IDENTITY_GENDER_FEMALE:'Feminino',
 	IDENTITY_GENDER_MALE:'Masculino',
@@ -51,6 +54,13 @@ value('lang', {
 	IDENTITY_TYPE_ORGANIZATIONAL_EMAIL:'Fornecido pela organização',
 	IDENTITY_TYPE_PERSONAL_EMAIL:'Pessoal',
 	IDENTITY_TYPE:'O e-mail é',
+	
+	IMAGE_ASSOCIATE:'Associar imagem',
+	IMAGE_CHOOSE:'Escolher Imagem',
+	IMAGE_CHOOSE_ERR:'Imagem muito grande : máximo 2MB',
+	IMAGE_CROP:'Corte a imagem para enviar',
+	IMAGE_TO_SEND:'Imagem a ser enviada:',
+	
 	INACTIVE: 'Inativo',
 
 	KNOWLEDGE_LEVEL_0:'Não requer',
@@ -64,6 +74,7 @@ value('lang', {
 	
 	MANY_USERS:'@{}@ pessoas',
 	
+	NEW_PASS: 'Nova Senha', 
 	NEW_PERSON:'Nova pessoa',
 	NEW_FUNCTION: 'Nova função',
 	NEW_POST: 'Novo cargo',
@@ -75,9 +86,15 @@ value('lang', {
 	
 	PEOPLE: 'Pessoas',
 	PERSONAL_DATA: 'Dados pessoais',
+	PASSWORD_TO_CHANGE: 'Nova Senha',
+	PASSWORD_CONFIRMATION: 'Confirmação Nova Senha',
 
-	SYSTEM:'Sistema',
+	SEARCH: 'Pesquisar',
+	SEND: 'Enviar',
 	SHOW_INACTIVES: 'Mostrar inativos',
+	SYSTEM:'Sistema',
+	
+	UPLOAD_SUCCESS:'Upload bem sucedido!',
 
 	USER_BIRTH_DATE:'Nascimento',
 	USER_GROUP_MINIMUM_TIME_REQUIREMENT_0:'não requer',
