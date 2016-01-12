@@ -275,7 +275,7 @@ angular.module('app.services', ['ngResource'])
 				'   data-ng-click="setQualifier({value: qualifierItem.qualifierValue})" >' +
 				'<div data-ng-class="{h4: isQualifierActive({value: qualifierItem.qualifierValue}) }">' +
 				'<i class="{{qualifierItem.fontIcon}}" data-ng-if="qualifierItem.fontIcon.length>0"></i>' +
-				'{{qualifierItem.qualifierName}}' +
+				'{{qualifierItem.qualifierName | i18n}}' +
 			    '</div>' +
 			    '<span style="font-size: 70%; color: #aaa;">{{qualifierItem.countItems}} {{countLabel}}</span>' +
 			    '</a></ul>'
@@ -324,8 +324,9 @@ angular.module('app.services', ['ngResource'])
 			list.$promise.then(function(data) {
 				if (value === 0 && data.length>0 && externalId==0) {
 					value = data[0].qualifierValue;
+					name = data[0].qualifierName;
 				}
-				callBack(value, data);
+				callBack(value, data, name);
 			})
 		};
 

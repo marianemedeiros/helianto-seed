@@ -16,12 +16,13 @@ import org.helianto.core.domain.Signup;
 import org.helianto.core.repository.IdentityRepository;
 import org.helianto.core.repository.LeadRepository;
 import org.helianto.core.repository.SignupRepository;
-import org.helianto.core.sender.NotificationSender;
+import org.helianto.sender.service.NotificationSender;
 import org.helianto.user.domain.User;
 import org.helianto.user.repository.UserRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.core.env.Environment;
 
 /**
  * 
@@ -184,6 +185,7 @@ public class SignupServiceTests {
 	private SignupRepository signupRepository;
 	private UserRepository userRepository;
 	private NotificationSender notificationSender;
+	private Environment env;
 	private Boolean calledNotifyAdminIfUserIsNotValid = false;
 	
 	@Before
@@ -192,7 +194,10 @@ public class SignupServiceTests {
 		identityRepository = EasyMock.createMock(IdentityRepository.class);
 		signupRepository = EasyMock.createMock(SignupRepository.class);
 		userRepository = EasyMock.createMock(UserRepository.class);
-		notificationSender = new NotificationSender() {
+		env = EasyMock.createMock(Environment.class);
+		EasyMock.expect(env.getProperty(EasyMock.isA(String.class))).andReturn("prop").anyTimes();
+		EasyMock.replay(env);
+		notificationSender = new NotificationSender(env) {
 			@Override 
 			public boolean send(String recipientEmail, String recipientFirstName, String recipientLastName
 					, String subject, String... params) {

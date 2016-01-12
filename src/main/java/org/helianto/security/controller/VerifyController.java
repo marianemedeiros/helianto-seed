@@ -25,11 +25,11 @@ import org.helianto.core.domain.Operator;
 import org.helianto.core.domain.Signup;
 import org.helianto.core.repository.IdentityRepository;
 import org.helianto.core.repository.OperatorRepository;
+import org.helianto.core.repository.SignupRepository;
+import org.helianto.install.service.EntityInstallStrategy;
 import org.helianto.security.domain.IdentitySecret;
 import org.helianto.security.internal.UserDetailsAdapter;
-import org.helianto.security.repository.SignupTmpRepository;
 import org.helianto.security.service.AuthorizationChecker;
-import org.helianto.security.service.EntityInstallService;
 import org.helianto.security.util.SignInUtils;
 import org.helianto.user.domain.User;
 import org.joda.time.DateMidnight;
@@ -72,6 +72,9 @@ public class VerifyController
 	@Inject 
 	private OperatorRepository contextRepository;
 	
+	@Inject
+	private SignupRepository signupRepository;
+
 	@Inject 
 	private IdentityRepository identityRepository;
 	
@@ -79,16 +82,14 @@ public class VerifyController
 	private AuthorizationChecker authorizationChecker;
 	
 	@Inject
-	private SignupTmpRepository signupTmpRepository;
-
-	@Inject
 	private UsersConnectionRepository connectionRepository;
 	
 	@Inject
 	private ConnectionFactoryLocator connectionFactoryLocator;
 
 	@Inject
-	private EntityInstallService entityInstallService;
+//	@Qualifier("defaultInstallStrategy")
+	private EntityInstallStrategy entityInstallService;
 	
 
 	/**
@@ -129,7 +130,7 @@ public class VerifyController
 	 * @param expirationLimit
 	 */
 	protected int findPreviousSignupAttempt(String confirmationToken, int expirationLimit) {
-		Signup signup = signupTmpRepository.findByToken(confirmationToken);
+		Signup signup = signupRepository.findByToken(confirmationToken);
 		if (signup!=null) {
 			if (expirationLimit>0 && signup.getIssueDate()!=null) {
 				DateMidnight expirationDate = new DateMidnight(signup.getIssueDate()).plusDays(expirationLimit + 1);
@@ -220,7 +221,7 @@ public class VerifyController
 			identitySecret = changeIdentitySecret(identity.getPrincipal(),password);
 		}
 		Operator context = contextRepository.findOne(contextId);
-		Signup signup = entityInstallService.getSignup(contextId, identity);
+		Signup signup = signupRepository.findByContextIdAndPrincipal(contextId, identity.getPrincipal());
 		List<Entity> prototypes = entityInstallService.generateEntityPrototypes(signup);
 		entityInstallService.createEntities(context, prototypes, identity);
 		model.addAttribute("passError", "false");
@@ -228,5 +229,5 @@ public class VerifyController
 		return SignUpController.WELCOME_TEMPLATE;
 		
 	}
-	
+
 }

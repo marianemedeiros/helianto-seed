@@ -1,4 +1,4 @@
-package org.helianto.core.sender;
+package org.helianto.sender.service;
 
 import javax.inject.Inject;
 
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
  * @author mauriciofernandesdecastro
  */
 @Component
-@PropertySource("classpath:/META-INF/sender.properties")
 public class UserConfirmationSender 
 	extends AbstractBodyTemplateSender
 {

@@ -1,108 +1,157 @@
-<div class="col-md-12"><h3>Pessoas</h3></div><!-- title -->
+<!-- 
+ ! Title 
+ -->
+<div class="col-md-12"><h3>{{'PEOPLE' | i18n}}</h3></div><!-- title -->
+
+<div class="col-md-12">
+<div class="row">
+
+<!-- Filter -->
+<div class="col-md-3 col-sm-12" data-ng-show="isSectionTabSet(-1)">
+<div data-qualifier-panel="qualifiers" data-set-qualifier="setQualifier(value)" data-is-qualifier-active="isQualifierActive(value)" data-ng-init="setSectionTab(-1)" ></div>
+</div><!-- Filter -->
 
 <!-- Main -->
-<div class="col-sm-12">
-    <div class="ui-tab-container ui-tab-horizontal panel panel-default">
+<div class="col-sm-12" data-ng-class="{'col-md-9':isSectionTabSet(-1)}">
 
-    <div data-justified="false" class="ui-tab">
-	<ul class="nav nav-tabs" >
-	<li data-ng-repeat="qualifier in qualifiers">
-		<a href="" data-ng-click="setQualifier(qualifier.qualifierValue)">{{qualifier.qualifierName}}
-		<br><span style="font-size: 70%;">{{qualifier.countItems}} pessoa(s)</span>
-		</a>
-	</li>
-	<li class="navbar-form navbar-right" role="search" id="rootForm" 
-		data-ng-submit="search(0, '/search/0/')" >
-		<div class="input-group input-group-sm">
-		<input type="hidden" name="qualifierValue" value="C" data-ng-model="searchModel.qualifierValue" class="ng-pristine ng-untouched ng-valid">
-		<input type="hidden" name="_csrf" value="4078c879-e55c-433b-8fba-6318c09bc596">
-		<input type="text" class="form-control ng-pristine ng-untouched ng-valid" placeholder="Buscar" size="32" id="searchString" name="searchString" data-ng-model="searchModel.searchString">
-		<span class="input-group-btn">
-			<button value="inst" type="submit" class="btn btn-default inst"><i class="glyphicon glyphicon-search ng-scope" data-tooltip-placement="left" data-tooltip="Pesquisar itens"></i></button>
-		</span>
-		</div>
-	</li>	
-	</ul>
-    
-    <div class="tab-content">
+    <div class="panel panel-default">
+	<!--
+	 ! Título
+	 !-->
+	<div class="panel-body">
 	<div class="row">
-		<div class="col-md-12">
-		
+		<div class="col-md-12 col-xs-12">
+			<div class="h4 pull-right">
+				<a data-ng-show="isSectionTabSet(-1) && qualifierValue=='A'" data-ng-click="newUser()" class="btn btn-danger">
+					{{'NEW_PERSON' | i18n}}</a>
+				<a data-ng-show="isSectionTabSet(-1) && qualifierValue=='F'" data-ng-click="newUserGroup()" class="btn btn-danger">
+					{{'NEW_FUNCTION' | i18n}}</a>
+				<a data-ng-show="isSectionTabSet(-1) && qualifierValue=='J'" data-ng-click="newUserGroup()" class="btn btn-danger">
+					{{'NEW_POST' | i18n}}</a>
+				<a class="btn btn-danger" data-ng-show="userState=='A' && isSectionTabSet(-1)" data-ng-click="listUsers(userGroupValue, 1, 'I')">
+					{{'SHOW_INACTIVES' | i18n}}</a>
+				<a class="btn btn-primary" data-ng-show="userState=='I' && isSectionTabSet(-1)" data-ng-click="listUsers(userGroupValue, 1, 'A')">
+					{{'HIDE_INACTIVES' | i18n}}</a>
+				<div class="btn-group" role="group" data-ng-show="isSectionTabSet(0) && isUserActive()">
+				  <button type="button" class="btn btn-info active" >{{'ACTIVE' | i18n}}</button>
+				  <button type="button" data-ng-click="activateUser('I')" class="btn btn-default">{{'DISABLE' | i18n}}</button>
+				</div>
+				<div class="btn-group" role="group" data-ng-show="isSectionTabSet(0) && !isUserActive()">
+				  <button type="button" data-ng-click="activateUser('A')" class="btn btn-default">{{'ACTIVATE' | i18n}}</button>
+				  <button type="button"class="btn btn-danger active">{{'INACTIVE' | i18n}}</button>
+				</div>
+				<a data-ng-show="isSectionTabSet(0)" data-ng-click="newAssessment('I')" class="btn btn-danger">
+					{{'NEW_INFORMATION' | i18n}}</a>
+				<a data-ng-show="isSectionTabSet(0)" data-ng-click="newAssessment('R')" class="btn btn-danger">
+					{{'NEW_EVALUATION' | i18n}}</a>
+				<a data-ng-show="isSectionTabSet(0)" data-ng-click="associate()" class="btn btn-danger">
+					{{'CONNECT' | i18n}}</a>
+			</div>
+			<!-- 
+			 ! Cabeçalho
+			 ! -->
+			<div data-ng-show="isSectionTabSet(-1)" class="h3">{{userGroup.userName}}</div>
+			<div data-ng-hide="isSectionTabSet(-1)" class="media">
+				<div class="pull-left">
+					<img class="img-rounded img64_64" 
+						data-ng-src="{{user.userImageUrl}}" 
+						data-err-src="/images/user/gender64-{{user.userGender}}.png">
+				</div>
+				<h5 >{{user.displayName.length>0?user.displayName:user.userName}}</h5>
+			    <h6 >{{user.userKey}}</h6>
+			</div>
 		</div>
-		<div class="col-md-4 col-xs-12">
-		<table class="table table-hover">
-		  <tbody>
-		   	<tr >
-		   		<td>
-		   		<a  data-ng-click="newUser()" class="btn btn-default">
-					Nova pessoa</a>
-		   		</td>
-		   	</tr>
-		    <tr data-ng-class="{active: userItem.id==user.id}" 
-		    	data-ng-click="getUser(userItem.id)"
-	 			data-ng-repeat="userItem in userList.content" >
-		      <td class="h4" style="min-width:72px; width: 72px;">
-		          <img class="media-object img-circle" style="width:45px" data-ng-src="{{userItem.userImageUrl}}" data-err-src="/images/user/gender64-N.png">
-		      </td>
-		      <td >{{userItem.userKey}}
-		        <h5>{{userItem.displayName.length>0?userItem.displayName:userItem.userName}}</h5>
-		      </td>
-		    </tr>
-		  </tbody>
-		</table>
-		</div>
-		<div class="col-md-8 col-xs-12">
-		<table class="table">
-		  <tbody>
-		    <tr >
-		      <td class="h4" style="min-width:72px; width: 72px;">
-		          <img class="media-object img-circle" style="width:45px" data-ng-src="{{user.userImageUrl}}" data-err-src="/images/user/gender64-N.png">
-		      </td>
-		      <td >{{user.userKey}}
-		        <h5>{{user.displayName.length>0?user.displayName:user.userName}}</h5>
-		      </td>
-		      <td><button class="btn btn-primary pull-right" data-ng-click="getUser(user.id)">Editar</button>
-		      </td>
-		    </tr>
-		  </tbody>
-		</table>
-		<div class="panel panel-default">
-		<div class="panel-body">
-		<p>{{user.userState}}</p>
-		<p>{{user.userGender}}</p>
-		</div>
-		</div>
+	</div>
+	</div>
+	<!-- 
+	 ! Nav
+	 !-->
+	<div class="panel-body ui-tab">
+		<ul class="nav nav-tabs">
+			<li data-ng-class="{active:isSectionTabSet(-1)}" > 
+		    	<a data-ng-click="setSectionTab(-1)">
+		    	<i class="fi-torsos-all"></i> <span data-ng-show="isSectionTabSet(-1)"> {{'USER_TYPE_'+qualifierValue | i18n}}</span>
+		    	</a>
+			</li>
+			<li data-ng-hide="isSectionTabSet(-1)" data-ng-class="{active:isSectionTabSet(0)}">
+			    <a data-ng-click="setSectionTab(0)">
+			    {{'PERSONAL_DATA' | i18n}}
+			    </a>
+			</li>
+			<li data-ng-hide="isSectionTabSet(-1)" data-ng-class="{active:isSectionTabSet(1)}">
+			    <a data-ng-click="setSectionTab(1)">
+			    {{'TRAINNING' | i18n}}
+			    </a>
+			</li>
+			<!-- shown only after tab selection is triggered anywhere else  -->
+			<li data-ng-show="isSectionTabSet(2)" data-ng-class="{active:isSectionTabSet(2)}">
+				{{'GROUP' | i18n}}
+			</li>
+		</ul>
 		<!-- 
-displayName: null
-firstName: null
-id: 357
-jobTitle: “"
-key: 357
-lastEvent: 1437260304022
-lastName: null
-minimalEducationRequirement: 0
-minimalExperienceRequirement: 0
-systemGroup: false
-userBirthDate: 1437260304054
-userDesc: “"
-userGroupId: 36
-userImageUrl: null
-userType: " "
- -->
+		 ! Conteúdo
+		 !-->
+		<div class="tab-content">
+	        <!-- 
+	         ! SEÇÃO -1
+	         ! Aba Grupos
+	         !
+	         ! -->
+	        <div class="tab-pane fade in" data-ng-class="{'active':isSectionTabSet(-1)}"
+	            data-ng-include="'/assets/user/selection/user-group.html'"></div>
+	        <!-- 
+	         ! SEÇÃO 0
+	         ! Aba Usuário
+	         !
+	         ! -->
+	        <div class="tab-pane fade in" data-ng-class="{'active':isSectionTabSet(0)}"
+	            data-ng-include="'/assets/user/selection/user-0.html'"></div>
+	        <!-- 
+	         ! SEÇÃO 1
+	         ! Aba Competências
+	         !
+	         ! -->
+	        <div class="tab-pane fade in" data-ng-class="{'active':isSectionTabSet(1)}"
+	            data-ng-include="'/assets/user/selection/user-1.html'"></div>
+	        <!-- 
+	         ! SEÇÃO 2
+	         ! Aba Grupo
+	         !
+	         ! -->
+	        <div class="tab-pane fade in" data-ng-class="{'active':isSectionTabSet(2)}"
+	            data-ng-include="'/assets/user/selection/user-2.html'"></div>
 		</div>
 	</div>
-	</div><!-- tab-content -->
+	<!-- 
+	 ! Rodapé
+	 !-->
+	<div class="panel-footer clearfix" data-ng-if="isSectionTabSet(-1)">
+		<div data-pagination data-total-items="userList.totalElements" data-items-per-page="userItemsPerPage"
+		     data-ng-model="userList.number" data-ng-change="userPageChanged()"
+		     data-previous-text="<" data-next-text=">" ></div>
+		<div class="pull-right">
+			<a href="" data-ng-class="{active: ipg==userItemsPerPage}" data-ng-click="setUserItemsPerPage(ipg)" 
+			data-ng-repeat="ipg in [5, 10, 20]"
+			class="btn btn-sm">{{ipg}} </a>
+		</div>
+		
 	</div>
-	
-	<div class="panel-footer">
-	<div data-pagination data-total-items="userList.totalElements" data-items-per-page="itemsPerPage"
-	     data-ng-model="userList.number" data-ng-change="pageChanged()"
-	     data-previous-text="<" data-next-text=">" ></div>
-	<div class="pull-right">
-		<a href="" data-ng-class="{active: ipg==itemsPerPage}" data-ng-click="setItemsPerPage(ipg)" 
-		data-ng-repeat="ipg in [5, 10, 20]"
-		class="btn btn-sm">{{ipg}} </a>
+	<div class="panel-footer clearfix" data-ng-if="isSectionTabSet(0)">
+		<button class="pull-right btn btn-primary" data-ng-click="getProfile()"> 
+			<i class="fa fa-pencil-square-o"></i> {{'CHANGE_DATA' | i18n}}
+		</button>	
 	</div>
-	</div><!-- panel footer -->
-	</div><!-- panel -->
+	<div class="panel-footer clearfix" data-ng-if="isSectionTabSet(1)">
+		<div data-pagination data-total-items="knowledgeList.totalElements" data-items-per-page="knowledgeItemsPerPage"
+		     data-ng-model="knowledgeList.number" data-ng-change="knowledgePageChanged()"
+		     data-previous-text="<" data-next-text=">" ></div>
+		<div class="pull-right">
+			<a href="" data-ng-class="{active: ipg==knowledgeItemsPerPage}" data-ng-click="setKnowledgeItemsPerPage(ipg)" 
+			data-ng-repeat="ipg in [5, 10, 20]"
+			class="btn btn-sm">{{ipg}} </a>
+		</div>
+	</div>
+	</div>
+</div><!-- Main -->
+</div>
 </div>

@@ -1,6 +1,5 @@
 package org.helianto.seed;
 
-import org.helianto.core.sender.NotificationSender;
 import org.helianto.network.service.RootQueryService;
 import org.helianto.network.service.SimpleNetworkKeyName;
 import org.helianto.user.service.SimpleUserKeyName;
@@ -59,14 +58,6 @@ public abstract class AbstractContextConfig extends WebMvcConfigurerAdapter {
 		ObjectMapper mapper =  new ObjectMapper(factory);
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		return mapper;
-	}
-	
-	/**
-	 * Notification sender.
-	 */
-	@Bean
-	public NotificationSender notificationSender() {
-		return new NotificationSender();
 	}
 	
 	/**

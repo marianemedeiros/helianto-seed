@@ -94,6 +94,4 @@ public class UserQueryService {
 		return userRepository.findAdapter(userId);
 	}
 	
-
-
 }

@@ -22,9 +22,9 @@ import org.springframework.stereotype.Service;
  * Service class for Entity operations.
  * 
  * @author Eldevan Nery Junior.
- * 
+ * @deprecated
  */
-@Service
+//@Service
 public class EntityInstallService {
 
 	private static final Logger logger = LoggerFactory.getLogger(EntityInstallService.class);

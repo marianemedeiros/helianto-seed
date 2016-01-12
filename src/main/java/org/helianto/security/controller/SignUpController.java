@@ -5,8 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.helianto.core.domain.Signup;
-import org.helianto.core.sender.UserConfirmationSender;
 import org.helianto.security.service.SignupService;
+import org.helianto.sender.service.UserConfirmationSender;
 import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
