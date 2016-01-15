@@ -6,11 +6,11 @@ import org.helianto.core.def.Appellation;
 import org.helianto.core.def.Gender;
 import org.helianto.core.def.IdentityType;
 import org.helianto.core.def.Notification;
+import org.helianto.core.domain.Identity;
 import org.helianto.core.repository.IdentityReadAdapter;
 import org.helianto.identity.service.IdentityCommandService;
 import org.helianto.identity.service.IdentityQueryService;
 import org.helianto.security.internal.UserAuthentication;
-import org.helianto.user.service.UserCommandService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -77,10 +77,21 @@ public class IdentityController {
 	 *
 	 * PUT 	/app/user/
 	 * @deprecated
-	 */
+	 
 	@RequestMapping(value={"/", ""}, method=RequestMethod.PUT, consumes=MediaType.APPLICATION_JSON_VALUE)
 	public IdentityReadAdapter user(UserAuthentication userAuthentication, @RequestBody IdentityReadAdapter command) {
 		return identityCommandService.identity(userAuthentication.getEntityId(), command);
+	}
+	*/
+	
+	/**
+	 * Atualiza identidade.
+	 *
+	 * PUT 	/app/identity/
+	 */
+	@RequestMapping(method=RequestMethod.PUT, consumes=MediaType.APPLICATION_JSON_VALUE)
+	public Identity user(UserAuthentication userAuthentication, @RequestBody Identity command) {
+		return identityCommandService.update(userAuthentication.getEntityId(), command);
 	}
 
 	/**

@@ -63,7 +63,6 @@ public class UserController {
 	public Page<User> userList(UserAuthentication userAuthentication, @RequestParam Character userType
 			, @RequestParam String userStates, @RequestParam(defaultValue="1") Integer pageNumber
 			, @RequestParam(defaultValue="20") Integer itemsPerPage) {
-		System.err.println("userList -- ");
 		Page<User> userList = new PageDecorator<User>(
 				
 				userQueryService.userList(userAuthentication.getEntityId(), userType, userStates, pageNumber - 1, itemsPerPage));
