@@ -35,7 +35,6 @@ import org.helianto.user.domain.User;
 import org.joda.time.DateMidnight;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.env.Environment;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.UsersConnectionRepository;
