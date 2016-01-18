@@ -38,13 +38,17 @@ public class IdentityQueryService {
 		return response;
 	}
 	
-	//TODO replace readAdapter.
-	public IdentityReadAdapter identityOne(Integer identityId) {
-		Identity target = identityRepository.findOne(identityId);
-		if (target==null) {
-			target = new Identity(); 
+	/**
+	 * Some identity.
+	 * 
+	 * @param identityId
+	 */
+	public Identity identityOne(Integer identityId) {
+		Identity identity = identityRepository.findOne(identityId);
+		if (identity==null) {
+			return new Identity(); 
 		}
-		return new IdentityReadAdapter().setAdaptee(target).build();
+		return identity;
 	}
 	
 	/**

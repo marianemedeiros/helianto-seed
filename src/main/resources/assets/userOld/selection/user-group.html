@@ -1,0 +1,54 @@
+<div class="row">
+
+<div id="userPanel" class="col-md-12" >
+
+	<div class="row" data-ng-hide="isSystemQualifier()">
+	
+	<!-- Groups -->
+	<div data-ng-repeat="userGroupItem in userGroupList.content" >
+		<div data-ng-if="$index % 6 == 0" class="clearfix"></div>
+		<div class="col-md-2 col-xs-12">
+		
+		<section class="panel panel-box"
+			data-ng-click="setExternalId(0);listUsers(userGroupItem.id)" >
+			<div class="panel-top" data-ng-class="{'bg-success':qualifierValue=='F', 'bg-info':qualifierValue=='J'}">
+				<i class="fi-torsos-all text-large"></i>
+			</div>
+			<div class="panel-bottom bg-gray text-center" >
+				<p >{{userGroupItem.userName}}</p>
+			</div>
+		</section>
+		
+		</div>
+	</div>
+	
+	</div>
+
+	<div class="row" data-ng-if="isUserGroupPinned()">
+	
+	<!-- Users -->
+	<div data-ng-repeat="userItem in userList.content" >
+		<div data-ng-if="$index % 6 == 0" class="clearfix"></div>
+		<div class="col-md-2 col-xs-12">
+		
+		<section class="panel panel-box"
+			data-ng-click="getUser(userItem.userId);setSectionTab(0);" >
+			<div class="panel-top" data-ng-class="{'bg-danger':userItem.userState=='I', 'bg-primary':userItem.userState=='A'}">
+				<img class="img-circle img64_64" 
+				    data-ng-src="{{userItem.userImageUrl}}" 
+					data-err-src="/images/user/gender64-{{userItem.userGender}}.png">
+			</div>
+			<div class="panel-bottom bg-gray text-center" >
+				<p >{{userItem.displayName.length>0?userItem.displayName:userItem.userName}}</p>
+			</div>
+		</section>
+		
+		</div>
+	</div>
+	
+	</div>
+
+
+</div><!-- #userPanel -->
+
+</div>

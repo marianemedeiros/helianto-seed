@@ -7,8 +7,6 @@ import javax.inject.Inject;
 import org.helianto.core.internal.KeyNameAdapter;
 import org.helianto.core.internal.QualifierAdapter;
 import org.helianto.core.internal.SimpleCounter;
-import org.helianto.core.repository.EntityRepository;
-import org.helianto.core.repository.IdentityRepository;
 import org.helianto.user.domain.User;
 import org.helianto.user.repository.UserRepository;
 import org.helianto.user.repository.UserStatsRepository;
@@ -29,12 +27,6 @@ public class UserQueryService {
 
 	@Inject 
 	protected UserStatsRepository userStatsRepository;
-	
-	@Inject 
-	private IdentityRepository identityRepository;	
-	
-	@Inject 
-	private EntityRepository entityRepository;	
 	
 	private KeyNameAdapter[] keyNameAdapter;
 	

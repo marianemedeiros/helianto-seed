@@ -58,10 +58,10 @@
 		[#if recoverFail?? && recoverFail="false"]<div class="alert alert-success" role="alert">Password successfully modified. </div>[/#if]
 
 		<div id="form-group-email" class="form-group">
-			<input type="email"  required="" name="username"  data-ng-model="username" placeholder="E-mail" class="form-control">
+			<input type="text" required name="username" data-ng-model="username" placeholder="E-mail" class="form-control">
 		</div>
 		<div id="form-group-password" class="form-group">
-			<input type="password"  required="" name="password" data-ng-model="password" placeholder="Senha" class="form-control">
+			<input type="password" required name="password" data-ng-model="password" placeholder="Senha" class="form-control">
 		</div>
 		
 		<!--
