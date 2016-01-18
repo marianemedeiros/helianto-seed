@@ -120,7 +120,7 @@ public class VerifyController
 		else {
 			model.addAttribute("userConfirmed", false);
 		}
-		return SignUpController.SIGN_UP;
+		return "redirect:"+SignUpController.SIGN_UP;
 	}
 	
 	/**
