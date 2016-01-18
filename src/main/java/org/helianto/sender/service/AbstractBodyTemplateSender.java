@@ -2,8 +2,6 @@ package org.helianto.sender.service;
 
 import java.util.Map;
 
-import javax.mail.internet.MimeUtility;
-
 import org.helianto.sendgrid.message.sender.AbstractTemplateSender;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
