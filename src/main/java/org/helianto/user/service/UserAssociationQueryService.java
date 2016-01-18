@@ -9,7 +9,7 @@ import org.helianto.user.repository.UserGroupNameAdapter;
 import org.springframework.stereotype.Service;
 
 /**
- * Serviço de associação de usuários.
+ * User association query service.
  * 
  * @author mauriciofernandesdecastro
  */
@@ -19,6 +19,12 @@ public class UserAssociationQueryService {
 	@Inject 
 	private UserAssociationAdapterRepository userTmpRepository;
 	
+	/**
+	 * List parents from an user.
+	 * 
+	 * @param entityId
+	 * @param userId
+	 */
 	public List<UserGroupNameAdapter> parentNameList(int entityId, int userId) {
 		List<UserGroupNameAdapter> parentNameList = userTmpRepository.findParentNamesByChildId(userId);
 		parentNameList.addAll(userTmpRepository.findParentNamesByChildId(entityId, userId));

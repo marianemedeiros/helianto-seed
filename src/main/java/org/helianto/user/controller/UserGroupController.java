@@ -84,6 +84,7 @@ public class UserGroupController {
 	 *
 	 * GET 	/app/user/parent?userId
 	 */
+	// TODO replace with the one in UserParentController
 	@RequestMapping(value={"/parent"}, method=RequestMethod.GET, params={"userId"})
 	public List<UserGroupNameAdapter> groupParent(UserAuthentication userAuthentication, @RequestParam Integer userId) {
 		return userAssociationQueryService.parentNameList(userAuthentication.getEntityId(), userId);
