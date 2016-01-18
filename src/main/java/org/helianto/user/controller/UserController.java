@@ -10,6 +10,7 @@ import org.helianto.identity.service.IdentityQueryService.IdentityUserCreateResp
 import org.helianto.security.internal.UserAuthentication;
 import org.helianto.seed.PageDecorator;
 import org.helianto.user.domain.User;
+import org.helianto.user.domain.UserGroup;
 import org.helianto.user.repository.UserReadAdapter;
 import org.helianto.user.service.UserCommandService;
 import org.helianto.user.service.UserQueryService;
@@ -42,6 +43,7 @@ public class UserController {
 	@Inject
 	private IdentityQueryService identityQueryService;
 	
+
 	/**
 	 * List qualifiers.
 	 * 
@@ -62,6 +64,7 @@ public class UserController {
 			, @RequestParam String userStates, @RequestParam(defaultValue="1") Integer pageNumber
 			, @RequestParam(defaultValue="20") Integer itemsPerPage) {
 		Page<User> userList = new PageDecorator<User>(
+				
 				userQueryService.userList(userAuthentication.getEntityId(), userType, userStates, pageNumber - 1, itemsPerPage));
 		return userList;
 	}
@@ -122,9 +125,13 @@ public class UserController {
 	 *
 	 * POST		/app/user/group?qualifierValue
 	 */
-	@RequestMapping(value={"/", ""}, method=RequestMethod.POST, params={"search","novo"})
-	public IdentityUserCreateResponse userSearchNew(UserAuthentication userAuthentication, @RequestParam String search) {
+	@RequestMapping(method=RequestMethod.POST, params={"search","novo"})
+	public IdentityUserCreateResponse userSearchNew(UserAuthentication userAuthentication, 
+			@RequestParam String search) {
 		return identityQueryService.createNewUser(search, userAuthentication.getEntityId());
 	}
+	
+
+
 	
 }

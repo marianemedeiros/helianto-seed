@@ -1,0 +1,119 @@
+<!-- 
+ ! Title 
+ -->
+<div class="col-md-12"><h3>{{'PEOPLE' | i18n}}</h3></div><!-- title -->
+
+<div class="col-md-12">
+<div class="row">
+
+<!-- Filter -->
+<div class="col-md-2 col-sm-12" data-ng-show="isSectionTabSet(-1)" data-ng-init="setSectionTab(-1)">
+<div data-qualifier-box="qualifiers" data-set-qualifier="setQualifier(value)" 
+data-is-qualifier-active="isQualifierActive(value)" data-qualifier-icon="fi-torsos-all" ></div>
+</div><!-- Filter -->
+
+<!-- Main -->
+<div class="col-sm-12" data-ng-class="{'col-md-10':isSectionTabSet(-1)}">
+
+    <div class="panel panel-default">
+	<!--
+	 ! Title
+	 !-->
+	<div class="panel-body">
+	<div class="row">
+		<div class="col-md-12 col-xs-12">
+			<div class="h4 pull-right">
+				<a data-ng-show="isSectionTabSet(-1) && qualifierValue=='A'" data-ng-click="newUser()" class="btn btn-danger">
+					{{'NEW_PERSON' | i18n}}</a>
+				<a data-ng-show="isSectionTabSet(-1) && qualifierValue!='A'" data-ng-click="newUserGroup()" class="btn btn-danger">
+					{{'NEW_GROUP' | i18n}}</a>
+				<a class="btn btn-danger" data-ng-show="userState=='A' && isSectionTabSet(-1)" data-ng-click="listUsers(userGroupValue, 1, 'I')">
+					{{'SHOW_INACTIVES' | i18n}}</a>
+				<a class="btn btn-primary" data-ng-show="userState=='I' && isSectionTabSet(-1)" data-ng-click="listUsers(userGroupValue, 1, 'A')">
+					{{'HIDE_INACTIVES' | i18n}}</a>
+				<div class="btn-group" role="group" data-ng-show="isSectionTabSet(0) && isUserActive()">
+				  <button type="button" class="btn btn-info active" >{{'ACTIVE' | i18n}}</button>
+				  <button type="button" data-ng-click="activateUser('I')" class="btn btn-default">{{'DISABLE' | i18n}}</button>
+				</div>
+				<div class="btn-group" role="group" data-ng-show="isSectionTabSet(0) && !isUserActive()">
+				  <button type="button" data-ng-click="activateUser('A')" class="btn btn-default">{{'ACTIVATE' | i18n}}</button>
+				  <button type="button"class="btn btn-danger active">{{'INACTIVE' | i18n}}</button>
+				</div>
+				<a data-ng-show="isSectionTabSet(0)" data-ng-click="openForm('associate')" class="btn btn-danger">
+					{{'ASSOCIATE' | i18n}}</a>
+			</div>
+			<!-- 
+			 ! Header
+			 ! -->
+			<div data-ng-show="isSectionTabSet(-1)" class="h3">{{userGroup.userName}}</div>
+			<div data-ng-hide="isSectionTabSet(-1)" class="media">
+				<div class="pull-left">
+					<img class="img-rounded img64_64"
+						data-ng-src="{{user.userImageUrl}}" 
+						data-err-src="/images/user/gender64-{{user.userGender}}.png">
+				</div>
+				<h5 >{{user.displayName.length>0?user.displayName:user.userName}}</h5>
+			    <h6 >{{user.userKey}}</h6>
+			</div>
+		</div>
+	</div>
+	</div>
+	<!-- 
+	 ! Nav
+	 !-->
+	<div class="panel-body ui-tab">
+		<ul class="nav nav-tabs">
+			<li data-ng-class="{active:isSectionTabSet(-1)}" > 
+		    	<a data-ng-click="setSectionTab(-1)">
+		    	<i class="fi-torsos-all"></i> <span data-ng-show="isSectionTabSet(-1)"> {{'USER_TYPE_'+qualifierValue | i18n}}</span>
+		    	</a>
+			</li>
+			<li data-ng-hide="isSectionTabSet(-1)" data-ng-class="{active:isSectionTabSet(0)}">
+			    <a data-ng-click="setSectionTab(0)">
+			    {{'PERSONAL_DATA' | i18n}}
+			    </a>
+			</li>
+		</ul>
+		<!-- 
+		 ! Conteúdo
+		 !-->
+		<div class="tab-content">
+	        <!-- 
+	         ! SECTION -1
+	         ! Groups
+	         !
+	         ! -->
+	        <div class="tab-pane fade in" data-ng-class="{'active':isSectionTabSet(-1)}"
+	            data-ng-include="'/assets/user/selection/user-group.html'"></div>
+	        <!-- 
+	         ! SECTION 0
+	         ! Users
+	         !
+	         ! -->
+	        <div class="tab-pane fade in" data-ng-class="{'active':isSectionTabSet(0)}"
+	            data-ng-include="'/assets/user/selection/user-0.html'"></div>
+		</div>
+	</div>
+	<!-- 
+	 ! Footer
+	 !-->
+	<div class="panel-footer clearfix" data-ng-if="isSectionTabSet(-1)">
+		<div data-pagination data-total-items="userList.totalElements" data-items-per-page="userItemsPerPage"
+		     data-ng-model="userList.number" data-ng-change="userPageChanged()"
+		     data-previous-text="<" data-next-text=">" ></div>
+		<div class="pull-right">
+			<a href="" data-ng-class="{active: ipg==userItemsPerPage}" data-ng-click="setUserItemsPerPage(ipg)" 
+			data-ng-repeat="ipg in [5, 10, 20]"
+			class="btn btn-sm">{{ipg}} </a>
+		</div>
+		
+	</div>
+	<div class="panel-footer clearfix" data-ng-if="isSectionTabSet(0)">
+		<button class="pull-right btn btn-primary" data-ng-click="getProfile()"> 
+			<i class="fa fa-pencil-square-o"></i> {{'CHANGE_DATA' | i18n}}
+		</button>	
+	</div>
+	</div>
+</div><!-- Main -->
+</div>
+</div>

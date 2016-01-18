@@ -9,8 +9,8 @@ import org.helianto.core.domain.Entity;
 import org.helianto.core.repository.EntityReadAdapter;
 import org.helianto.core.repository.EntityRepository;
 import org.helianto.entity.service.EntityCommandService;
+import org.helianto.security.domain.UserAuthority;
 import org.helianto.security.internal.UserAuthentication;
-import org.helianto.security.repository.UserAuthorityReadAdapter;
 import org.helianto.security.repository.UserAuthorityRepository;
 import org.helianto.user.domain.User;
 import org.helianto.user.domain.UserGroup;
@@ -105,8 +105,8 @@ public class EntityController {
 	 * GET /api/entity/auth
 	 */
 	@RequestMapping(value={"/auth"}, method=RequestMethod.GET)
-	public List<UserAuthorityReadAdapter> auth(UserAuthentication userAuthentication) {
-		return auth(userAuthentication.getUserId(), userAuthentication.getIdentityId(), 0);
+	public List<UserAuthority> auth(UserAuthentication userAuthentication) {
+		return auth(userAuthentication.getUserId(), 0);
 	}
 
 	/**
@@ -115,10 +115,10 @@ public class EntityController {
 	 * GET /api/entity/auth?userId
 	 */
 	@RequestMapping(value={"/auth"}, method=RequestMethod.GET, params="userId")
-	public List<UserAuthorityReadAdapter> auth(UserAuthentication userAuthentication
+	public List<UserAuthority> auth(UserAuthentication userAuthentication
 			, @RequestParam Integer userId
 			, @RequestParam(required = false, defaultValue = "0") Integer pageNumber) {
-		return auth(userId, userAuthentication.getIdentityId(),pageNumber);
+		return auth(userId, pageNumber);
 	}
 	
 	/**
@@ -127,12 +127,11 @@ public class EntityController {
 	 * @param userId
 	 * @param pageNumber
 	 */
-	private List<UserAuthorityReadAdapter> auth(Integer userId, Integer identityId, Integer pageNumber) {
+	private List<UserAuthority> auth(Integer userId, Integer pageNumber) {
 		List<UserGroup> parentGroups = userGroupRepository.findParentsByChildId(userId);
-		List<UserAuthorityReadAdapter> authList = new ArrayList<>();
+		List<UserAuthority> authList = new ArrayList<>();
 		authList.addAll(userAuthorityRepository.findByUserGroupIdOrderByServiceCodeAsc(parentGroups));
-		authList.add(new UserAuthorityReadAdapter(0, 0, "USER", "READ"));
-		authList.add(new UserAuthorityReadAdapter(0, 0, "SELF", identityId+""));
+		authList.add(new UserAuthority(0, 0, "USER", "READ", ""));
 		return authList;
 	}
 	

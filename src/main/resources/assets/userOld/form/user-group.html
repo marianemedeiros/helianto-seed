@@ -1,0 +1,79 @@
+<!-- 		<input type="hidden" name="userType" value="${userGroup.userType}" />
+ -->
+<!-- 
+ ! Form modal
+ ! -->
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	<h4 class="modal-title" id="modalLabel">
+		<img src="/images/folder/folder64.png" width="48"/>
+		Grupo de pessoas
+	</h4>
+</div><!-- modal-header-->
+  		
+<div class="modal-body">
+	
+	<form data-ng-submit="updateUserGroup()" 
+		class="form-horizontal" role="form">
+	
+		<div class="row">
+	
+			<div class="col-md-8" >
+	
+				<div id="form-group-userName"
+					class="form-group">
+					<label for="userName" class="col-sm-3 control-label">Name</label>
+					<div class="col-sm-9">
+						<input id="userName" type="text" name="userName" required
+							data-ng-model="userGroup.userName"
+							class="form-control" />
+					</div>
+				</div>
+				
+				<div class="panel panel-default" data-ng-show="isUserGroupFunction()">
+				<div class="panel-body">
+			
+				<div id="form-group-minimalEducationRequirement" class="form-group">
+					<label for="minimalEducationRequirement" class="col-sm-6 control-label">Ensino fundamental e médio</label>
+					<div class="col-sm-6">
+					<select data-ng-model="userGroup.minimalEducationRequirement" class="form-control">
+					<option data-ng-repeat="mer in [0,1,2,3,4,5,6,7,8,9,10,11,12,13]" value="{{mer}}">
+						{{'USER_GROUP_MINIMUM_TIME_REQUIREMENT_'+mer | i18n}}</option>
+					</select>
+					</div>
+				</div>
+				
+				</div>
+				</div>
+	
+			</div>
+			<!-- col-md-8 -->
+			<div class="col-md-4">
+			
+				<h4>{{'USER_TYPE_'+userGroup.userType | i18n}}</h4>
+<!-- 				<div data-ng-show="message.exist" class="alert alert-danger" role="alert">Código Existente.</div>
+ -->				
+			</div><!--col-md-4  -->	 
+			
+	
+		</div>
+		<!-- row -->
+	
+		<hr />
+	
+		<!-- ! Submit row !-->
+		<div class="row">
+			<div class="col-md-12">
+				<!-- ! Submit button !-->
+				<div class="pull-right"> 
+					<button type="submit" name="submit" value="0" class="btn btn-primary">Salvar grupo</button>
+					<a data-dismiss="modal"  class="btn btn-link">Fechar</a>
+				</div>
+			</div>
+		</div>
+		<!-- row -->
+	</form>
+
+</div><!-- modal-body-->
+
+

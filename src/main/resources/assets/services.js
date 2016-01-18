@@ -324,8 +324,9 @@ angular.module('app.services', ['ngResource'])
 			list.$promise.then(function(data) {
 				if (value === 0 && data.length>0 && externalId==0) {
 					value = data[0].qualifierValue;
+					name = data[0].qualifierName;
 				}
-				callBack(value, data);
+				callBack(value, data, name);
 			})
 		};
 
