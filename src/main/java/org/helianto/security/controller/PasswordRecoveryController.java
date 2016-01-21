@@ -148,7 +148,7 @@ public class PasswordRecoveryController extends AbstractCryptoController{
 			}
 			changeIdentitySecret(identity.getPrincipal(), password);
 			model.addAttribute("recoverFail", "false");
-			return "redirect:/app/home/";
+			return "redirect:/home/";
 		}
 		model.addAttribute("recoverFailMsg", "label.user.password.recover.fail.message.1");
 		model.addAttribute("recoverFail", "true");
@@ -201,7 +201,6 @@ public class PasswordRecoveryController extends AbstractCryptoController{
 			model.addAttribute("recoverFail", "true");
 			
 		} catch (Exception e) {
-			
 			model.addAttribute("recoverFailMsg", e.getMessage());
 			model.addAttribute("recoverFail", "true");
 			
