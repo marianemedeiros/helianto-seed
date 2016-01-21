@@ -208,7 +208,6 @@ public class VerifyController
 	@RequestMapping(value="/createPass", method= RequestMethod.POST)
 	public String postVerificationPage(Model model, @RequestParam(defaultValue="1") Integer contextId
 			, @RequestParam String email, @RequestParam String password) {
-		
 		Identity identity = identityRepository.findByPrincipal(email);
 		model.addAttribute("userExists", true);
 		logger.debug("User {} exists",identity.getPrincipal());
@@ -216,16 +215,15 @@ public class VerifyController
 		if (identitySecret==null) {
 			logger.info("Will install identity secret for {}.", identity);
 			identitySecret = createIdentitySecret(identity, password);
+			Operator context = contextRepository.findOne(contextId);
+			Signup signup = signupRepository.findByContextIdAndPrincipal(contextId, identity.getPrincipal());
+			List<Entity> prototypes = entityInstallService.generateEntityPrototypes(signup);
+			entityInstallService.createEntities(context, prototypes, identity);
 		}else{
 			logger.info("Will change identity secret for {}.", identity);
 			identitySecret = changeIdentitySecret(identity.getPrincipal(),password);
 		}
-		Operator context = contextRepository.findOne(contextId);
-		Signup signup = signupRepository.findByContextIdAndPrincipal(contextId, identity.getPrincipal());
-		List<Entity> prototypes = entityInstallService.generateEntityPrototypes(signup);
-		entityInstallService.createEntities(context, prototypes, identity);
 		model.addAttribute("passError", "false");
-		
 		return SignUpController.WELCOME_TEMPLATE;
 		
 	}
