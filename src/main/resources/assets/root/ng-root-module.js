@@ -1,6 +1,6 @@
 (function() {
-	app = angular.module('root', ['ui.bootstrap', 'app.layout', 'angular-loading-bar', 'app.services']);
-
+	app = angular.module('root', ['ui.bootstrap', 'app.services', 'ngResource', 'ngSanitize', 'angular-loading-bar']);
+	
 	app.controller('RootController', ['$scope', '$window', '$http', '$resource', 'qualifierService', 'lang'
 	                                  , function($scope, $window, $http, $resource, qualifierService, lang) {
 
@@ -18,6 +18,7 @@
 			, authorize : { method: 'GET'}
 		});
 		
+		
 		/**
 		 * Entity Resource.
 		 */
@@ -33,6 +34,8 @@
 			save: { method: 'PUT' }
 			, create: { method: 'POST' }
 		});
+		
+		
 		
 		$scope.root;
 
@@ -153,34 +156,18 @@
 					function(data){
 						$scope.entity = data;
 						$scope.getStates();
-						$scope.openForm('form-root-entity')
+						$scope.openForm('root-entity')
 					});
 		}
 
 		$scope.saveEntity = function(){
-			$scope.entityResource.save($scope.entity).$promise.then(
+			$scope.entityResource.save($scope.root).$promise.then(
 					function(data){
 						$scope.entity = data;
 						$("#modalBody").modal('hide');
 					});
 		}
 
-		/**
-		 * Abre um modal.
-		 * 
-		 * @param formName Nome do Fragmento (form-YYYY)
-		 * 
-		 */
-		$scope.openForm = function(formName){
-			$scope.message =[];
-			//inicialização em form-report
-			//$scope.createPart = false;
-			//$('#save-report input[type="text"]').removeAttr('readonly').val('');
-
-			$scope.formUrl = '/ng/entity/'+formName+'.html';
-			console.log($scope.formUrl);
-			$("#modalBody").modal('show');
-		}
 
 		/**
 		 * Retorna o form a ser mostrado no Modal
@@ -206,10 +193,13 @@
 		function openForm(formName){
 			$scope.message = [];
 			//inicialização em form
-			$scope.formUrl = '/assets/'+$scope.baseName+'/'+formName+'.html';
+			$scope.formUrl = '/assets/'+$scope.baseName+'/form/'+formName+'.html';
 			$("#modalBody").modal('show');
 
 		}
+		
+//		$scope.getStates();
+		
 
 	}])
 

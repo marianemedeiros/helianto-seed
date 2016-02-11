@@ -1,0 +1,121 @@
+<!-- 
+ ! Form modal
+ ! -->
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	{{'ENTITY' | i18n}}
+</div><!-- modal-header-->
+  		
+<div class="modal-body">
+
+<form method="POST" data-ng-submit="saveEntity()" id="save-order" class="form-horizontal" role="form">
+
+	<div class="row">
+
+		<div class="col-md-8">
+
+			<!--
+			 ! Alias
+			 !-->
+			<div id="form-alias" class="form-group">
+					<label for="alias" class="col-sm-3 control-label">{{'ALIAS' | i18n}}</label>
+					<div class="col-sm-9">
+						<div class="input-group">
+							<input id="alias" type="text" required maxlength="64"
+								   data-ng-keyup="isAliasValid(root.alias)"
+								   data-ng-model="root.alias" class="form-control"
+                                   placeholder="{{'ALIAS_HINT' | i18n}}" />
+							<div class="input-group-addon">
+								<i class="fa fa-check text-success" data-ng-show="entiyAliasValid"></i>
+								<i class="fa fa-close text-danger"  data-ng-hide="entiyAliasValid"></i>
+							</div>
+                            <!--  <div class="input-group-addon">64 {{'_MAX' | i18n}}</div> -->
+						</div>
+					</div>
+			</div>
+
+            <!--
+             ! Name
+             !-->
+            <div id="form-entity-name" class="form-group">
+                <label for="entity-name" class="col-sm-3 control-label">{{'ENTITY_NAME' | i18n}}</label>
+                <div class="col-sm-9">
+                    <div class="">
+                        <input id="entity-name" type="text" class="form-control" required data-ng-model="root.entityName">
+                    </div>
+                </div>
+            </div>
+
+            <!--
+             ! Summary
+             ! TODO: nome não é apropriado para um campo com 1024
+             !-->
+            <div id="form-summary" class="form-group">
+                <label for="summary" class="col-sm-3 control-label">{{'SUMMARY' | i18n}}</label>
+                <div class="col-sm-9">
+                    <textarea id="summary" data-ng-model="root.summary" data-redactor ></textarea>
+                </div>
+            </div>
+
+            <!--
+             ! Logo
+             !-->
+			<div id="form-logo" class="form-group">
+					<label for="logo" class="col-sm-3 control-label">{{'URL_IMAGE' | i18n}}</label>
+					<div class="col-sm-9">
+						<div class="">
+							<input id="logo" type="text" class="form-control" data-ng-model="root.externalLogoUrl">
+						</div>
+					</div>
+			</div>
+			
+			<div id="form-group-stateId" class="form-group">
+					<label for="stateId" class="col-sm-3 control-label">{{'STATE' | i18n}}</label>
+					<div class="col-sm-9">
+						<select id="stateId" class="form-control" name="stateId"  data-ng-model="root.stateId" data-ng-change="getCities(stateId)"
+					  		data-ng-options="state.id as state.stateName +' / ' +  state.stateCode for state in states"
+					  		required="required">
+						</select>
+					</div>
+			</div>
+			
+			<div id="form-group-cityId" class="form-group">
+					<label for="cityId" class="col-sm-3 control-label">{{'CITY' | i18n}}</label>
+					<div class="col-sm-9">
+						<select id="cityId" class="form-control" name="cityId"  data-ng-model="root.cityId" 
+					  		data-ng-options="city.id as city.cityName for city in cities"
+					  		required="required">
+						</select>
+					</div>
+			</div>
+			
+			<div class="row ng-hide">
+       			 <div class="col-md-6">
+            		<label>{{'SITUATION' | i18n}}</label> <select class="form-control" data-ng-model="format" data-ng-options="f for f in formats"><option></option></select>
+        		</div>
+   			</div>
+			
+				
+		</div>
+
+
+	</div>
+	<!-- row -->
+
+	<hr />
+
+	<!-- ! Submit row !-->
+	<div class="row">
+		<div class="col-md-12">
+			<!-- ! Submit button !-->
+			<div class="pull-right">
+					<button type="submit" name="submit" value="0" class="btn btn-primary">{{'_SAVE' | i18n}}</button>
+				<a data-dismiss="modal"  class="btn btn-link">{{'_CLOSE' | i18n}}</a>
+			</div>
+		
+		</div>
+	</div>
+	<!-- row -->
+</form>
+
+</div><!-- modal-body-->

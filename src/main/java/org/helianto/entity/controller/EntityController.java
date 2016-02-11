@@ -6,11 +6,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.helianto.core.domain.Entity;
-import org.helianto.core.internal.SimpleCounter;
 import org.helianto.core.repository.EntityReadAdapter;
 import org.helianto.core.repository.EntityRepository;
 import org.helianto.entity.service.EntityCommandService;
-import org.helianto.entity.service.EntityQueryService;
 import org.helianto.security.domain.UserAuthority;
 import org.helianto.security.internal.UserAuthentication;
 import org.helianto.security.repository.UserAuthorityRepository;
@@ -41,21 +39,19 @@ public class EntityController {
 
 	@Inject
 	private EntityRepository entityRepository;
-
+	
 	@Inject
 	private UserGroupRepository userGroupRepository;
-
+	
 	@Inject
 	private UserRepository userRepository;
-
+	
 	@Inject
 	private UserAuthorityRepository userAuthorityRepository;
-
+	
 	@Inject
 	private EntityCommandService entityCommandService ;	
-
-	private EntityQueryService entityQueryService ;
-
+	
 	/**
 	 * Get the current entity.
 	 * 
@@ -73,7 +69,7 @@ public class EntityController {
 		logger.debug("Entity found: {}.", adapter);
 		return adapter;
 	}
-
+	
 	/**
 	 * Create entity.
 	 * 
@@ -85,12 +81,12 @@ public class EntityController {
 		logger.debug("Creating Entity {}.", entity);
 		return entity;
 	}
-
+	
 	@RequestMapping(method= RequestMethod.PUT)
 	public Entity saveEntity(UserAuthentication userAuthentication, @RequestBody Entity entity ) {
 		return entityCommandService.saveOrUpdate(userAuthentication, entity);
 	}
-
+	
 	/**
 	 * Get the current user.
 	 * 
@@ -102,7 +98,7 @@ public class EntityController {
 		logger.debug("User found: {}.", adapter);
 		return adapter;
 	}
-
+	
 	/**
 	 * Get user authorities for the current user.
 	 *
@@ -124,7 +120,7 @@ public class EntityController {
 			, @RequestParam(required = false, defaultValue = "0") Integer pageNumber) {
 		return auth(userId, pageNumber);
 	}
-
+	
 	/**
 	 * Internal authorities.
 	 * 
@@ -138,17 +134,5 @@ public class EntityController {
 		authList.add(new UserAuthority(0, 0, "USER", "READ", ""));
 		return authList;
 	}
-
-	/**
-	 * Count entity aliases.
-	 *
-	 * GET /api/entity?alias
-	 *
-	 * @param userAuthentication
-	 * @param alias
-	 */
-	@RequestMapping(method= RequestMethod.GET, params="alias")
-	public SimpleCounter entityAliasCount(UserAuthentication userAuthentication, @RequestParam String alias) {
-		return entityQueryService.countEntity(userAuthentication.getContextId(), alias);
-	}
+	
 }

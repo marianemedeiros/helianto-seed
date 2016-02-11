@@ -5,8 +5,10 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.helianto.core.config.HeliantoServiceConfig;
+import org.helianto.entity.service.EntityCommandService;
 import org.helianto.install.service.DefaultInstallStrategy;
 import org.helianto.install.service.EntityInstallStrategy;
+import org.helianto.security.service.EntityInstallService;
 import org.helianto.sendgrid.config.SendGridConfig;
 import org.hibernate.ejb.HibernatePersistence;
 import org.slf4j.Logger;
@@ -117,5 +119,7 @@ public abstract class AbstractRootContextConfig extends AbstractContextConfig {
 	    requestMappingHandlerMapping.setRemoveSemicolonContent(false); 
 	    return requestMappingHandlerMapping;
 	}
+
+	
 
 }
