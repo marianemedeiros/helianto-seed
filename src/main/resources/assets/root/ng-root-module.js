@@ -1,6 +1,6 @@
 (function() {
-	app = angular.module('root', ['ui.bootstrap', 'app.layout', 'angular-loading-bar', 'app.services']);
-
+	app = angular.module('root', ['ui.bootstrap', 'app.services', 'ngResource', 'ngSanitize', 'angular-loading-bar']);
+	
 	app.controller('RootController', ['$scope', '$window', '$http', '$resource', 'qualifierService', 'lang'
 	                                  , function($scope, $window, $http, $resource, qualifierService, lang) {
 
@@ -18,6 +18,7 @@
 			, authorize : { method: 'GET'}
 		});
 		
+		
 		/**
 		 * Entity Resource.
 		 */
@@ -33,6 +34,8 @@
 			save: { method: 'PUT' }
 			, create: { method: 'POST' }
 		});
+		
+		
 		
 		$scope.root;
 
@@ -64,7 +67,7 @@
 		};
 		
 		/**
-		 * get states.
+		 * States.
 		 */
 		$scope.getStates = function(){
 			$scope.locationResource.query({path: 'state'}).$promise.then(function(data){
@@ -77,7 +80,7 @@
 		};
 		
 		/**
-		 * get cities.
+		 * Cities.
 		 */
 		$scope.getCities = function(val){
 			$scope.locationResource.query({path: 'city', stateId:val}).$promise.then(function(data){
@@ -86,7 +89,7 @@
 		};
 
 		/**
-		 * Faz  a pesquisa
+		 * Search 
 		 */
 		$scope.search = function(page, searchUrl) {
 			$scope.searchString = $("#searchString").val();
@@ -117,7 +120,10 @@
 				}
 			})    
 		}
-		// get
+		
+		/**
+		 * Some root
+		 */
 		$scope.getRoot = function(id) {
 			console.log("USER ID = "+id);
 			if (id==0) {
@@ -133,7 +139,8 @@
 						}
 					}
 			);
-		};
+		}
+		
 		// authorize
 		$scope.authorize = function() {
 			$scope.newUser = $scope.rootResource.authorize({rootUserId:$scope.root.userId});
@@ -145,46 +152,28 @@
 					}
 			);
 		}
+		
 		/**
 		 * Entity
 		 */
 		$scope.createEntity = function(){
 			$scope.entityResource.create().$promise.then(
 					function(data){
-						$scope.entity = data;
+						$scope.root = data;
 						$scope.getStates();
-						$scope.openForm('form-root-entity')
+						$scope.openForm('root-entity')
 					});
 		}
 
 		$scope.saveEntity = function(){
-			$scope.entityResource.save($scope.entity).$promise.then(
+			$scope.entityResource.save($scope.root).$promise.then(
 					function(data){
-						$scope.entity = data;
+						$scope.root = data;
+						$scope.listRoots($scope.qualifierValue, 1);
 						$("#modalBody").modal('hide');
 					});
 		}
 
-		/**
-		 * Abre um modal.
-		 * 
-		 * @param formName Nome do Fragmento (form-YYYY)
-		 * 
-		 */
-		$scope.openForm = function(formName){
-			$scope.message =[];
-			//inicialização em form-report
-			//$scope.createPart = false;
-			//$('#save-report input[type="text"]').removeAttr('readonly').val('');
-
-			$scope.formUrl = '/ng/entity/'+formName+'.html';
-			console.log($scope.formUrl);
-			$("#modalBody").modal('show');
-		}
-
-		/**
-		 * Retorna o form a ser mostrado no Modal
-		 */
 		$scope.getFormUrl = function(){
 			return $scope.formUrl;
 		} 
@@ -195,7 +184,8 @@
 			$scope.datePicker = [];
 			$scope.datePicker[value]=true;
 		};
-		//formato do combobox
+		
+
 		$scope.formats = ['ativo', 'inativo'];
 		$scope.format = $scope.formats[0];
 
@@ -205,12 +195,11 @@
 
 		function openForm(formName){
 			$scope.message = [];
-			//inicialização em form
-			$scope.formUrl = '/assets/'+$scope.baseName+'/'+formName+'.html';
+			$scope.formUrl = '/assets/'+$scope.baseName+'/form/'+formName+'.html';
 			$("#modalBody").modal('show');
 
 		}
-
+		
 	}])
 
 	.directive('rootWrapper', function() {
