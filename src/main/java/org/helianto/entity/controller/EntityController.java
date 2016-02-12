@@ -82,7 +82,7 @@ public class EntityController {
 		return entity;
 	}
 	
-	@RequestMapping(method= RequestMethod.PUT)
+	@RequestMapping(method= RequestMethod.PUT, consumes="application/json")
 	public Entity saveEntity(UserAuthentication userAuthentication, @RequestBody Entity entity ) {
 		return entityCommandService.saveOrUpdate(userAuthentication, entity);
 	}
