@@ -154,7 +154,7 @@
 		$scope.createEntity = function(){
 			$scope.entityResource.create().$promise.then(
 					function(data){
-						$scope.entity = data;
+						$scope.root = data;
 						$scope.getStates();
 						$scope.openForm('root-entity')
 					});
@@ -163,7 +163,8 @@
 		$scope.saveEntity = function(){
 			$scope.entityResource.save($scope.root).$promise.then(
 					function(data){
-						$scope.entity = data;
+						$scope.root = data;
+						$scope.listRoots($scope.qualifierValue, 1);
 						$("#modalBody").modal('hide');
 					});
 		}

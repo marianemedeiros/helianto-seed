@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
  * @author Eldevan Nery Junior.
  * @deprecated
  */
-//@Service
+@Service
 public class EntityInstallService {
 
 	private static final Logger logger = LoggerFactory.getLogger(EntityInstallService.class);
@@ -60,6 +60,7 @@ public class EntityInstallService {
 		return entityInstallStrategy.generateEntityPrototypes(signup);
 	}
 
+
 	/**
 	 * Create entities.
 	 * 
@@ -94,7 +95,7 @@ public class EntityInstallService {
 			return null;
 		}
 	}
-
+	
 	/**
 	 * Remove temporary lead.
 	 * 
