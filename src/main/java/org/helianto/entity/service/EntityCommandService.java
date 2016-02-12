@@ -10,6 +10,7 @@ import org.helianto.core.repository.CityRepository;
 import org.helianto.core.repository.EntityRepository;
 import org.helianto.core.repository.IdentityRepository;
 import org.helianto.core.repository.OperatorRepository;
+import org.helianto.install.service.EntityInstallStrategy;
 import org.helianto.security.domain.UserAuthority;
 import org.helianto.security.internal.UserAuthentication;
 import org.helianto.security.repository.UserAuthorityRepository;
@@ -51,7 +52,6 @@ public class EntityCommandService {
 	
 	@Inject
 	private EntityInstallService entityInstallService;
-
 	
 	
 	/**
@@ -65,6 +65,7 @@ public class EntityCommandService {
         command.setEntityDomain(command.getAlias());
 		Entity target = null;
 		if(command.getId()==0){
+			
 			Operator context = operatorRepository.findOne(userAuthentication.getContextId());
 			if (context==null) {
 				throw new IllegalArgumentException("Unable to find context");
@@ -84,7 +85,8 @@ public class EntityCommandService {
 			Identity identity = identityRepository.findOne(userAuthentication.getIdentityId());
             target = entityRepository.saveAndFlush(target.merge(command));
             entityInstallService.createUser(target, identity);
- //           installAuthorities(target.getId());
+            installAuthorities(target.getId());
+            
             return target;
 		}
 		else {

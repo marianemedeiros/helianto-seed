@@ -203,7 +203,7 @@ public abstract class AbstractEntityInstallStrategy
 		if (form==null || form.getCityId()==null || form.getCityId()==0) {
 			throw new IllegalArgumentException("A city is required to build an entity.");
 		}
-		if (cityRepository==null) {System.out.println("AHHHH");}
+		
 		City city = cityRepository.findOne(form.getCityId());
 		if (city==null) {
 			logger.error("Unable to create entity, city with id {} not found", form.getCityId());

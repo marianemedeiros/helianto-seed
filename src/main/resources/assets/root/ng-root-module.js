@@ -67,7 +67,7 @@
 		};
 		
 		/**
-		 * get states.
+		 * States.
 		 */
 		$scope.getStates = function(){
 			$scope.locationResource.query({path: 'state'}).$promise.then(function(data){
@@ -80,7 +80,7 @@
 		};
 		
 		/**
-		 * get cities.
+		 * Cities.
 		 */
 		$scope.getCities = function(val){
 			$scope.locationResource.query({path: 'city', stateId:val}).$promise.then(function(data){
@@ -89,7 +89,7 @@
 		};
 
 		/**
-		 * Faz  a pesquisa
+		 * Search 
 		 */
 		$scope.search = function(page, searchUrl) {
 			$scope.searchString = $("#searchString").val();
@@ -120,7 +120,10 @@
 				}
 			})    
 		}
-		// get
+		
+		/**
+		 * Some root
+		 */
 		$scope.getRoot = function(id) {
 			console.log("USER ID = "+id);
 			if (id==0) {
@@ -136,7 +139,8 @@
 						}
 					}
 			);
-		};
+		}
+		
 		// authorize
 		$scope.authorize = function() {
 			$scope.newUser = $scope.rootResource.authorize({rootUserId:$scope.root.userId});
@@ -148,6 +152,7 @@
 					}
 			);
 		}
+		
 		/**
 		 * Entity
 		 */
@@ -170,9 +175,6 @@
 		}
 
 
-		/**
-		 * Retorna o form a ser mostrado no Modal
-		 */
 		$scope.getFormUrl = function(){
 			return $scope.formUrl;
 		} 
@@ -183,7 +185,8 @@
 			$scope.datePicker = [];
 			$scope.datePicker[value]=true;
 		};
-		//formato do combobox
+		
+
 		$scope.formats = ['ativo', 'inativo'];
 		$scope.format = $scope.formats[0];
 
@@ -193,15 +196,11 @@
 
 		function openForm(formName){
 			$scope.message = [];
-			//inicialização em form
 			$scope.formUrl = '/assets/'+$scope.baseName+'/form/'+formName+'.html';
 			$("#modalBody").modal('show');
 
 		}
 		
-//		$scope.getStates();
-		
-
 	}])
 
 	.directive('rootWrapper', function() {
