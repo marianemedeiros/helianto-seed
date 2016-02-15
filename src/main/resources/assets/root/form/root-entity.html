@@ -71,7 +71,7 @@
 			<div id="form-group-stateId" class="form-group">
 					<label for="stateId" class="col-sm-3 control-label">{{'STATE' | i18n}}</label>
 					<div class="col-sm-9">
-						<select id="stateId" class="form-control" name="stateId"  data-ng-model="root.stateId" data-ng-change="getCities(stateId)"
+						<select id="stateId" class="form-control" name="stateId"  data-ng-model="root.stateId" data-ng-change="getCities(root.stateId)"
 					  		data-ng-options="state.id as state.stateName +' / ' +  state.stateCode for state in states"
 					  		required="required">
 						</select>
